@@ -1,0 +1,14 @@
+@keyframes blocking {
+	0% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}
+.blocked::after  {
+	.blocked-scope();
+	content:@content;
+	background-color:@color;
+	animation: blocking @block-time forwards;
+}
