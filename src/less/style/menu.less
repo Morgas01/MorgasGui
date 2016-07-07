@@ -13,3 +13,16 @@
 	background-color:white;
 	color:black;
 }
+.sub-menu() {
+.menu-scope();
+	transition: opacity @fadeOut-time @fadeOut-delay, transform @transformOut-time @transformOut-delay;
+	background-color:@background-color;
+}
+.show-sub-menu() {
+.menu-scope();
+	transition: opacity @fadeIn-time @fadeIn-delay, transform @transformIn-time @transformIn-delay;
+}
+.rehide-sub-menu() {
+.menu-scope();
+	transition: opacity @fadeChange-time @fadeChange-delay, transform @transformChange-time @transformChange-delay;
+}

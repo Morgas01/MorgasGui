@@ -1,0 +1,21 @@
+.selectionTable {
+	display:table;
+	& > header {
+		display:table-header-group;
+	}
+	& > div {
+		display:table-row-group;
+	}
+	& > footer {
+		display:table-footer-group;
+	}
+	> * > * {
+		display:table-row;
+		& > * {
+			display:table-cell;
+		}
+	}
+	&.noInput > * > * > *:first-child, {
+		display:none;
+	}
+}

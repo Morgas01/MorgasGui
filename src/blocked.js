@@ -7,6 +7,7 @@
 	µ.gui.blocked=function(element)
 	{
 		element=element||document.createElement("div");
+		element.classList.add("blocked");
 		element.block		=element.classList.add.bind(element.classList,"blocked");
 		element.unblock		=element.classList.remove.bind(element.classList,"blocked");
 		element.toggleBlock	=element.classList.toggle.bind(element.classList,"blocked");

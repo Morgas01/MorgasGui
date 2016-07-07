@@ -1,0 +1,18 @@
+.selectionTable {
+	border-collapse:collapse;
+	> header {
+		font-weight:bold;
+	}
+	> * > * {
+		&:nth-child(even) {
+			background-color:@background-color2;
+		}
+		& > * {
+			padding:1ex;
+		}
+		& > input:checked ~ * {
+			color:@selected-color;
+			background-color:@selected-background-color;
+		}
+	}
+}

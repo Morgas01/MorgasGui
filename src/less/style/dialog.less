@@ -1,0 +1,20 @@
+.dialog-wrapper.modal {
+	.dialog-scope();
+	background-color:fade(@background-color2,50%);
+	
+	animation: fadeIn @fade-time forwards;
+}
+.dialog {
+	.dialog-scope();
+	background-color:@background-color;
+	border:@border;
+	border-radius:@border-radius;
+	padding:@border-radius/2;
+	box-shadow:@box-shadow;
+	opacity:0;
+	animation: fadeIn @fade-time @fade-delay forwards;
+}
+*:not(.dialog-wrapper) > .dialog,.dialog-wrapper:not(.modal) .dialog {
+	.dialog-scope();
+	animation: fadeIn @fade-time forwards;
+}

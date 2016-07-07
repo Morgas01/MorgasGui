@@ -24,13 +24,10 @@
 		testFn(container);
 		activeModule.appendChild(container);
 	};
-	/*
-	var load=function(name){
-		document.write(String.raw`<link rel="stylesheet" href="../src/css/${name}.css"></script>`);
-		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="../src/${name}.js" defer></script>`);
-		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/${name}.js" defer></script>`);
-	};
-	/*/
+	var loadMorgas=function(name)
+	{
+		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="/morgas/${name}.js" defer></script>`);
+	}
 	var load=function(name){
 		document.write(String.raw`<link rel="stylesheet" href="../build/css/structure/${name}.css"></script>`);
 		document.write(String.raw`<link rel="stylesheet" href="../build/css/style/${name}.css"></script>`);
@@ -39,10 +36,14 @@
 	};
 	//*
 	
+	loadMorgas("Morgas");
 	
 	load("blocked");
 	load("loading");
 	load("menu");
+	load("TableData");
+	load("selectionTable");
+	load("dialog");
 	
 	
 })();

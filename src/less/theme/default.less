@@ -1,7 +1,16 @@
-/* blocked */
+@background-color:white;
+@background-color2:#dfddfd;
+
+@selected-color:white;
+@selected-background-color:blue;
+
+@fade-time:.25s;
+
+@box-shadow: 1em 1em .5em fade(darken(@background-color2,20%),50%);
+
+
 .blocked-scope(){
 	@content: "";
-	@block-time: .25s;
 	@color:rgba(0,0,0,.25);
 }
 
@@ -14,4 +23,36 @@
 	@color-2-1:green;
 	@color-2-2:yellow;
 	@color-2-3:red;
+}
+
+.menu-scope() {
+	@fadeIn-time:.25s;
+	@fadeIn-delay:0;
+	@transformIn-time:.25s;
+	@transformIn-delay:0;
+	
+	@fadeChange-time:@fadeIn-time;
+	@fadeChange-delay:@fadeIn-delay;
+	@transformChange-time:@transformIn-time;
+	@transformChange-delay:@transformIn-delay;
+	
+	@fadeOut-time:@fadeIn-time;
+	@fadeOut-delay:.5s;
+	@transformOut-time:@transformIn-time;
+	@transformOut-delay:.5s;
+}
+
+.dialog-scope() {
+	@border-radius:1em;
+	@fade-delay:@fade-time;
+	@border: 1px solid darken(@background-color2,20%);
+}
+/* Animations */
+@keyframes fadeIn {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
 }
