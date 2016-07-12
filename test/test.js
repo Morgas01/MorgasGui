@@ -11,7 +11,7 @@
 		return document.createElement("div");
 	}
 	var activeModule=document.body;
-	
+
 	window.module=function(name,testFns)
 	{
 		activeModule=getContainer(name);
@@ -26,7 +26,7 @@
 	};
 	var loadMorgas=function(name)
 	{
-		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="/morgas/${name}.js" defer></script>`);
+		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="/Morgas.js/src/${name}.js" defer></script>`);
 	}
 	var load=function(name){
 		document.write(String.raw`<link rel="stylesheet" href="../build/css/structure/${name}.css"></script>`);
@@ -35,15 +35,20 @@
 		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/${name}.js" defer></script>`);
 	};
 	//*
-	
+
 	loadMorgas("Morgas");
-	
+
 	load("blocked");
 	load("loading");
 	load("menu");
 	load("TableData");
 	load("selectionTable");
 	load("dialog");
-	
-	
+	loadMorgas("Morgas.Patch");
+	loadMorgas("Morgas.util.object.iterate");
+	loadMorgas("Morgas.util.function.proxy");
+	loadMorgas("Morgas.nodePatch");
+	load("tree");
+
+
 })();

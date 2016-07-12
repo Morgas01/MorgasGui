@@ -1,0 +1,28 @@
+.tree {
+	li {
+		position: relative;
+		list-style: none;
+	}
+	ul {
+		&.expanded {
+			visibility: visible;
+		}
+		&::before {
+			content:"+";
+			position: absolute;
+			font-size: 75%;
+			top:.5em;
+			right:calc(~"100% + .25em");
+		}
+		&.expanded::before {
+			content:"−";
+		}
+		&:not(.expanded) * {
+			visibility: hidden;
+		}
+	}
+}
+
+.tree > li >ul::before, .tree .expanded > li > ul::before {
+	visibility: visible;
+}

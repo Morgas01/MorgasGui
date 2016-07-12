@@ -1,0 +1,22 @@
+.tree {
+	ul {
+		li {
+			list-style: "– ";
+		}
+		&::before {
+			display:inline-block;
+			line-height: .75em;
+			width: .75em;
+			text-align: center;
+			border:1px solid;
+			cursor: pointer;
+		}
+		&:not(.expanded) * {
+			height:0;
+			width:0;
+		}
+		border-left: 1px dotted;
+		padding-left: 1.5em;
+		margin-left: -.5em;
+	}
+}
