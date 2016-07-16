@@ -9,12 +9,13 @@
 	µ.gui.tree=function(root,mapper,childrenKey)
 	{
 		var tree=document.createElement("ul");
-		var rootResult=SC.Node.traverse(root,function(node,parent,parentDOM)
+		var rootResult=SC.Node.traverse(root,function(node,parent,parentDOM,entry)
 		{
 			var li=document.createElement("li");
-			mapper.call(node,li,node,parent);
 			if(parent)
 			{
+				if(parent!=root)li.dataset.index=parentDOM.li.dataset.index+"."+entry.index;
+				else li.dataset.index=entry.index;
 				if(!parentDOM.ul)
 				{
 					parentDOM.ul=document.createElement("ul");
@@ -22,6 +23,7 @@
 				}
 				parentDOM.ul.appendChild(li);
 			}
+			mapper.call(node,li,node,parent,entry.index);
 			return {ul:null,li:li};
 		},childrenKey);
 
@@ -38,5 +40,7 @@
 			event.target.classList.toggle("expanded");
 		}
 	}
+
+	SMOD("gui.tree",µ.gui.tree);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

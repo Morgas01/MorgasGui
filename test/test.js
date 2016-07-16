@@ -49,6 +49,7 @@
 	loadMorgas("Morgas.util.function.proxy");
 	loadMorgas("Morgas.nodePatch");
 	load("tree");
+	load("selectionTree");
 
 
 })();

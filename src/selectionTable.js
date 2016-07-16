@@ -1,9 +1,9 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
-	
+
 	SC=SC({
 		TableData:"gui.TableData"
 	});
-	
+
 	if(!µ.gui) µ.gui={};
 	/**
 	 * @param {gui.TableData} tableData
@@ -26,6 +26,7 @@
 		for(var r of tableData.getRows("label","div"))
 		{
 			var input=document.createElement("input");
+			input.value=r.dataset.index;
 			if(radioName)
 			{
 				input.type="radio";
@@ -36,8 +37,8 @@
 			body.appendChild(r);
 		}
 		table.appendChild(body);
-		
-		
+
+
 		Object.defineProperty(table,"noInput",{
 			configurable:false,
 			enumerable:true,
@@ -58,12 +59,12 @@
 			return table.getSelectedRows()
 			.map(r=>tableData.data[r.dataset.index]);
 		}
-		
+
 		return table;
 	};
-	
+
 	SMOD("selectionTable",µ.gui.selectionTable);
-	
+
 	µ.gui.selectionTable.selectionControl=function(table)
 	{
 		var tableBody=Array.from(table.children).filter(e=>e.tagName=="DIV")[0];
@@ -83,10 +84,10 @@
 						{//remove other selected
 							Array.map(tableBody.children,r=>r.children[0]).forEach(i=>i.checked=false);
 						}
-						
+
 						var lastIndex=lastSelected?Array.indexOf(tableBody.children,lastSelected):0;
 						var index=Array.indexOf(tableBody.children,row);
-						
+
 						for(var from=Math.min(lastIndex,index),to=Math.max(lastIndex,index);from<=to;from++)
 						{
 							tableBody.children[from].children[0].checked=true;
@@ -109,5 +110,7 @@
 		}
 		else return false;
 	};
-	
+
+	SMOD("gui.tree",µ.gui.tree);
+
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
