@@ -7,8 +7,6 @@
   },
   "dependencies": {
     "Morgas": "git+https://github.com/Morgas01/Morgas.js.git"
-  },
-  "devDependencies": {
-    "less": "^2.7.1"
+	"less": "^2.7.1"
   }
 }
