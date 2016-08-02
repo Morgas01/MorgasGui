@@ -63,8 +63,6 @@
 		return table;
 	};
 
-	SMOD("selectionTable",µ.gui.selectionTable);
-
 	µ.gui.selectionTable.selectionControl=function(table)
 	{
 		var tableBody=Array.from(table.children).filter(e=>e.tagName=="DIV")[0];
@@ -111,6 +109,6 @@
 		else return false;
 	};
 
-	SMOD("gui.tree",µ.gui.tree);
+	SMOD("gui.selectionTable",µ.gui.selectionTable);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
