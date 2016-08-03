@@ -1,9 +1,12 @@
 .selectionTable {
 	border-collapse:collapse;
-	> header {
+	& > header {
 		font-weight:bold;
 	}
-	> * > * {
+	& > div > * {
+		cursor: pointer;
+	}
+	& > * > * {
 		&:nth-child(even) {
 			background-color:@background-color2;
 		}
