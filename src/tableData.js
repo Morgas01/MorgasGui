@@ -1,22 +1,22 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
-	
+
 	//SC=SC({});
-	
+
 	if(!µ.gui) µ.gui={};
-	
+
 	/**
 	 * @typedef {object} ColumnDef
 	 * @param {string} (name=undefined)
 	 * @param {function} fn function that sets the content of the cell
-	 * 
+	 *
 	 */
-	
+
 	µ.gui.TableData=µ.Class({
 		/**
-		 * 
+		 *
 		 * @param {any[]} data
 		 * @param {string[]|function[]|ColumnDef[]} (columns=undefined)
-		 * 
+		 *
 		 */
 		init:function(data,columns)
 		{
@@ -25,9 +25,9 @@
 			if(columns) for(var c of columns) this.addColumn(c);
 		},
 		/**
-		 * 
+		 *
 		 * @param {string|function|ColumnDef} (columns=undefined)
-		 * 
+		 *
 		 */
 		addColumn:function(column)
 		{
@@ -47,7 +47,12 @@
 					column={name:column.name,fn:column};
 					break;
 				case "object":
+					var getter=column.getter;
 					column={name:column.name,fn:column.fn};
+					if(!column.fn&&getter) column.fn=function(cell,data)
+					{
+						cell.dataset.translation=cell.textContent=getter(data);
+					}
 					break;
 				default:
 					return false;
@@ -55,7 +60,7 @@
 			this.columns.push(column);
 			return true;
 		},
-		
+
 		hasHeader:function()
 		{
 			for( var c of this.columns)
@@ -114,5 +119,5 @@
 		}
 	});
 	SMOD("gui.TableData",µ.gui.TableData);
-	
+
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
