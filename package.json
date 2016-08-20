@@ -6,7 +6,9 @@
     "url": "https://github.com/Morgas01/MorgasGui"
   },
   "dependencies": {
-    "Morgas": "git+https://github.com/Morgas01/Morgas.js.git",
 	"less": "^2.7.1"
+  },
+  "devDependencies": {
+    "Morgas": "git+https://github.com/Morgas01/Morgas.js.git"
   }
 }
