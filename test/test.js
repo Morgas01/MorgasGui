@@ -29,8 +29,7 @@
 		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="/Morgas.js/src/${name}.js" defer></script>`);
 	}
 	var load=function(name){
-		document.write(String.raw`<link rel="stylesheet" href="../build/css/structure/${name}.css"></script>`);
-		document.write(String.raw`<link rel="stylesheet" href="../build/css/style/${name}.css"></script>`);
+		document.write(String.raw`<link rel="stylesheet" href="/morgas/gui/css/${name}.less"/>`);
 		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="../src/${name}.js" defer></script>`);
 		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/${name}.js" defer></script>`);
 	};
@@ -50,6 +49,8 @@
 	loadMorgas("Morgas.nodePatch");
 	load("tree");
 	load("selectionTree");
+	loadMorgas("Morgas.Config");
+	load("form");
 
 
 })();

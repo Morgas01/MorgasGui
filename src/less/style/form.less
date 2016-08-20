@@ -1,0 +1,43 @@
+.form {
+	&, & fieldset{
+		position: relative;
+	}
+	& fieldset > .removeField {
+		position: absolute;
+		top:-2em;
+		left: -1.25em;
+	}
+	legend {
+		font-size:125%;
+		font-weight: bold;
+		text-transform: capitalize;
+	}
+	label {
+		display: flex;
+		justify-content: space-between;
+		margin: .25em 0;
+		.removeField, .label {
+			margin-right: 1em;
+		}
+		input,select,textarea {
+			flex-grow: 1;
+		}
+	}
+	button {
+		cursor: pointer;
+		align-self: start;
+	}
+	.Array .label {
+		display: none;
+	}
+	.Array .Array
+	{
+		& > .removeField {
+			position: static;
+		}
+		* .removeField {
+			margin-right: 0;
+			margin-left: 1em;
+		}
+	}
+}
