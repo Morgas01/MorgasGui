@@ -12,4 +12,8 @@ exports.getStyle=function(component,theme)
 		data=>data.css,
 		error=>Promise.reject(JSON.stringify(error))
 	);
+};
+if(Morgas)
+{// Morgas.js is loaded
+	Morgas.addResourceFolder(exports.dirname);
 }
