@@ -15,6 +15,13 @@ module("form",[
 				values:[2,4,8,16],
 				default:4
 			},
+			range:{
+				type:"number",
+				default:2,
+				min:0,
+				step:3,
+				max:9
+			}
 		},null,"simple"));
 	},
 	function(container)

@@ -38,7 +38,8 @@
 					case "remove":
 						var field=button.parentNode;
 						var container=field.parentNode;
-						container.removeField(field.dataset.name)
+						var name=field.tagName=="LABEL"?field.dataset.name:field.firstChild.dataset.translation;
+						container.removeField(name);
 						break;
 					default:
 						µ.logger.warning(String.raw`unknown form action ${action}`);
@@ -76,6 +77,9 @@
 				field=document.createElement("input");
 				field.type="number";
 				field.value=config.get();
+				field.min=config.min;
+				field.step=config.step;
+				field.max=config.max;
 				break;
 			case "select":
 				field=document.createElement("select");
@@ -97,7 +101,7 @@
 
 		field.isValid=function()
 		{
-			return (!field.checkValidity||field.checkValidity()) && (config.isValid(field.valueAsNumber||field.value))
+			return (!field.checkValidity||field.checkValidity()) && (config.isValid(isNaN(field.valueAsNumber)?field.value:field.valueAsNumber))
 		}
 		field.addEventListener("change",function()
 		{
@@ -106,7 +110,7 @@
 			var valid=field.isValid();
 			if(valid!==true)
 			{
-				field.setCustomValidity(valid||"invalid");
+				field.setCustomValidity(valid||field.validationMessage||"invalid");
 			}
 			else
 			{
@@ -115,7 +119,7 @@
 					detail:{
 						old:config.get(),
 						new:value,
-						key:name,
+						key:field.name,
 						path:path
 					}
 				});
@@ -173,16 +177,16 @@
 
 			container.appendChild(span);
 		}
-		var fields=[];
+		var fields=new Map();
 		for(var [name,field] of config)
 		{
 			var field=parseConfig(name,field,config,path);
 			container.appendChild(field);
-			fields.push(field);
+			fields.set(name,field);
 		};
 		container.isValid=function()
 		{
-			return fields.every(f=>f.isValid());
+			return Array.from(fields.values).every(f=>f.isValid());
 		}
 		container.addField=function(key,value)
 		{
@@ -201,16 +205,73 @@
 
 			field=parseConfig(key,field,config,path);
 			container.appendChild(field);
-			fields.push(field);
+			fields.set(key,field);
 			var formAddEvent=new CustomEvent("FormAdd",{
 				bubbles:true,
 				detail:{
 					key:key,
 					path:path,
-					value:value
+					value:value,
+					field:field
 				}
 			});
-			field.dispatchEvent(formAddEvent);
+			container.dispatchEvent(formAddEvent);
+		};
+		container.removeField=function(key)
+		{
+			if(config instanceof SC.Config.Container.Array)
+			{
+				key=parseInt(key,10);
+				var field=fields.get(key);
+				if(field)
+				{
+					config.splice(key);
+					container.removeChild(field);
+					fields.delete(key);
+					var oldIndex=key
+					for(var index of fields.keys())
+					{
+						if(index>key)
+						{
+							var shiftField=fields.get(index);
+							if(shiftField.tagName=="LABEL")
+							{
+								shiftField.dataset.name=oldIndex;
+								shiftField.querySelector("[name]").name=oldIndex;
+							}
+							else
+							{
+								shiftField.firstChild.dataset.translation=shiftField.firstChild.textContent=oldIndex;
+								var oldPath=shiftField.dataset.path;
+								var newPath=oldPath.replace(new RegExp("\\["+index+"\\]$"),"["+oldIndex+"]");
+								Array.from(shiftField.querySelectorAll('[data-path^="'+oldPath+'"]'))
+								.forEach(e=>e.dataset.path=e.dataset.path.replace(oldPath,newPath));
+								shiftField.dataset.path=newPath;
+							}
+							fields.set(oldIndex,shiftField);
+							oldIndex=index;
+						}
+					}
+				}
+				else return;
+			}
+			else if(config instanceof SC.Config.Container.Map)
+			{
+				config.remove(key);
+				var field=fields.get(key);
+				container.removeChild(field);
+				fields.delete(key);
+			}
+			else return;
+
+			var formAddEvent=new CustomEvent("FormRemove",{
+				bubbles:true,
+				detail:{
+					key:key,
+					path:path
+				}
+			});
+			container.dispatchEvent(formAddEvent);
 		}
 		return container;
 	};
@@ -236,7 +297,7 @@
 				removeButton.dataset.action="remove";
 				removeButton.dataset.translation="form.removeButton"
 				removeButton.textContent="-";
-				container.insertBefore(removeButton,container.firstChild);
+				container.insertBefore(removeButton,container.firstChild.nextSibling);
 			}
 			return container;
 		}
@@ -265,5 +326,6 @@
 			return label;
 		}
 	}
+	SMOD("gui.form",FORM);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
