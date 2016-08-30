@@ -15,6 +15,12 @@ module("form",[
 				values:[2,4,8,16],
 				default:4
 			},
+			"select multiple":{
+				type:"select",
+				values:["2","4","8","16"],
+				default:["4","16"],
+				multiple:true
+			},
 			range:{
 				type:"number",
 				default:2,

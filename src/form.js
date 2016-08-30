@@ -90,7 +90,12 @@
 					option.dataset.translation=name+"."+val;
 					field.appendChild(option);
 				}
-				field.value=config.get();
+				if(config.multiple)
+				{
+					field.multiple=true;
+				}
+				field.value=null;
+				[].concat(config.get()).map(v=>config.values.indexOf(v)).filter(i=>i>=0).map(i=>field.children[i].selected=true);
 				break;
 			default:
 				throw "unknown type "+config.type;
@@ -99,13 +104,27 @@
 		field.name=name;
 		if(path) field.dataset.path=path;
 
+		var getValue=function()
+		{
+			switch (config.type) {
+				case "number":
+					return isNaN(field.valueAsNumber)?field.value:field.valueAsNumber;
+					break;
+				case "boolean":
+					return field.checked;
+					break;
+				case "select":
+					if(config.multiple) return Array.from(field.selectedOptions).map(o=>o.value);
+				default:
+					return field.value;
+			}
+		}
 		field.isValid=function()
 		{
-			return (!field.checkValidity||field.checkValidity()) && (config.isValid(isNaN(field.valueAsNumber)?field.value:field.valueAsNumber))
+			return (!field.checkValidity||field.checkValidity()) && config.isValid(getValue())
 		}
 		field.addEventListener("change",function()
 		{
-			var value=field.valueAsNumber||field.value;
 			field.setCustomValidity("");
 			var valid=field.isValid();
 			if(valid!==true)
@@ -114,11 +133,12 @@
 			}
 			else
 			{
+				var value=getValue();
 				var formChangeEvent=new CustomEvent("FormChange",{
 					bubbles:true,
 					detail:{
-						old:config.get(),
-						new:value,
+						oldValue:config.get(),
+						value:value,
 						key:field.name,
 						path:path
 					}
