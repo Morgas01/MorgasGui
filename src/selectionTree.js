@@ -38,4 +38,6 @@
 		return tree;
 	};
 
+	SMOD("gui.selectionTree",µ.gui.selectionTree);
+
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
