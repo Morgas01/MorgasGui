@@ -19,7 +19,7 @@
 		var detachedMap=new Map();
 		var domToData=new Map();
 		var dataToDom=new Map();
-		filtered=new Set();
+		var filtered=new Set();
 
 		var attach=function(domParent,domChild)
 		{
@@ -114,6 +114,10 @@
 		{
 			event.target.expand&&event.target.expand(null,event.ctrlKey)
 		},false);
+		tree.expand=function(state,all)
+		{
+			this.firstChild.lastChild.expand(state,all);
+		}
 
 		tree.getData=domToData.get.bind(domToData);
 
