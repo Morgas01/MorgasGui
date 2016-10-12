@@ -47,6 +47,7 @@
 	loadMorgas("Morgas.util.object.iterate");
 	loadMorgas("Morgas.util.function.proxy");
 	loadMorgas("Morgas.nodePatch");
+	loadMorgas("Morgas.util.object.adopt");
 	load("tree");
 	load("selectionTree");
 	loadMorgas("Morgas.Config");

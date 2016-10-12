@@ -9,8 +9,13 @@
 
 	µ.gui.selectionTree=function(root,mapper,childrenKey)
 	{
+		var dataToDom=new Map();
+		var domToData=new Map();
 		var tree= SC.tree(root,function(element,node,parent,index)
 		{
+			dataToDom.set(node,element);
+			domToData.set(element,node);
+
 			var label=document.createElement("label");
 			element.appendChild(label);
 			var input=document.createElement("input");
@@ -27,12 +32,7 @@
 		tree.getSelectedItems=function()
 		{
 			return Array.from(tree.querySelectorAll("ul>input:checked"))
-			.map(e=>e.nextElementSibling);
-		}
-		tree.getSelectedItems=function()
-		{
-			return Array.from(tree.querySelectorAll("ul>input:checked"))
-			.map(e=>SC.goPath(root,e.value.split(".").join("."+childrenKey+".")));
+			.map(e=>domToData.get(e.parentNode.parentNode));
 		}
 
 		return tree;
