@@ -21,7 +21,7 @@
 			})()
 		}
 	};
-	module("loading",[
+	module("menu",[
 		function markup(container)
 		{
 			container.innerHTML+=String.raw

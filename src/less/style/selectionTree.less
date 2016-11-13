@@ -1,0 +1,8 @@
+.selectionTree {
+	li>label {
+		.selectable();
+		&>input:checked ~ * {
+			.selected();
+		}
+	}
+}

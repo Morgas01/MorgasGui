@@ -6,16 +6,17 @@
 	& > div > * {
 		cursor: pointer;
 	}
-	& > * > * {
-		&:nth-child(even) {
-			background-color:@background-color2;
-		}
+	& > * > label {
+		.zebra();
+		.selectable();
 		& > * {
 			padding:1ex;
 		}
 		& > input:checked ~ * {
-			color:@selected-color;
-			background-color:@selected-background-color;
+			.selected();
+		}
+		&:nth-child(odd) > input:checked ~ * {
+			.selected(fade(@secondaryColor,80%));
 		}
 	}
 }

@@ -1,20 +1,18 @@
 .dialog-wrapper.modal {
 	.dialog-scope();
-	background-color:fade(@background-color2,50%);
-	
-	animation: fadeIn @fade-time forwards;
+	background:@modalBackground;
+	animation: fadeIn @fadeTime forwards;
 }
 .dialog {
 	.dialog-scope();
-	background-color:@background-color;
 	border:@border;
-	border-radius:@border-radius;
-	padding:@border-radius/2;
-	box-shadow:@box-shadow;
+	border-radius:@borderRadius;
+	padding:@borderRadius/2;
+	.boxShadow();
 	opacity:0;
-	animation: fadeIn @fade-time @fade-delay forwards;
+	animation: fadeIn @fadeTime @fadeDelay forwards;
 }
 *:not(.dialog-wrapper) > .dialog,.dialog-wrapper:not(.modal) .dialog {
 	.dialog-scope();
-	animation: fadeIn @fade-time forwards;
+	animation: fadeIn @fadeTime forwards;
 }
