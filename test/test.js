@@ -5,24 +5,30 @@
 		if(name)
 		{
 			var rtn=document.createElement("fieldset");
-			rtn.innerHTML=String.raw`<legend>${name}</legend>`;
+			rtn.innerHTML=String.raw`<legend><a name="${name}">${name}</a></legend>`;
 			return rtn;
 		}
 		return document.createElement("div");
 	}
-	var activeModule=document.body;
+	var moduleList=document.createElement("ul");
+	window.addEventListener("load",()=>document.body.insertBefore(moduleList,document.body.firstChild));
 
 	window.module=function(name,testFns)
 	{
-		activeModule=getContainer(name);
-		if(testFns) for(t of testFns)test(t.name,t);
-		document.body.appendChild(activeModule);
+		var container=getContainer(name);
+		if(testFns) for(t of testFns)test(t.name,t,container);
+		document.body.appendChild(container);
+
+		var moduleListEntry=document.createElement("li");
+		moduleListEntry.innerHTML=String.raw`<a href="#${name}">${name}</a>`
+		moduleList.appendChild(moduleListEntry);
+
 	};
-	window.test=function(name,testFn)
+	var test=function(name,testFn,moduleContainer)
 	{
 		var container=getContainer(name);
 		testFn(container);
-		activeModule.appendChild(container);
+		moduleContainer.appendChild(container);
 	};
 	var loadMorgas=function(name)
 	{
@@ -52,6 +58,7 @@
 	load("selectionTree");
 	loadMorgas("Morgas.Config");
 	load("form");
+	load("tabs");
 
 
 })();

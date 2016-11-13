@@ -1,0 +1,16 @@
+.tabs {
+
+	display:flex;
+	flex-direction:column;
+
+	& > header {
+
+		flex-shrink:0;
+		display:flex;
+		flex-wrap:wrap;
+
+		& + * {
+			flex-grow:1;
+		}
+	}
+}

@@ -44,9 +44,9 @@
 
 .menu-scope() {
 	@fadeIn-time:@fadeTime;
-	@fadeIn-delay:0;
+	@fadeIn-delay:0s;
 	@transformIn-time:@fadeIn-time;
-	@transformIn-delay:0;
+	@transformIn-delay:0s;
 	
 	@fadeChange-time:@fadeTime;
 	@fadeChange-delay:@fadeIn-delay;
@@ -65,7 +65,12 @@
 	@border: 1px solid @ternaryColor;
 	@fadeDelay:@fadeTime;
 }
-
+.tabs-scope() {
+	@tabBackgroundColor:fade(@secondaryColor,40%);
+	@tabActiveBackgroundColor:@primaryColor;
+	@tabBorderRadius:.5em;
+	@contentBorderRadius:@tabBorderRadius;
+}
 /* Animations */
 @keyframes fadeIn {
 	from {

@@ -1,0 +1,21 @@
+.tabs {
+	.tabs-scope();
+	& > header {
+	 	& > * {
+			background-color:@tabBackgroundColor;
+			border-width:1px 1px 0;
+			border-style:inset;
+			border-color:@ternaryColor;
+			border-radius:@tabBorderRadius @tabBorderRadius 0 0;
+			padding: 0 @tabBorderRadius/2;
+			&.active {
+				background-color:@tabActiveBackgroundColor;
+				border-style:outset;
+			}
+		}
+		& + * {
+			border:1px outset @ternaryColor;
+			border-radius: 0 0 @contentBorderRadius @contentBorderRadius;
+		}
+	}
+}
