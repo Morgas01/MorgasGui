@@ -4,6 +4,8 @@
 		Config:"Config"
 	});
 
+	if(!µ.gui) µ.gui={};
+
 	var FORM=µ.gui.form=function(config,value,header,path)
 	{
 		if(!(config instanceof SC.Config)) config=SC.Config.parse(config,value);
@@ -121,17 +123,17 @@
 		}
 		field.isValid=function()
 		{
-			return (!field.checkValidity||field.checkValidity()) && config.isValid(getValue())
+			var valid=(!field.checkValidity||field.checkValidity()) && config.isValid(getValue());
+			if(valid!==true)
+            {
+                field.setCustomValidity(valid||field.validationMessage||"invalid");
+            }
+			return valid;
 		}
 		field.addEventListener("change",function()
 		{
 			field.setCustomValidity("");
-			var valid=field.isValid();
-			if(valid!==true)
-			{
-				field.setCustomValidity(valid||field.validationMessage||"invalid");
-			}
-			else
+			if(field.isValid()===true)
 			{
 				var value=getValue();
 				var formChangeEvent=new CustomEvent("FormChange",{
@@ -206,7 +208,7 @@
 		};
 		container.isValid=function()
 		{
-			return Array.from(fields.values).every(f=>f.isValid());
+			return Array.from(fields.values()).reduce((v,f)=>f.isValid()&&v,true);
 		}
 		container.addField=function(key,value)
 		{
