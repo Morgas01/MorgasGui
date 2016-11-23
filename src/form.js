@@ -121,6 +121,7 @@
 					return field.value;
 			}
 		}
+		field.getConfig=function(){return config};
 		field.isValid=function()
 		{
 			var valid=(!field.checkValidity||field.checkValidity()) && config.isValid(getValue());
@@ -206,6 +207,7 @@
 			container.appendChild(field);
 			fields.set(name,field);
 		};
+		container.getConfig=function(){return config};
 		container.isValid=function()
 		{
 			return Array.from(fields.values()).reduce((v,f)=>f.isValid()&&v,true);
