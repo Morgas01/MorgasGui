@@ -14,7 +14,8 @@
 		{
 			var title=e.target;
 			while(title&&title.parentNode!=header) title=title.parentNode;
-			container.setActive(title);
+			if(e.target.dataset.action==="closeTab") container.removeTab(title);
+			else container.setActive(title);
 		})
 		var tabMap=new Map();
 		for(var entry of map)
@@ -24,7 +25,32 @@
 			tabMap.set(title,content);
 			header.appendChild(title);
 		}
+		container.addTab=function(title,content,activate)
+		{
+			title=parse(title);
+			content=parse(content);
+			if(tabMap.has(title)) return false;
+			tabMap.set(title,content);
+			header.appendChild(title);
 
+			if(activate)container.setActive(title);
+
+			return header.children.length-1;//index
+		};
+		container.removeTab=function(title)
+		{
+			if(!tabMap.has(title))title=header.children[title];
+			if(tabMap.has(title))
+			{
+				tabMap.get(title).remove();
+				if(title.classList.contains("active"))
+				{
+					container.setActive(title.nextSibling||title.previousSibling);
+				}
+				title.remove();
+				tabMap.delete(title);
+			}
+		};
 		container.setActive=function(index)
 		{
 			var active=container.getActive();
@@ -67,7 +93,7 @@
 				break;
 		}
 		return element;
-	}
-	
+	};
+	SMOD("gui.tabs",µ.gui.tabs);
 	
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
