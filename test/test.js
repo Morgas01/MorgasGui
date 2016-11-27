@@ -11,7 +11,7 @@
 		return document.createElement("div");
 	}
 	var moduleList=document.createElement("ul");
-	window.addEventListener("load",()=>document.body.insertBefore(moduleList,document.body.firstChild));
+	window.addEventListener("load",()=>document.body.insertBefore(moduleList,document.body.firstElementChild));
 
 	window.module=function(name,testFns)
 	{
@@ -34,8 +34,8 @@
 	{
 		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="/Morgas.js/src/${name}.js" defer></script>`);
 	}
-	var load=function(name){
-		document.write(String.raw`<link rel="stylesheet" href="/morgas/gui/css/${name}.less"/>`);
+	var load=function(name,noStyle){
+		noStyle||document.write(String.raw`<link rel="stylesheet" href="/morgas/gui/css/${name}.less"/>`);
 		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="../src/${name}.js" defer></script>`);
 		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/${name}.js" defer></script>`);
 	};
@@ -46,7 +46,7 @@
 	load("blocked");
 	load("loading");
 	load("menu");
-	load("TableData");
+	load("TableData",true);
 	load("selectionTable");
 	load("dialog");
 	loadMorgas("Morgas.Patch");
@@ -59,6 +59,7 @@
 	loadMorgas("Morgas.Config");
 	load("form");
 	load("tabs");
+	load("actionize",true);
 
 
 })();

@@ -3,7 +3,12 @@
 	//SC=SC({});
 	
 	if(!µ.gui) µ.gui={};
-	
+	/**
+	 * @param {Object.<String|Element|Function,String|Element|Function>} map - Object/Map of title:content
+	 *
+	 * Strings will be innerHTML.
+	 * Functions get an element as an argument
+	 */
 	µ.gui.tabs=function(map,active)
 	{
 		var container=document.createElement("div")

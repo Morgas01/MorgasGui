@@ -53,12 +53,16 @@
 		{
 			return Array.from(tableBody.querySelectorAll(":scope>label>input:checked"))
 			.map(c=>c.parentNode);
-		}
+		};
 		table.getSelected=function()
 		{
 			return table.getSelectedRows()
-			.map(r=>tableData.data[r.dataset.index]);
-		}
+			.map(table.getData);
+		};
+		table.getData=function(row)
+		{
+			return tableData.data[row.dataset.index];
+		};
 
 		return table;
 	};
@@ -71,38 +75,51 @@
 			var lastSelected=null;
 			table.addEventListener("click",function(e)
 			{
-				if(e.target.tagName!="INPUT"&&e.target.parentNode.parentNode==tableBody)
+				e.preventDefault();
+				e.stopPropagation();
+
+				var row=e.target;
+				while(row&&row.parentNode!==tableBody)
 				{
-					e.preventDefault();
-					e.stopPropagation();
-					var row=e.target.parentNode;
-					 if (e.shiftKey)
-					{//select all between here and last
-						if (!e.ctrlKey)
-						{//remove other selected
-							Array.map(tableBody.children,r=>r.children[0]).forEach(i=>i.checked=false);
-						}
-
-						var lastIndex=lastSelected?Array.indexOf(tableBody.children,lastSelected):0;
-						var index=Array.indexOf(tableBody.children,row);
-
-						for(var from=Math.min(lastIndex,index),to=Math.max(lastIndex,index);from<=to;from++)
-						{
-							tableBody.children[from].children[0].checked=true;
-						}
-					}
-					else if(e.ctrlKey)
-					{//add to selection
-						row.children[0].checked=!row.children[0].checked;
-						lastSelected=row;
-					}
-					else
-					{//select only this
-						Array.map(tableBody.children,r=>r.children[0]).forEach(i=>i.checked=false);
-						row.children[0].checked=true;
-						lastSelected=row;
-					}
+					row=row.parentNode;
 				}
+				var rows=Array.from(tableBody.children);
+				var selectionType=null;
+				if (e.shiftKey)
+				{//select all between here and last
+					selectionType="range";
+					window.getSelection().removeAllRanges();
+					if (!e.ctrlKey)
+					{//remove other selected
+						rows.forEach(r=>r.children[0].checked=false);
+					}
+
+					var lastIndex=lastSelected?rows.indexOf(lastSelected):0;
+					var index=rows.indexOf(row);
+
+					rows.slice(Math.min(lastIndex,index),Math.max(lastIndex,index)-Math.min(lastIndex,index))
+					.forEach(r=>r.children[0].checked=true);
+				}
+				else if(e.ctrlKey)
+				{//add to selection
+					selectionType="toggle";
+					row.children[0].checked=!row.children[0].checked;
+					lastSelected=row;
+				}
+				else
+				{//select only this
+					selectionType="single";
+					Array.map(tableBody.children,r=>r.children[0]).forEach(i=>i.checked=false);
+					row.children[0].checked=true;
+					lastSelected=row;
+				}
+				table.dispatchEvent(new CustomEvent("select",{
+					bubbles:false,
+					cancelable:false,
+					detail:{
+						selectionType:selectionType
+					}
+				}));
 			});
 			return true;
 		}

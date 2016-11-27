@@ -1,7 +1,10 @@
 .dialog-wrapper.modal {
 	.dialog-scope();
 	background:@modalBackground;
-	animation: fadeIn @fadeTime forwards;
+	.fadeIn(@fadeTime);
+	.dialog {
+		animation-delay:@fadeDelay;
+	}
 }
 .dialog {
 	.dialog-scope();
@@ -9,10 +12,5 @@
 	border-radius:@borderRadius;
 	padding:@borderRadius/2;
 	.boxShadow();
-	opacity:0;
-	animation: fadeIn @fadeTime @fadeDelay forwards;
-}
-*:not(.dialog-wrapper) > .dialog,.dialog-wrapper:not(.modal) .dialog {
-	.dialog-scope();
-	animation: fadeIn @fadeTime forwards;
+	.fadeIn(@fadeTime);
 }

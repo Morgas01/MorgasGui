@@ -16,10 +16,13 @@
 		display: flex;
 		justify-content: space-between;
 		margin: .25em 0;
+		.removeField {
+			order:-1;
+		}
 		.removeField, .label {
 			margin-right: 1em;
 		}
-		input,select,textarea {
+		input:not([type=checkbox]),select,textarea {
 			flex-grow: 1;
 		}
 	}

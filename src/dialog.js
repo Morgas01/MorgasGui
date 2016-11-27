@@ -1,24 +1,34 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
-	//SC=SC({});
+	SC=SC({
+		adopt:"adopt",
+		action:"gui.actionize"
+	});
 	
 	if(!µ.gui) µ.gui={};
-	
-	µ.gui.dialog=function(html,actions)
+	/**
+	 * @param {String|Element|Function} content
+	 * @param {Object} (param)
+	 * @param {boolean} (param.modal=false)
+	 * @param {Element} (param.target=body)
+	 * @param {Object.<String,Function>} param.actions
+	 *
+	 * uses "close" action to close the dialog
+	 */
+	µ.gui.dialog=function(content,param)
 	{
 		var wrapper=document.createElement("div");
 		wrapper.classList.add("dialog-wrapper","modal");
-		var dialog=document.createElement("div");
+		var dialog=parse(content);
 		dialog.classList.add("dialog");
 		
 		wrapper.appendChild(dialog);
-		document.body.appendChild(wrapper);
 		
 		dialog.appendTo=function(element)
 		{
 			element.appendChild(wrapper);
 		}
-		dialog.remove=wrapper.remove.bind(wrapper);
+		dialog.close=wrapper.remove.bind(wrapper);
 		
 		Object.defineProperty(dialog,"modal",{
 			configurable:true,
@@ -30,10 +40,40 @@
 			},
 			get:wrapper.classList.contains.bind(wrapper.classList,"modal")
 		});
-		
-		//TODO html & actions
+
+		param=SC.adopt({
+			modal:false,
+			target:document.body,
+			actions:{}
+		},param);
+
+		dialog.modal=param.modal;
+		if(param.target) dialog.appendTo(param.target);
+		param.actions.close=dialog.close;
+
+		SC.action(param.actions,dialog);
 		
 		return dialog;
-	}
+	};
+
+
+	var parse=function(param)
+	{
+		if(param instanceof HTMLElement) return param;
+		var element=document.createElement("div");
+		switch(typeof param)
+		{
+			case "string":
+			default:
+				element.innerHTML=param;
+				break;
+			case "function":
+				param(element);
+				break;
+		}
+		return element;
+	};
+
+	SMOD("gui.dialog",µ.gui.dialog);
 	
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

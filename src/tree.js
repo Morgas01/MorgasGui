@@ -116,7 +116,7 @@
 		},false);
 		tree.expand=function(state,all)
 		{
-			this.firstChild.lastChild.expand(state,all);
+			this.firstElementChild.lastChild.expand(state,all);
 		}
 
 		tree.getData=domToData.get.bind(domToData);

@@ -5,7 +5,10 @@
 	});
 
 	if(!µ.gui) µ.gui={};
-
+	/**
+	 * Creates a "form" with fieldsets from [config] data.
+	 * uses "add" and "remove" actions.
+	 */
 	var FORM=µ.gui.form=function(config,value,header,path)
 	{
 		if(!(config instanceof SC.Config)) config=SC.Config.parse(config,value);
@@ -16,6 +19,7 @@
 		{
 			var button=event.target;
 			var action=button.dataset.action;
+			event.stopPropagation();
 			if(action)
 			{
 				event.stopPropagation();
@@ -40,7 +44,7 @@
 					case "remove":
 						var field=button.parentNode;
 						var container=field.parentNode;
-						var name=field.tagName=="LABEL"?field.dataset.name:field.firstChild.dataset.translation;
+						var name=field.tagName=="LABEL"?field.dataset.name:field.firstElementChild.dataset.translation;
 						container.removeField(name);
 						break;
 					default:
@@ -265,7 +269,7 @@
 							}
 							else
 							{
-								shiftField.firstChild.dataset.translation=shiftField.firstChild.textContent=oldIndex;
+								shiftField.firstElementChild.dataset.translation=shiftField.firstElementChild.textContent=oldIndex;
 								var oldPath=shiftField.dataset.path;
 								var newPath=oldPath.replace(new RegExp("\\["+index+"\\]$"),"["+oldIndex+"]");
 								Array.from(shiftField.querySelectorAll('[data-path^="'+oldPath+'"]'))
@@ -321,7 +325,7 @@
 				removeButton.dataset.action="remove";
 				removeButton.dataset.translation="form.removeButton"
 				removeButton.textContent="-";
-				container.insertBefore(removeButton,container.firstChild.nextSibling);
+				container.appendChild(removeButton);
 			}
 			return container;
 		}
@@ -329,6 +333,16 @@
 		{
 			var label=document.createElement("label");
 			label.dataset.name=name;
+
+			var span=document.createElement("span");
+			span.classList.add("label");
+			span.dataset.translation=span.textContent=name;
+			label.appendChild(span);
+
+			var field=FIELD(config,name,path);
+			label.appendChild(field);
+			label.isValid=()=>field.isValid();
+
 			if(parent instanceof SC.Config.Container.Array || parent instanceof SC.Config.Container.Map)
 			{
 				var removeButton=document.createElement("button")
@@ -339,14 +353,6 @@
 				label.appendChild(removeButton);
 			}
 
-			var span=document.createElement("span");
-			span.classList.add("label");
-			span.dataset.translation=span.textContent=name;
-			label.appendChild(span);
-
-			var field=FIELD(config,name,path);
-			label.appendChild(field);
-			label.isValid=()=>field.isValid();
 			return label;
 		}
 	}

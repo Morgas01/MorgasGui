@@ -7,9 +7,16 @@ module("dialog",[
 <button data-action="modal">modal dialog</button>
 <button data-action="script">script dialog</button>
 <button data-action="script" data-modal="true">script modal dialog</button>
-`;
+`
+		;
 		container.addEventListener("click",function(e)
 		{
+			var dialogHTML=String.raw
+`
+<div>I'm a ${(e.target.dataset.modal?"modal ":"")+e.target.dataset.action}</div>
+<button data-action="close">close</button>
+`
+			;
 			var dialog,wrapper;
 			switch(e.target.dataset.action)
 			{
@@ -25,24 +32,19 @@ module("dialog",[
 						document.body.appendChild(wrapper);
 					}
 					else document.body.appendChild(dialog);
+					dialog.innerHTML=dialogHTML;
+					dialog.querySelector("button").addEventListener("click",function()
+					{
+						(wrapper?wrapper:dialog).remove();
+					});
 					break;
 				case "script":
-					var dialog=µ.gui.dialog();
+					var dialog=µ.gui.dialog(dialogHTML);
 					dialog.modal=e.target.dataset.modal;
 					break;
 				default:
 					return;
 			}
-			dialog.innerHTML=String.raw
-`
-<div>I'm a ${(e.target.dataset.modal?"modal ":"")+e.target.dataset.action}</div>
-<button>close</button>
-`;
-			dialog.querySelector("button").addEventListener("click",function()
-			{
-				if(dialog.parentNode.classList.contains("dialog-wrapper")) dialog=dialog.parentNode;
-				dialog.remove();
-			});
 		})
 	}
 ]);

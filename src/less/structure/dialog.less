@@ -6,8 +6,13 @@
 	left:0;
 }
 .dialog {
+	background-color:@primaryColor;
 	position:fixed;
 	top:50%;
 	left:50%;
 	transform:translate(-50%,-50%);
+	box-sizing:border-box;
+	max-height:~"calc(100vh - 1em)";
+	max-width:~"calc(100vw - 1em)";
+	overflow:auto;
 }
