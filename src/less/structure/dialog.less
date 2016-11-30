@@ -16,3 +16,8 @@
 	max-width:~"calc(100vw - 1em)";
 	overflow:auto;
 }
+:not(body)> .dialog-wrapper {
+	&.modal, .dialog {
+		position:absolute;
+	}
+}
