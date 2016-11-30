@@ -15,7 +15,7 @@
 		/**
 		 *
 		 * @param {any[]} data
-		 * @param {string[]|function[]|ColumnDef[]} (columns=undefined)
+		 * @param {Array.<string||ColumnDef>} (columns=undefined)
 		 *
 		 */
 		init:function(data,columns)
@@ -94,6 +94,7 @@
 				for( var c of this.columns)
 				{
 					var cell=document.createElement(columnTagName);
+					cell.classList.add(c.name);
 					c.fn.call(data,cell,data);
 					row.appendChild(cell);
 				}
