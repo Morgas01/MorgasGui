@@ -13,7 +13,7 @@
 	{
 		var table=document.createElement("div");
 		table.classList.add("selectionTable");
-		var body=document.createElement("div");
+		var tableBody=document.createElement("div");
 		if(tableData.hasHeader())
 		{
 			var header=document.createElement("header");
@@ -34,9 +34,9 @@
 			}
 			else input.type="checkbox";
 			r.insertBefore(input,r.firstChild);
-			body.appendChild(r);
+			tableBody.appendChild(r);
 		}
-		table.appendChild(body);
+		table.appendChild(tableBody);
 
 
 		Object.defineProperty(table,"noInput",{
@@ -73,7 +73,7 @@
 		if(tableBody)
 		{
 			var lastSelected=null;
-			table.addEventListener("click",function(e)
+			tableBody.addEventListener("click",function(e)
 			{
 				e.preventDefault();
 				e.stopPropagation();
@@ -97,12 +97,13 @@
 					var lastIndex=lastSelected?rows.indexOf(lastSelected):0;
 					var index=rows.indexOf(row);
 
-					rows.slice(Math.min(lastIndex,index),Math.max(lastIndex,index)-Math.min(lastIndex,index))
+					rows.slice(Math.min(lastIndex,index),Math.max(lastIndex,index)+1)
 					.forEach(r=>r.children[0].checked=true);
 				}
 				else if(e.ctrlKey)
 				{//add to selection
 					selectionType="toggle";
+					window.getSelection().removeAllRanges();
 					row.children[0].checked=!row.children[0].checked;
 					lastSelected=row;
 				}
