@@ -96,6 +96,7 @@
 					option.dataset.translation=name+"."+val;
 					field.appendChild(option);
 				}
+				field.size=field.children.length;
 				if(config.multiple)
 				{
 					field.multiple=true;
@@ -141,7 +142,7 @@
 			if(field.isValid()===true)
 			{
 				var value=getValue();
-				var formChangeEvent=new CustomEvent("FormChange",{
+				var formChangeEvent=new CustomEvent("formChange",{
 					bubbles:true,
 					detail:{
 						oldValue:config.get(),
