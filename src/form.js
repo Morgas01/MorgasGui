@@ -12,6 +12,7 @@
 	var FORM=µ.gui.form=function(config,value,header,path)
 	{
 		if(!(config instanceof SC.Config)) config=SC.Config.parse(config,value);
+		path=Array.prototype.concat(path||[]);
 		var form=parseContainer(config,header,path);
 		form.classList.add("form");
 
@@ -57,6 +58,7 @@
 	};
 	var FIELD=µ.gui.form.field=function(config,name,path)
 	{
+		path=Array.prototype.concat(path||[]);
 		name=name==null?"":name;
 		var field;
 		switch (config.type)
@@ -109,7 +111,7 @@
 		}
 
 		field.name=name;
-		if(path) field.dataset.path=path;
+		field.dataset.path=path.join(".");
 
 		var getValue=function()
 		{
@@ -147,7 +149,7 @@
 					detail:{
 						oldValue:config.get(),
 						value:value,
-						key:field.name,
+						key:name,
 						path:path
 					}
 				});
@@ -160,7 +162,7 @@
 	var parseContainer=function(config,header,path)
 	{
 		var container=document.createElement("fieldset");
-		container.dataset.path=path;
+		container.dataset.path=path.join(".");
 		if(header!=null)
 		{
 			var legend=document.createElement("legend");
@@ -238,8 +240,8 @@
 			var formAddEvent=new CustomEvent("formAdd",{
 				bubbles:true,
 				detail:{
-					key:key,
 					path:path,
+					key:key,
 					value:value,
 					field:field
 				}
@@ -264,15 +266,15 @@
 						{
 							var shiftField=fields.get(index);
 							if(shiftField.tagName=="LABEL")
-							{
+							{//Field
 								shiftField.dataset.name=oldIndex;
 								shiftField.querySelector("[name]").name=oldIndex;
 							}
 							else
-							{
+							{//container
 								shiftField.firstElementChild.dataset.translation=shiftField.firstElementChild.textContent=oldIndex;
 								var oldPath=shiftField.dataset.path;
-								var newPath=oldPath.replace(new RegExp("\\["+index+"\\]$"),"["+oldIndex+"]");
+								var newPath=oldPath.replace(new RegExp(index+"$"),oldIndex);
 								Array.from(shiftField.querySelectorAll('[data-path^="'+oldPath+'"]'))
 								.forEach(e=>e.dataset.path=e.dataset.path.replace(oldPath,newPath));
 								shiftField.dataset.path=newPath;
@@ -308,16 +310,7 @@
 	{
 		if(config instanceof SC.Config.Container)
 		{
-			var subPath;
-			if(path)
-			{
-				if(parent instanceof SC.Config.Container.Array)
-				{
-					subPath=path+"["+name+"]";
-				}
-				else subPath=path+"."+name
-			}
-			else subPath=name;
+			var subPath=path.concat(name);
 			var container=parseContainer(config,name,subPath);
 			if(parent instanceof SC.Config.Container.Array || parent instanceof SC.Config.Container.Map)
 			{
