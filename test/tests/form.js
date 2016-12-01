@@ -84,7 +84,7 @@ module("form",[
 		{
 			alert(event.type+"\n"+JSON.stringify(event.detail,null,"\t"));
 		}
-		form.addEventListener("FormChange",alertEvent);
-		form.addEventListener("FormAdd",alertEvent);
+		form.addEventListener("formChange",alertEvent);
+		form.addEventListener("formAdd",alertEvent);
 	}
 ]);

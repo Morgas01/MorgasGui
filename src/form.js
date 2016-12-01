@@ -235,7 +235,7 @@
 			field=parseConfig(key,field,config,path);
 			container.appendChild(field);
 			fields.set(key,field);
-			var formAddEvent=new CustomEvent("FormAdd",{
+			var formAddEvent=new CustomEvent("formAdd",{
 				bubbles:true,
 				detail:{
 					key:key,
@@ -293,7 +293,7 @@
 			}
 			else return;
 
-			var formAddEvent=new CustomEvent("FormRemove",{
+			var formAddEvent=new CustomEvent("formRemove",{
 				bubbles:true,
 				detail:{
 					key:key,
