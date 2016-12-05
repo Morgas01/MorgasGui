@@ -15,7 +15,7 @@
 		/**
 		 *
 		 * @param {any[]} data
-		 * @param {Array.<string||ColumnDef>} (columns=undefined)
+		 * @param {Array.<string|function|ColumnDef>} (columns=undefined)
 		 *
 		 */
 		init:function(data,columns)
