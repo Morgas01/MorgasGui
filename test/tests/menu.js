@@ -1,26 +1,41 @@
 (function(){
-	var onClick=function(){alert(this.dataset.translation)};
-	var menuData={
-		"item 1":onClick,
-		"item 2":{
-			"item 2-1":onClick,
-			"item 2-2":onClick,
-			"item 2-3":(function()
-			{
-				var item23=function(){alert(this.dataset.translation)};
-				item23["item 2-3-1"]=onClick;
-				item23["item 2-3-2"]=onClick;
-				return item23;
-			})(),
-			"item 2-4":(function()
-			{
-				var item24=function(){alert(this.dataset.translation)};
-				item24["item 2-4-1"]=onClick;
-				item24["item 2-4-2"]=onClick;
-				return item24;
-			})()
-		}
+	var onClick=function(){alert(this.text)};
+	var mapper=function(element,data)
+	{
+		element.textContent=data.text;
+		if(data.fn) return onClick;
 	};
+	menuData=[
+		{
+			text:"item 1",
+			fn:true
+		},
+		{
+			text:"item 2",
+			children:[
+				{
+					text:"item 2-1",
+					fn:true
+				},
+				{
+					text:"item 2-2",
+				},
+				{
+					text:"item 2-3",
+					fn:true,
+					children:[
+						{
+							text:"item 2-3-1",
+							fn:true
+						},
+						{
+							text:"item 2-3-2",
+						}
+					]
+				},
+			]
+		}
+	];
 	module("menu",[
 		function markup(container)
 		{
@@ -86,11 +101,11 @@
 		},
 		function data(container)
 		{
-			container.appendChild(µ.gui.menu(menuData));
+			container.appendChild(µ.gui.menu(menuData,mapper));
 		},
 		function data_Button(container)
 		{
-			container.appendChild(µ.gui.menu.button("button",menuData));
+			container.appendChild(µ.gui.menu.button("button",menuData,mapper));
 		}
 	]);
 })();

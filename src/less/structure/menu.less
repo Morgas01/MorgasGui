@@ -34,7 +34,7 @@ button.menu {
 			display:block;
 		}
 	}
-	&:focus + .menu {
+	&:focus + .menu, + .menu:hover {
 		.show-sub-menu();
 		& ul:hover > li:not(:hover) > ul{
 			.rehide-sub-menu();
