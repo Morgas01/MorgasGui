@@ -94,7 +94,7 @@
 				for( var c of this.columns)
 				{
 					var cell=document.createElement(columnTagName);
-					cell.classList.add(c.name);
+					c.name&&cell.classList.add(c.name);
 					c.fn.call(data,cell,data);
 					row.appendChild(cell);
 				}
