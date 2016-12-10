@@ -45,17 +45,17 @@
 
 	load("blocked");
 	load("loading");
+	load("TableData",true);
+	load("selectionTable");
+	load("dialog");
 	loadMorgas("Morgas.Patch");
 	loadMorgas("Morgas.util.object.iterate");
 	loadMorgas("Morgas.util.function.proxy");
 	loadMorgas("Morgas.nodePatch");
-	load("menu");
-	load("TableData",true);
-	load("selectionTable");
-	load("dialog");
 	loadMorgas("Morgas.util.object.adopt");
 	load("tree");
 	load("selectionTree");
+	load("menu");
 	loadMorgas("Morgas.Config");
 	load("form");
 	load("tabs");

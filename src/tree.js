@@ -10,15 +10,14 @@
 	var TREE=µ.gui.tree=function(root,mapper,options)
 	{
 		options=SC.adopt({
-			childrenKey:null,
+			childrenKey:null, //NodePatch.traverse default
 			detacheHidden:true,
 		},options);
 
-		var tree=document.createElement("ul");
+		var tree;
 
 		var detachedMap=new Map();
-		var domToData=new Map();
-		var dataToDom=new Map();
+		var domDataMap=new Map();
 		var filtered=new Set();
 
 		var attach=function(domParent,domChild)
@@ -45,15 +44,15 @@
 				if(isExpanded)
 				{
 						Array.from(detachedMap.entries())
-						.filter(arr=>arr[1]==this&&!filtered.has(domToData.get(arr[0]))
+						.filter(arr=>arr[1]==this&&!filtered.has(domDataMap.get(arr[0]))
 						)
 						.map(arr=>arr[0])
 						.sort((a,b)=>parseInt(a.dataset.index.split(".").pop(),10)>parseInt(b.dataset.index.split(".").pop(),10))
 						.forEach(e=>
 						{
-							if(all&&e.lastChild&&typeof e.lastChild.expand=="function")
+							if(all&&e.lastElementChild&&typeof e.lastElementChild.expand=="function")
 							{
-								e.lastChild.expand(true,true);
+								e.lastElementChild.expand(true,true);
 							}
 							attach(this,e);
 						});
@@ -67,9 +66,9 @@
 							detachedMap.set(child,this);
 							this.removeChild(child);
 						}
-						if(all&&child.lastChild&&typeof child.lastChild.expand=="function")
+						if(all&&child.lastElementChild&&typeof child.lastElementChild.expand=="function")
 						{
-							child.lastChild.expand(false,true);
+							child.lastElementChild.expand(false,true);
 						}
 					}
 				}
@@ -85,41 +84,61 @@
 			}
 			return null;
 		};
-
-		var rootResult=SC.Node.traverse(root,function(node,parent,parentDOM,entry)
+		if(root instanceof HTMLElement)
 		{
-			var li=document.createElement("li");
-			domToData.set(li,node);
-			dataToDom.set(node,li);
+			tree=root;
+			options.detacheHidden=tree.dataset.detacheHidden!="false";
 
-			if(parent)
+			var todo=[{
+				subTree:tree,
+				index:null
+			}];
+			var entry;
+			while(entry=todo.shift())
 			{
-				if(parent!=root)li.dataset.index=parentDOM.li.dataset.index+"."+entry.index;
-				else li.dataset.index=entry.index;
-				if(!parentDOM.ul)
+				entry.subTree.expand=expand;
+				for(var i=0;i<entry.subTree.children.length;i++)
 				{
-					parentDOM.ul=document.createElement("ul");
-					parentDOM.ul.expand=expand;
-					parentDOM.li.appendChild(parentDOM.ul);
+					var child=entry.subTree.children[i];
+					var index=entry.index==null?i:entry.index+"."+i;
+					child.dataset.index=index;
+					if(child.lastElementChild&&child.lastElementChild.tagName==="UL")
+					{
+						todo.push({
+							subTree:child.lastElementChild,
+							index:index
+						});
+					}
 				}
-				parentDOM.ul.appendChild(li);
 			}
-			mapper.call(node,li,node,parent,entry.index);
-			return {ul:null,li:li};
-		},options.childrenKey);
+		}
+		else
+		{
+			tree=TREE.create(root,function(item,node,parent,index)
+			{
+				mapper.call(node,item,node,parent,index);
+				domDataMap.set(node,item);					// data			-> dom
+				domDataMap.set(item,node);					// dom			-> data
+				domDataMap.set(item.dataset.index,node);	// data-index	-> data
+
+				if(item.parentNode)item.parentNode.expand=expand;
+			},{
+				childrenKey:options.childrenKey,
+				rootContainer:true
+			});
+		}
 
 		tree.classList.add("tree");
-		tree.appendChild(rootResult.li);
 		tree.addEventListener("click",function(event)
 		{
 			event.target.expand&&event.target.expand(null,event.ctrlKey)
 		},false);
 		tree.expand=function(state,all)
 		{
-			this.firstElementChild.lastChild.expand(state,all);
+			this.firstElementChild.lastElementChild.expand(state,all);
 		}
 
-		tree.getData=domToData.get.bind(domToData);
+		tree.getData=domDataMap.get.bind(domDataMap);
 
 		Object.defineProperty(tree,"detacheHidden",{
 			configurable:false,
@@ -146,7 +165,7 @@
 			tree.classList.remove("filtered");
 			for(var node of filtered)
 			{
-				var domChild=dataToDom.get(node);
+				var domChild=domDataMap.get(node);
 				if(detachedMap.get(domChild).classList.contains("expanded"))
 				{
 					attach(detachedMap.get(domChild),domChild);
@@ -179,7 +198,7 @@
 
 				for(var child of filtered)
 				{
-					var domChild=dataToDom.get(child);
+					var domChild=domDataMap.get(child);
 					if(!detachedMap.has(domChild))
 					{
 						detachedMap.set(domChild,domChild.parentNode);
@@ -190,7 +209,41 @@
 		}
 		return tree;
 	};
+	TREE.create=function(root,mapper,options)
+	{
+		options=SC.adopt({
+			childrenKey:null, //NodePatch.traverse default
+			itemTag:"li",
+			containerTag:"ul",
+			rootContainer:false
+		},options);
+		var rootResult=SC.Node.traverse(root,function(node,parent,parentDOM,entry)
+		{
+			var item=document.createElement(options.itemTag);
+			if(parent)
+			{
+				if(parent!=root)item.dataset.index=parentDOM.item.dataset.index+"."+entry.index;
+				else item.dataset.index=entry.index;
+				if(!parentDOM.container)
+				{
+					parentDOM.container=document.createElement(options.containerTag);
+					parentDOM.item.appendChild(parentDOM.container);
+				}
+				parentDOM.container.appendChild(item);
+			}
+			mapper.call(node,item,node,parent,entry.index);
+			return {container:null,item:item};
+		},options.childrenKey);
 
-	SMOD("gui.tree",µ.gui.tree);
+		if(options.rootContainer)
+		{
+			var rootContainer=document.createElement(options.containerTag);
+			rootContainer.appendChild(rootResult.item);
+			return rootContainer;
+		}
+		return rootResult.item;
+	}
+
+	SMOD("gui.tree",TREE);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

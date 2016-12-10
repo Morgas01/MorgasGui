@@ -3,7 +3,7 @@
 	var mapper=function(element,data)
 	{
 		element.textContent=data.text;
-		if(data.fn) return onClick;
+		if(data.fn) element.addEventListener("click",onClick.bind(data));
 	};
 	menuData=[
 		{

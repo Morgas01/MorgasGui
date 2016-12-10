@@ -5,7 +5,6 @@ module("tree",[
 `
 <ul class="tree">
 	<li>
-		<span class="tree-toggle"></span>
 		root
 		<ul>
 			<li>child1</li>
@@ -19,7 +18,7 @@ module("tree",[
 	</li>
 </ul>
 `;
-		container.querySelector(".tree").addEventListener("click",µ.gui.tree.toggleNode,false);
+		µ.gui.tree(container.querySelector(".tree"));
 	},
 	function fromData (container)
 	{
