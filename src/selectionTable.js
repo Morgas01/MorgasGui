@@ -11,33 +11,37 @@
 	 */
 	µ.gui.selectionTable=function(tableData,radioName)
 	{
-		var table=document.createElement("div");
-		table.classList.add("selectionTable");
-		var tableBody=document.createElement("div");
-		if(tableData.hasHeader())
-		{
-			var header=document.createElement("header");
-			var headerRow=document.createElement("div");
-			headerRow.appendChild(document.createElement("div")); //input column
-			for(var h of tableData.getHeaders("div")) headerRow.appendChild(h);
-			header.appendChild(headerRow);
-			table.appendChild(header);
-		}
-		for(var r of tableData.getRows("label","div"))
-		{
-			var input=document.createElement("input");
-			input.value=r.dataset.index;
-			if(radioName)
+		var inputs=[];
+		var table=tableData.getTable({
+			container:"div",
+			headerSection:"header",
+			header:{
+				row:"div",
+				column:"div",
+				callback:function(row)
+				{
+					row.insertBefore(document.createElement("div"),row.firstChild); //input column
+				}
+			},
+			contentSection:"div",
+			row:"label",
+			column:"div",
+			callback:function(row)
 			{
-				input.type="radio";
-				input.name=radioName;
+				var input=document.createElement("input");
+				input.value=row.dataset.index;
+				if(radioName)
+				{
+					input.type="radio";
+					input.name=radioName;
+				}
+				else input.type="checkbox";
+				row.insertBefore(input,row.firstChild);
+				inputs.push(input);
 			}
-			else input.type="checkbox";
-			r.insertBefore(input,r.firstChild);
-			tableBody.appendChild(r);
-		}
-		table.appendChild(tableBody);
-
+		});
+		table.classList.add("selectionTable");
+		var tableBody=Array.from(table.children).filter(e=>e.tagName=="DIV")[0];
 
 		Object.defineProperty(table,"noInput",{
 			configurable:false,
@@ -49,10 +53,11 @@
 			},
 			get:table.classList.contains.bind(table.classList,"noInput")
 		});
+
 		table.getSelectedRows=function()
 		{
-			return Array.from(tableBody.querySelectorAll(":scope>label>input:checked"))
-			.map(c=>c.parentNode);
+			return inputs.filter(i=>i.checked)
+			.map(i=>i.parentNode);
 		};
 		table.getSelected=function()
 		{
@@ -61,7 +66,7 @@
 		};
 		table.getData=function(row)
 		{
-			return tableData.data[row.dataset.index];
+			return tableData.getData(row.dataset.index);
 		};
 
 		return table;
@@ -75,7 +80,7 @@
 			var lastSelected=null;
 			tableBody.addEventListener("click",function(e)
 			{
-				e.preventDefault();
+				if(e.target.tagName!=="INPUT")e.preventDefault();
 				e.stopPropagation();
 
 				var row=e.target;
@@ -121,7 +126,7 @@
 						selectionType:selectionType
 					}
 				}));
-			});
+			},false);
 			return true;
 		}
 		else return false;

@@ -1,14 +1,18 @@
-.indent {
+.indent
+{
 	.TreeTableData-scope();
 	white-space:nowrap;
-	 span {
+	span
+	{
 		display:inline-block;
 		width:@indentWidth;
 	}
-	&:after {
-		content:"+";
-	}
-	.expanded &:after {
-		content:"-";
-	}
 }
+.collapsed .toggler::after
+ {
+ 	content:"+";
+ }
+.expanded .toggler::after
+ {
+ 	content:"−";
+ }

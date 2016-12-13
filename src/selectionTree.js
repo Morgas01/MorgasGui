@@ -9,13 +9,9 @@
 
 	µ.gui.selectionTree=function(root,mapper,childrenKey)
 	{
-		var dataToDom=new Map();
-		var domToData=new Map();
+		var checkboxes=[];
 		var tree= SC.tree(root,function(element,node,parent,index)
 		{
-			dataToDom.set(node,element);
-			domToData.set(element,node);
-
 			var label=document.createElement("label");
 			element.appendChild(label);
 			var input=document.createElement("input");
@@ -23,16 +19,23 @@
 			input.value=element.dataset.index;
 			label.appendChild(input);
 
+			checkboxes.push(input);
+
 			var span=document.createElement("span");
 			label.appendChild(span);
 			mapper.call(node,span,node,parent,index);
+
 		},childrenKey);
 		tree.classList.add("selectionTree");
 
 		tree.getSelectedItems=function()
 		{
-			return Array.from(tree.querySelectorAll("ul>input:checked"))
-			.map(e=>domToData.get(e.parentNode.parentNode));
+			return checkboxes.filter(e=>e.checked)
+			.map(e=>e.parentNode.parentNode);
+		};
+		tree.getSelected=function()
+		{
+			return tree.getSelectedItems().map(tree.getData);
 		}
 
 		return tree;

@@ -69,19 +69,21 @@
 			}
 			return false;
 		},
-		getHeaders:function(tagName)
+		getHeader:function(rowTagName,columnTagName,callback)
 		{
-			if(!tagName) tagName="th";
-			var rtn=[];
+			if(!rowTagName) rowTagName="tr";
+			if(!columnTagName) columnTagName="th";
+			var row=document.createElement(rowTagName);
 			for( var c of this.columns)
 			{
-				var element=document.createElement(tagName);
+				var element=document.createElement(columnTagName);
 				if(c.name) element.dataset.translation=element.textContent=c.name;
-				rtn.push(element);
+				row.appendChild(element);
 			}
-			return rtn;
+			if(callback)callback.call(row,row,this);
+			return row;
 		},
-		getRows:function(rowTagName,columnTagName)
+		getRows:function(rowTagName,columnTagName,callback)
 		{
 			if(!rowTagName) rowTagName="tr";
 			if(!columnTagName) columnTagName="td";
@@ -98,25 +100,36 @@
 					c.fn.call(data,cell,data);
 					row.appendChild(cell);
 				}
+				if(callback)callback.call(row,row,data,this);
 				rtn.push(row);
 			}
 			return rtn;
 		},
-		getTable:function()
+		getTable:function(options)
 		{
-			var table=document.createElement("table");
+			options=options||{};
+			options.header=options.header||{};
+
+			if(!options.container)options.container="table";
+			if(!options.headerSection)options.headerSection="thead";
+			if(!options.contentSection)options.contentSection="tbody";
+
+			var table=document.createElement(options.container);
 			if(this.hasHeader())
 			{
-				var header=document.createElement("thead");
-				var headerRow=document.createElement("tr");
-				for(var h of this.getHeaders())headerRow.appendChild(h);
+				var header=document.createElement(options.headerSection);
+				var headerRow=this.getHeader(options.header.row,options.header.column,options.header.callback);
 				header.appendChild(headerRow);
 				table.appendChild(header);
 			}
-			var body=document.createElement("tbody")
-			for(var r of this.getRows())body.appendChild(r);
+			var body=document.createElement(options.contentSection);
+			for(var r of this.getRows(options.row,options.column,options.callback))body.appendChild(r);
 			table.appendChild(body);
 			return table;
+		},
+		getData:function(index)
+		{
+			return this.data[index];
 		}
 	});
 	SMOD("gui.TableData",µ.gui.TableData);
