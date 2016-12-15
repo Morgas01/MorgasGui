@@ -32,6 +32,23 @@
 		return wrapper;
 	};
 
+	µ.gui.menu.splitButton=function(text,data,mapper,childrenKey)
+	{
+		var wrapper=document.createDocumentFragment();
+		var button=document.createElement("button");
+		button.classList.add("splitButton");
+		wrapper.appendChild(button);
+
+		var splitWrapper=document.createElement("div");
+		splitWrapper.appendChild(µ.gui.menu.button("\u02C5",data,mapper,childrenKey));
+		wrapper.appendChild(splitWrapper);
+
+		if(typeof text!="function")button.textContent=button.dataset.translation=text;
+		else text.call(button,button);
+
+		return wrapper;
+	}
+
 	SMOD("gui.menu",µ.gui.menu);
 	
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
