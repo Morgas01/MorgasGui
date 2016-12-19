@@ -61,6 +61,7 @@
 	load("form");
 	load("tabs");
 	load("actionize",true);
+	load("dragBox");
 
 
 })();
