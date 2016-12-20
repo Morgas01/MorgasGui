@@ -9,7 +9,7 @@
 	 * @param {gui.TableData} tableData
 	 * @param {string} (radioName=undefined) if radioName is provided selectionTable will use radio inputs instead of checkboxes
 	 */
-	µ.gui.selectionTable=function(tableData,radioName)
+	µ.gui.selectionTable=function(tableData,radioName,callback)
 	{
 		var inputs=[];
 		var table=tableData.getTable({
@@ -26,7 +26,7 @@
 			contentSection:"div",
 			row:"label",
 			column:"div",
-			callback:function(row)
+			callback:function(row,data,table)
 			{
 				var input=document.createElement("input");
 				input.value=row.dataset.index;
@@ -38,6 +38,7 @@
 				else input.type="checkbox";
 				row.insertBefore(input,row.firstChild);
 				inputs.push(input);
+				if(callback) callback.call(this,row,data,table);
 			}
 		});
 		table.classList.add("selectionTable");
