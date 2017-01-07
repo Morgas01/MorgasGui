@@ -35,6 +35,9 @@
 			return this.data.map((root,index)=>SC.Node.traverse(root,(node,parent,parentResult,entry)=>
 			{
 				var row=document.createElement(rowTagName);
+				row.dataset.index=parentResult&&parentResult.index?parentResult.index+"."+entry.index:index;
+				row.dataset.depth=entry.depth;
+
 				for( var c of this.columns)
 				{
 					var cell=document.createElement(columnTagName);
@@ -49,9 +52,6 @@
 				indent.classList.add("indent");
 				indent.innerHTML='<span></span>'.repeat(entry.depth);
 				row.firstElementChild.insertBefore(indent,row.firstElementChild.firstChild);
-
-				row.dataset.index=parentResult&&parentResult.index?parentResult.index+"."+entry.index:index;
-				row.dataset.depth=entry.depth;
 
 				if(callback)callback.call(row,row,node,this);
 
