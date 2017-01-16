@@ -7,8 +7,8 @@ module("dragBox",[
 `;
 		var dragArea=container.children[1];
 		µ.gui.dragBox(dragArea,{
-			start:function(){console.log("start")},
-			move:function(dimension){console.log("move",dimension)},
+			start:function(){µ.logger.info("start")},
+			move:function(dimension){µ.logger.info("move",dimension)},
 			stop:function(dimension){alert(JSON.stringify(dimension,null,"\t"))},
 		});
 	},
