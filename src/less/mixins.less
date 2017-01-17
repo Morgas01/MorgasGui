@@ -44,14 +44,14 @@
 	background-image: linear-gradient(@angle, @color1 25%, @color2 25%, @color2 50%, @color1 50%, @color1 75%, @color2 75%, @color2);
 	.animate-stripes(@time:2s)
 	{
-		animation+: animate-stripes 2s linear infinite;
+		animation+: animate-stripes @time linear infinite;
 
 		@keyframes animate-stripes {
 			0% {
 				background-position: 0 0;
 			}
 			100% {
-				background-position: 100px 0;
+				background-position: 95px 0;
 			}
 		}
 	}
