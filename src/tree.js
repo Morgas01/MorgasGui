@@ -10,7 +10,7 @@
 	var TREE=µ.gui.tree=function(root,mapper,options)
 	{
 		options=SC.adopt({
-			childrenKey:null, //NodePatch.traverse default
+			childrenGetter:null, //NodePatch.traverse default
 			detacheHidden:true,
 		},options);
 
@@ -123,7 +123,7 @@
 
 				if(item.parentNode)item.parentNode.expand=expand;
 			},{
-				childrenKey:options.childrenKey,
+				childrenGetter:options.childrenGetter,
 				rootContainer:true
 			});
 		}
@@ -194,7 +194,7 @@
 						parentresult.length=0;
 						return [];
 					}
-				},options.childrenKey);
+				},options.childrenGetter);
 
 				for(var child of filtered)
 				{
@@ -212,7 +212,7 @@
 	TREE.create=function(root,mapper,options)
 	{
 		options=SC.adopt({
-			childrenKey:null, //NodePatch.traverse default
+			childrenGetter:null, //NodePatch.traverse default
 			itemTag:"li",
 			containerTag:"ul",
 			rootContainer:false
@@ -233,7 +233,7 @@
 			}
 			mapper.call(node,item,node,parent,entry.index);
 			return {container:null,item:item};
-		},options.childrenKey);
+		},options.childrenGetter);
 
 		if(options.rootContainer)
 		{

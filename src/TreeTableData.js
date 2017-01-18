@@ -20,13 +20,13 @@
 		 *
 		 * @param {any[]} data
 		 * @param {Array.<string|function|ColumnDef>} (columns=undefined)
-		 * @param {String} (childrenKey=undefined)
+		 * @param {String|function} (childrenGetter=undefined)
 		 *
 		 */
-		init:function(data,columns,childrenKey)
+		init:function(data,columns,childrenGetter)
 		{
 			this.mega(data,columns);
-			this.childrenKey=childrenKey;
+			this.childrenGetter=childrenGetter;
 		},
 		getRows:function(rowTagName,columnTagName,callback)
 		{
@@ -110,12 +110,12 @@
 
 
 				return result;
-			},this.childrenKey).fragment);
+			},this.childrenGetter).fragment);
 		},
 		getData:function(index)
 		{
 			if(typeof index=="string") index=index.split(".");
-			return SC.Node.traverseTo(this.data[index.shift()],index,this.childrenKey);
+			return SC.Node.traverseTo(this.data[index.shift()],index,this.childrenGetter);
 		}
 	});
 	SMOD("gui.TreeTableData",TREE);

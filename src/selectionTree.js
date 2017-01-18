@@ -7,7 +7,7 @@
 
 	if(!µ.gui) µ.gui={};
 
-	µ.gui.selectionTree=function(root,mapper,childrenKey)
+	µ.gui.selectionTree=function(root,mapper,childrenGetter)
 	{
 		var checkboxes=[];
 		var tree= SC.tree(root,function(element,node,parent,index)
@@ -25,7 +25,7 @@
 			label.appendChild(span);
 			mapper.call(node,span,node,parent,index);
 
-		},childrenKey);
+		},childrenGetter);
 		tree.classList.add("selectionTree");
 
 		tree.getSelectedItems=function()
