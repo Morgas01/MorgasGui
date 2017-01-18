@@ -63,3 +63,22 @@
 				 -1px  1px @blur @color,
 				 -1px -1px @blur @color;
 }
+
+.tooltip(@attr:~"data-title",@direction:~"right"){
+	position:relative;
+	&:hover::after {
+		content:attr(@attr);
+		.background();
+		color:@textColor;
+		border:1px solid;
+		.border-color();
+		border-radius:1em;
+		position:absolute;
+		z-index:1;
+		top:~"calc(100% + .5em)";
+		@{direction}:1em;
+		padding:.5em;
+		.boxShadow();
+		white-space:pre;
+	}
+}
