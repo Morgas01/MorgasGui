@@ -8,7 +8,7 @@
 }
 
 .fadeIn(@time:@fadeTime, @delay:0s) {
-	animation+: fadeIn @fadeTime @delay both;
+	animation+: fadeIn @time @delay both;
 
 	@keyframes fadeIn {
 		from {
@@ -42,11 +42,11 @@
 .stripes(@color1:@secondaryColor,@color2:lighten(@color1,20%),@width: 100px,@angle: 45deg) {
 	background-size: @width @width;
 	background-image: linear-gradient(@angle, @color1 25%, @color2 25%, @color2 50%, @color1 50%, @color1 75%, @color2 75%, @color2);
-	.animate-stripes(@time:2s)
+	.stripes-animate(@time:2s)
 	{
-		animation+: animate-stripes @time linear infinite;
+		animation+: stripes-animate @time linear infinite;
 
-		@keyframes animate-stripes {
+		@keyframes stripes-animate {
 			0% {
 				background-position: 0 0;
 			}
@@ -64,10 +64,15 @@
 				 -1px -1px @blur @color;
 }
 
-.tooltip(@attr:~"data-title",@direction:~"right"){
+.tooltip(@attr:~"data-title",@direction:~"right",@distance:1em,@content:attr(@attr),@additions:{}) {
+	.tooltip-fadeIn(@time:@fadeTime, @delay:0s) {
+		&:hover::after {
+			.fadeIn(@time,@delay);
+		}
+	}
 	position:relative;
 	&:hover::after {
-		content:attr(@attr);
+		content:@content;
 		.background();
 		color:@textColor;
 		border:1px solid;
@@ -76,9 +81,11 @@
 		position:absolute;
 		z-index:1;
 		top:~"calc(100% + .5em)";
-		@{direction}:1em;
+		@{direction}:@distance;
 		padding:.5em;
 		.boxShadow();
 		white-space:pre;
+
+		@additions();
 	}
 }
