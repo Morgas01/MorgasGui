@@ -2,20 +2,31 @@
 
 	SC=SC({
 		tree:"gui.tree",
-		goPath:"goPath"
+		goPath:"goPath",
+		adopt:"adopt"
 	});
 
 	if(!µ.gui) µ.gui={};
 
-	µ.gui.selectionTree=function(root,mapper,childrenGetter)
+	µ.gui.selectionTree=function(root,mapper,options)
 	{
+		options=SC.adopt({
+			childrenGetter:null, //NodePatch.traverse default
+			radioName:null,
+			detacheHidden:true
+		},options);
 		var checkboxes=[];
 		var tree= SC.tree(root,function(element,node,parent,index)
 		{
 			var label=document.createElement("label");
 			element.appendChild(label);
 			var input=document.createElement("input");
-			input.type="checkbox";
+			if(options.radioName)
+			{
+				input.type="radio";
+				input.name=options.radioName;
+			}
+			else input.type="checkbox";
 			input.value=element.dataset.index;
 			label.appendChild(input);
 
@@ -25,7 +36,7 @@
 			label.appendChild(span);
 			mapper.call(node,span,node,parent,index);
 
-		},childrenGetter);
+		},options);
 		tree.classList.add("selectionTree");
 
 		tree.getSelectedItems=function()
