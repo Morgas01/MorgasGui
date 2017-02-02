@@ -11,6 +11,7 @@
 	 * @param {Object} (param)
 	 * @param {boolean} (param.modal=false)
 	 * @param {Element} (param.target=body)
+	 * @param {boolean} (param.autofocus=true) - try to focus an element with the "autofocus" attribute when the dialog is appended to a container
 	 * @param {Object.<String,Function>} param.actions
 	 *
 	 * uses "close" action to close the dialog
@@ -27,7 +28,12 @@
 		dialog.appendTo=function(element)
 		{
 			element.appendChild(wrapper);
-		}
+			if(param.autofocus!=false)
+			{
+				var toFocus=dialog.querySelector("[autofocus]");
+				if(toFocus) toFocus.focus();
+			}
+		};
 		dialog.close=wrapper.remove.bind(wrapper);
 		
 		Object.defineProperty(dialog,"modal",{
