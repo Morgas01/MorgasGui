@@ -2,7 +2,6 @@
 
 	SC=SC({
 		tree:"gui.tree",
-		goPath:"goPath",
 		adopt:"adopt"
 	});
 

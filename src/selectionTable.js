@@ -1,8 +1,6 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
-	SC=SC({
-		TableData:"gui.TableData"
-	});
+	//SC=SC({});
 
 	if(!µ.gui) µ.gui={};
 	/**
