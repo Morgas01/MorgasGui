@@ -15,29 +15,16 @@
 		container.classList.add("tabs");
 		var header=document.createElement("header")
 		container.appendChild(header);
-		header.addEventListener("click",function(e)
-		{
-			var title=e.target;
-			while(title&&title.parentNode!=header) title=title.parentNode;
-			if(e.target.dataset.action==="closeTab") container.removeTab(title);
-			else container.setActive(title);
-		})
-		var tabMap=new Map();
-		for(var entry of map)
-		{
-			var title=parse(entry[0]);
-			var content=parse(entry[1]);
-			tabMap.set(title,content);
-			header.appendChild(title);
-		}
-		container.addTab=function(title,content,activate)
+		container.addTab=function(title,content,activate,index)
 		{
 			title=parse(title);
-			content=parse(content);
-			if(tabMap.has(title)) return false;
-			tabMap.set(title,content);
-			header.appendChild(title);
-
+			if(!tabMap.has(title))
+			{
+				content=parse(content);
+				tabMap.set(title,content);
+			}
+			if(index<0) index=header.length+index;
+			header.insertBefore(title,header.children[index]);
 			if(activate)container.setActive(title);
 
 			return header.children.length-1;//index
@@ -77,6 +64,18 @@
 		container.getActive=function()
 		{
 			return header.querySelector(".active")
+		};
+		header.addEventListener("click",function(e)
+		{
+			var title=e.target;
+			while(title&&title.parentNode!=header) title=title.parentNode;
+			if(e.target.dataset.action==="closeTab") container.removeTab(title);
+			else container.setActive(title);
+		});
+		var tabMap=new Map();
+		for(var entry of map)
+		{
+			container.addTab(entry[0],entry[1]);
 		}
 
 		container.setActive(active||0);
