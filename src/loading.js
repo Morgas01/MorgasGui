@@ -45,6 +45,9 @@
 `;
 		return element;
 	};
-	
+
+	SMOD("gui.loading",µ.gui.loading);
+	SMOD("gui.loading2",µ.gui.loading2);
+
 	
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

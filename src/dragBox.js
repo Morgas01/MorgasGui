@@ -110,6 +110,6 @@
 
 	}
 
-	SMOD("dragBox",dragBox);
+	SMOD("gui.dragBox",dragBox);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

@@ -1,0 +1,71 @@
+{
+	"actionize.js": {
+		"deps": [],
+		"uses": []
+	},
+	"blocked.js": {
+		"deps": [],
+		"uses": []
+	},
+	"dialog.js": {
+		"deps": [],
+		"uses": [
+			"adopt",
+			"gui.actionize"
+		]
+	},
+	"dragBox.js": {
+		"deps": [],
+		"uses": []
+	},
+	"form.js": {
+		"deps": [],
+		"uses": [
+			"Config"
+		]
+	},
+	"loading.js": {
+		"deps": [],
+		"uses": []
+	},
+	"menu.js": {
+		"deps": [],
+		"uses": [
+			"gui.tree"
+		]
+	},
+	"selectionTable.js": {
+		"deps": [],
+		"uses": []
+	},
+	"selectionTree.js": {
+		"deps": [],
+		"uses": [
+			"gui.tree",
+			"adopt"
+		]
+	},
+	"tableData.js": {
+		"deps": [],
+		"uses": []
+	},
+	"tabs.js": {
+		"deps": [],
+		"uses": []
+	},
+	"tree.js": {
+		"deps": [],
+		"uses": [
+			"NodePatch",
+			"adopt"
+		]
+	},
+	"TreeTableData.js": {
+		"deps": [
+			"gui.TableData"
+		],
+		"uses": [
+			"NodePatch"
+		]
+	}
+}

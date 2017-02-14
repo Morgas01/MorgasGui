@@ -1,0 +1,16 @@
+{
+	"gui.actionize": "actionize.js",
+	"gui.blocked": "blocked.js",
+	"gui.dialog": "dialog.js",
+	"gui.dragBox": "dragBox.js",
+	"gui.form": "form.js",
+	"gui.loading": "loading.js",
+	"gui.loading2": "loading.js",
+	"gui.menu": "menu.js",
+	"gui.selectionTable": "selectionTable.js",
+	"gui.selectionTree": "selectionTree.js",
+	"gui.TableData": "tableData.js",
+	"gui.tabs": "tabs.js",
+	"gui.tree": "tree.js",
+	"gui.TreeTableData": "TreeTableData.js"
+}

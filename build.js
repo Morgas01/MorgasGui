@@ -1,4 +1,5 @@
 require("Morgas");
+require(".");
 var less=require("less");
 
 var SC=µ.shortcut({
@@ -8,20 +9,40 @@ var SC=µ.shortcut({
 	itAs:"iterateAsync"
 });
 
-var root				=new SC.File(__dirname);
-var src					=root.clone().changePath("src");
-var build				=root.clone().changePath("build");
+var root				= new SC.File(__dirname);
+var src					= root.clone().changePath("src");
+var build				= root.clone().changePath("build");
 
-var lessFolder			=src.clone().changePath("less");
-var lessStructureFolder	=lessFolder.clone().changePath("structure");
-var lessStyleFolder		=lessFolder.clone().changePath("style");
-var lessThemeFolder		=lessFolder.clone().changePath("theme");
-var defaultTheme		=lessThemeFolder.clone().changePath("default.less");
+var lessFolder			= src.clone().changePath("less");
+var lessStructureFolder	= lessFolder.clone().changePath("structure");
+var lessStyleFolder		= lessFolder.clone().changePath("style");
+var lessThemeFolder		= lessFolder.clone().changePath("theme");
+var defaultTheme		= lessThemeFolder.clone().changePath("default.less");
 
-var cssFolder			=build.clone().changePath("css");
-var cssStructureFolder	=cssFolder.clone().changePath("structure");
-var cssStyleFolder		=cssFolder.clone().changePath("style");
+var cssFolder			= build.clone().changePath("css");
+var cssStructureFolder	= cssFolder.clone().changePath("structure");
+var cssStyleFolder		= cssFolder.clone().changePath("style");
 
+/*** dependencies ***/
+
+(new (require("Morgas/dependencyParser"))).addSource("src").parse("src")
+.then(function(result)
+{
+	root.clone().changePath("src/Morgas.gui.ModuleRegister.json").write(JSON.stringify(result.moduleRegister,null,"\t")).then(null,function(err)
+	{
+		µ.logger.error("could not save ModuleRegister",err);
+	});
+	root.clone().changePath("src/Morgas.gui.ModuleDependencies.json").write(JSON.stringify(result.moduleDependencies,null,"\t")).then(null,function(err)
+	{
+		µ.logger.error("could not save ModuleDependencies",err);
+	});
+})
+.catch(µ.logger.error);
+
+
+
+/*** styles ***/
+/* TODO ?
 var loadFiles=function(folder)
 {
 	return folder.listFiles().then(files=>
@@ -30,16 +51,9 @@ var loadFiles=function(folder)
 		)
 	);
 }
-/*
-build.remove()
-/*/
-Promise.resolve()
-//*
-.then(function()
-{
-	return SC.util.enshureDir(cssStructureFolder)
-	.then(()=>SC.util.enshureDir(cssStyleFolder));
-})
+
+SC.util.enshureDir(cssStructureFolder)
+.then(()=>SC.util.enshureDir(cssStyleFolder))
 .then(function()
 {
 	return new SC.Promise([defaultTheme.read({encoding:"utf8"}),loadFiles(lessStructureFolder),loadFiles(lessStyleFolder)])
@@ -79,12 +93,4 @@ function(e)
 {
 	µ.logger.error(e,e.stack);
 });
-/*
-.then(function()
-{
-	
-})
-.then(function()
-{
-	
-})*/
+*/

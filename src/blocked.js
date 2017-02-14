@@ -18,5 +18,7 @@
 		element.classList.remove("blocked");
 		return element;
 	}
+
+	SMOD("gui.blocked",µ.gui.blocked);
 	
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
