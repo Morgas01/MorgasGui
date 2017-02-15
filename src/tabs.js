@@ -4,7 +4,7 @@
 	
 	if(!µ.gui) µ.gui={};
 	/**
-	 * @param {Object.<String|Element|Function,String|Element|Function>} map - Object/Map of title:content
+	 * @param {Map.<String|Element|Function,String|Element|Function>} map - Object/Map of title:content
 	 *
 	 * Strings will be innerHTML.
 	 * Functions get an element as an argument
@@ -73,9 +73,12 @@
 			else container.setActive(title);
 		});
 		var tabMap=new Map();
-		for(var entry of map)
+		if(map)
 		{
-			container.addTab(entry[0],entry[1]);
+			for(var entry of map)
+			{
+				container.addTab(entry[0],entry[1]);
+			}
 		}
 
 		container.setActive(active||0);
