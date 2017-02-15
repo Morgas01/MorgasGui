@@ -89,3 +89,12 @@
 		@additions();
 	}
 }
+.display-table() {
+	display:table;
+	> * {
+		display:table-row;
+		> * {
+			display:table-cell;
+		}
+	}
+}
