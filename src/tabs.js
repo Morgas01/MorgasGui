@@ -15,6 +15,7 @@
 		container.classList.add("tabs");
 		var header=document.createElement("header")
 		container.appendChild(header);
+		var tabMap=new Map();
 		container.addTab=function(title,content,activate,index)
 		{
 			title=parse(title);
@@ -23,27 +24,45 @@
 				content=parse(content);
 				tabMap.set(title,content);
 			}
-			if(index<0) index=header.length+index;
+			if(index<0) index=header.children.length+index;
 			header.insertBefore(title,header.children[index]);
 			if(activate)container.setActive(title);
 
 			return header.children.length-1;//index
 		};
-		container.removeTab=function(title)
+		container.getTab=function(tabQualifier)
 		{
-			if(!tabMap.has(title))title=header.children[title];
-			if(tabMap.has(title))
+			return tabMap.get(container.getHeader(tabQualifier));
+		};
+		container.removeTab=function(tabQualifier)
+		{
+			var header=container.getHeader(tabQualifier);
+			if(header)
 			{
-				tabMap.get(title).remove();
+				tabMap.get(header).remove();
 				if(title.classList.contains("active"))
 				{
-					container.setActive(title.nextSibling||title.previousSibling);
+					container.setActive(header.nextSibling||header.previousSibling);
 				}
-				title.remove();
-				tabMap.delete(title);
+				header.remove();
+				tabMap.delete(header);
 			}
 		};
-		container.setActive=function(index)
+		/**
+		 * @param {Element,Number} tabQualifier - header element, tab element or index of header
+		 * @return {Elemenr} header
+		 */
+		container.getHeader=function(tabQualifier)
+		{
+			if(tabMap.has(tabQualifier))return tabQualifier;
+			if(Number.isInteger(tabQualifier) && tabQualifier in header.children) return header.children[tabQualifier];
+			for(var entry of tabMap.entries())
+			{
+				if(entry[1]==tabQualifier) return entry[0];
+			}
+			return null;
+		};
+		container.setActive=function(tabQualifier)
 		{
 			var active=container.getActive();
 			if(active)
@@ -52,8 +71,7 @@
 				tabMap.get(active).remove();
 			}
 
-			if(!tabMap.has(index))active=header.children[index];
-			else active=index;
+			active=container.getHeader(tabQualifier)
 			if(active)
 			{
 				var content=tabMap.get(active);
@@ -63,8 +81,17 @@
 		};
 		container.getActive=function()
 		{
-			return header.querySelector(".active")
+			return header.querySelector(".active");
 		};
+		container.getActiveTab=function()
+		{
+			return tabMap.get(container.getActive());
+		};
+		container.getTabsByTitleContent=function(title)
+		{
+			return Array.prototype.filter.call(header.children,c=>c.textContent==title).map(h=>tabMap.get(h));
+		};
+
 		header.addEventListener("click",function(e)
 		{
 			var title=e.target;
@@ -72,7 +99,7 @@
 			if(e.target.dataset.action==="closeTab") container.removeTab(title);
 			else container.setActive(title);
 		});
-		var tabMap=new Map();
+
 		if(map)
 		{
 			for(var entry of map)
@@ -93,7 +120,7 @@
 		{
 			case "string":
 			default:
-				element.innerHTML=param;
+				element.textContent=param;
 				break;
 			case "function":
 				param(element);

@@ -1,13 +1,6 @@
 (function(){
 	module("tabs",[
-		function markup(container)
-		{
-			//TODO
-			container.innerHTML+=String.raw
-`
-`;
-		},
-		function data(container)
+		function (container)
 		{
 			var tab3=document.createElement("div");
 			tab3.textContent="tab3";
