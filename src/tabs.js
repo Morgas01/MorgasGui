@@ -95,9 +95,16 @@
 		header.addEventListener("click",function(e)
 		{
 			var title=e.target;
-			while(title&&title.parentNode!=header) title=title.parentNode;
-			if(e.target.dataset.action==="closeTab") container.removeTab(title);
-			else container.setActive(title);
+			while(title&&title.parentNode!=header)
+			{
+				if(title==header) return;
+				title=title.parentNode;
+			}
+			if(title)
+			{
+				if(e.target.dataset.action==="closeTab") container.removeTab(title);
+				else container.setActive(title);
+			}
 		});
 
 		if(map)
