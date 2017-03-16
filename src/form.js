@@ -234,16 +234,17 @@
 			}
 			else return;
 
-			field=parseConfig(key,field,config,path);
-			container.appendChild(field);
-			fields.set(key,field);
+			var domField=parseConfig(key,field,config,path);
+			container.appendChild(domField);
+			fields.set(key,domField);
 			var formAddEvent=new CustomEvent("formAdd",{
 				bubbles:true,
 				detail:{
 					path:path,
 					key:key,
 					value:value,
-					field:field
+					field:field,
+					element:domField
 				}
 			});
 			container.dispatchEvent(formAddEvent);
