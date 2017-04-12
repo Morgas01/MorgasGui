@@ -141,20 +141,19 @@
 		field.addEventListener("change",function()
 		{
 			field.setCustomValidity("");
-			if(field.isValid()===true)
+			var oldValue=config.get();
+			var value=getValue();
+			if(field.isValid()===true&&config.set(value))
 			{
-				var value=getValue();
-				var formChangeEvent=new CustomEvent("formChange",{
+				field.dispatchEvent(new CustomEvent("formChange",{
 					bubbles:true,
 					detail:{
-						oldValue:config.get(),
+						oldValue:oldValue,
 						value:value,
 						key:name,
 						path:path
 					}
-				});
-				config.set(value);
-				field.dispatchEvent(formChangeEvent);
+				}));
 			}
 		},false);
 		return field;
