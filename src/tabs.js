@@ -39,8 +39,7 @@
 			var header=container.getHeader(tabQualifier);
 			if(header)
 			{
-				tabMap.get(header).remove();
-				if(title.classList.contains("active"))
+				if(header.classList.contains("active"))
 				{
 					container.setActive(header.nextSibling||header.previousSibling);
 				}
@@ -91,6 +90,14 @@
 		{
 			return Array.prototype.filter.call(header.children,c=>c.textContent==title).map(h=>tabMap.get(h));
 		};
+		Object.defineProperty(container,"length",{
+			configurable:false,
+			enumerable:true,
+			get:function()
+			{
+				return tabMap.size;
+			}
+		});
 
 		header.addEventListener("click",function(e)
 		{
