@@ -35,7 +35,7 @@
 			return this.data.map((root,index)=>SC.Node.traverse(root,(node,parent,parentResult,entry)=>
 			{
 				var row=document.createElement(rowTagName);
-				row.dataset.index=parentResult&&parentResult.index?parentResult.index+"."+entry.index:index;
+				row.dataset.index=parentResult&&parentResult.index!=null?parentResult.index+"."+entry.index:index;
 				row.dataset.depth=entry.depth;
 
 				for( var c of this.columns)
