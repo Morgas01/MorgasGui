@@ -79,15 +79,15 @@
 			case "boolean":
 				field=document.createElement("input");
 				field.type="checkbox";
-				field.checked=config.get();
+				field.checked=!!config.get();
 				break;
 			case "number":
 				field=document.createElement("input");
 				field.type="number";
-				field.value=config.get();
-				field.min=config.min;
-				field.step=config.step;
-				field.max=config.max;
+				if(config.get()!=null) field.value=config.get();
+				if(config.min!=null) field.min=config.min;
+				if(config.step!=null) field.step=config.step;
+				if(config.max!=null) field.max=config.max;
 				break;
 			case "select":
 				field=document.createElement("select");
