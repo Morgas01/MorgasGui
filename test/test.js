@@ -62,6 +62,7 @@
 	load("tabs");
 	load("actionize",true);
 	load("dragBox");
+	load("inputHistory");
 
 
 })();
