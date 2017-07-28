@@ -32,19 +32,13 @@
 		{
 			if(!rowTagName) rowTagName="tr";
 			if(!columnTagName) columnTagName="td";
-			return this.data.map((root,index)=>SC.Node.traverse(root,(node,parent,parentResult,entry)=>
+			return this.data.map(root=>SC.Node.traverse(root,(node,parent,parentResult,entry)=>
 			{
 				var row=document.createElement(rowTagName);
-				row.dataset.index=parentResult&&parentResult.index!=null?parentResult.index+"."+entry.index:index;
 				row.dataset.depth=entry.depth;
 
-				for( var c of this.columns)
-				{
-					var cell=document.createElement(columnTagName);
-					c.name&&cell.classList.add(c.name);
-					c.fn.call(node,cell,node);
-					row.appendChild(cell);
-				}
+				this.fillRow(data,row);
+
 				var toggler=document.createElement("span");
 				toggler.classList.add("toggler");
 				row.firstElementChild.insertBefore(toggler,row.firstElementChild.firstChild);
@@ -75,19 +69,17 @@
 							for(var child of row.treeChildren) child.expand(state,true);
 						}
 					}
-				}
+				};
 
 				var result={};
 				if(!parentResult)
 				{
 					result.fragment=document.createDocumentFragment();
 					result.fragment.appendChild(row);
-					result.index=index;
 				}
 				else
 				{
 					parentResult.addChildRow(row);
-					result.index=parentResult.index+"."+entry.index;
 				}
 
 				result.addChildRow=function(childRow)
@@ -106,16 +98,10 @@
 							event.preventDefault();
 						},false);
 					}
-				}
-
+				};
 
 				return result;
 			},this.childrenGetter).fragment);
-		},
-		getData:function(index)
-		{
-			if(typeof index=="string") index=index.split(".");
-			return SC.Node.traverseTo(this.data[index.shift()],index,this.childrenGetter);
 		}
 	});
 	SMOD("gui.TreeTableData",TREE);
