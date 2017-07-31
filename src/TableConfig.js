@@ -11,7 +11,7 @@
 	 *
 	 */
 
-	µ.gui.TableData=µ.Class({
+	µ.gui.TableConfig=µ.Class({
 		/**
 		 *
 		 * @param {Array.<string|function|ColumnDef>} (columns=undefined)
@@ -28,7 +28,7 @@
 					columnTag:"th"
 				},
 				body:{
-					tag:"tbpdy",
+					tag:"tbody",
 					rowTag:"tr",
 					columnTag:"td"
 				}
@@ -73,20 +73,23 @@
 			this.columns.push(column);
 			return true;
 		},
-		setOptions:function(options={})
+		setOptions:function(options)
 		{
-			if(options.tag)this.options.tag=options.tag;
-			if(options.header)
+			if(!options)
 			{
-				if(options.header.tag)this.options.header.tag=options.header.tag;
-				if(options.header.rowTag)this.options.header.rowTag=options.header.rowTag;
-				if(options.header.columnTag)this.options.header.columnTag=options.header.columnTag;
-			}
-			if(options.body)
-			{
-				if(options.body.tag)this.options.body.tag=options.body.tag;
-				if(options.body.rowTag)this.options.body.rowTag=options.body.rowTag;
-				if(options.body.columnTag)this.options.body.columnTag=options.body.columnTag;
+				if(options.tag)this.options.tag=options.tag;
+				if(options.header)
+				{
+					if(options.header.tag)this.options.header.tag=options.header.tag;
+					if(options.header.rowTag)this.options.header.rowTag=options.header.rowTag;
+					if(options.header.columnTag)this.options.header.columnTag=options.header.columnTag;
+				}
+				if(options.body)
+				{
+					if(options.body.tag)this.options.body.tag=options.body.tag;
+					if(options.body.rowTag)this.options.body.rowTag=options.body.rowTag;
+					if(options.body.columnTag)this.options.body.columnTag=options.body.columnTag;
+				}
 			}
 			return this;
 		},
@@ -110,13 +113,12 @@
 			if(callback)callback.call(row,row,this);
 			return row;
 		},
-		getRows:function(callback)
+		getRows:function(data,callback)
 		{
 			var rtn=[];
-			for(var i=0;i<this.data.length;i++)
+			for(var entry of data)
 			{
-				var data=this.data[i];
-				var row=this.getRow(data);
+				var row=this.getRow(entry);
 				if(callback)callback.call(row,row,data,this);
 				rtn.push(row);
 			}
@@ -138,9 +140,11 @@
 				row.appendChild(cell);
 			}
 		},
-		getTable:function(headerCallback,rowCallback)
+		getTable:function(data,headerCallback,rowCallback)
 		{
-			var table=document.createElement(this.options.container);
+			var table=document.createElement(this.options.tag);
+			table.classList.add("TableConfig");
+
 			if(this.hasHeader())
 			{
 				var header=document.createElement(this.options.header.tag);
@@ -149,11 +153,11 @@
 				table.appendChild(header);
 			}
 			var body=document.createElement(this.options.body.tag);
-			for(var r of this.getRows(rowCallback))body.appendChild(r);
+			for(var r of this.getRows(data,rowCallback))body.appendChild(r);
 			table.appendChild(body);
 			return table;
 		}
 	});
-	SMOD("gui.TableData",µ.gui.TableData);
+	SMOD("gui.TableConfig",µ.gui.TableConfig);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

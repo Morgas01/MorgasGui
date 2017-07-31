@@ -5,7 +5,7 @@
 		element.textContent=data.text;
 		if(data.fn) element.addEventListener("click",onClick.bind(data));
 	};
-	menuData=[
+	var menuData=[
 		{
 			text:"item 1",
 			fn:true
