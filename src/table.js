@@ -3,37 +3,31 @@
 	var LISTERNERS=GMOD("Listeners");
 
 	SC=SC({
-		TableData:"tableData",
+		TableConfig:"gui.TableConfig",
 		arrayRemove:"array.remove"
 	});
 
 	var Table=µ.Class(LISTERNERS,{
-		init:function(tableData=new SC.TableData())
+		init:function(TableConfig=new SC.TableConfig())
 		{
 			this.mega();
 
-			this.tableData=tableData;
+			this.tableConfig=TableConfig;
 			this.tableElement=null;
-			this.connections=new WeakMap();
+			this.dataDomMap=new WeakMap();
+			this.data=[];
 
 			this.createListener("add update remove");
 		},
-		setTableDataOptions:function()
-		{
-			this.tableData.setOptions(options);
-		},
-		getTable:function()
+		getTable:function(headerCallback,rowCallback)
 		{
 			if(this.tableElement==null);
 			{
-				var overrideOptions=Object.create(this.tableData.options);
-				overrideOptions.callback=(row,data)=>
+				this.tableElement=this.tableConfig.getTable(this.data,headerCallback,(row,data)=>
 				{
-					this.connections.set(row,data);
-					this.connections.set(data,row);
-					if(options.callback) options.callback(row,row,data,this.tableData);
-				}
-				this.tableElement=this.tableData.getTable(overrideOptions);
+					this.dataDomMap.set(data,row);
+					if(rowCallback) rowCallback.call(row,row,data,this.tableConfig);
+				});
 			}
 			return this.tableElement;
 		},
@@ -41,58 +35,57 @@
 		{
 			if(item instanceof HTMLElement)
 			{
-				item=this.connections.get(item);
+				item=this.getEntry(item);
 			}
-			if(item==null||this.connections.has(item)) return false;
+			if(item==null||!this.connections.has(item)) return false;
 
-			arrayRemove(this.tableData.data,item);
-			var element=this.connections.get(item);
-			this.connections.delete(element);
-			this.connections.delete(item);
-			this.fire("remove",{data:item,element:element});
+			var row=this.connections.get(item);
+			row.remove();
+			this.dataDomMap.delete(item);
+			this.fire("remove",{entry:item,row:row});
 			return true;
 		},
 		add:function(rowData)
 		{
 			if(!Array.isArray(rowData)) rowData=[rowData];
-			for(var data in rowData)
+			for(var entry of rowData)
 			{
-				this.tableData.getRow(this.tableDataOptions.row,this.tableDataOptions.column,data,row=>
+				this.data.push(entry);
+				if(this.tableElement!=null)
 				{
-					this.connections.set(row,data);
-					this.connections.set(data,row);
-					if(options.callback) options.callback.call(row,row,data,this.tableData);
-					this.tableBody.appendChild(row);
-				});
-			}
-		},
-		update:function(item,callback)
-		{
-			if(item)
-			{
-				if(this.connections.has(item))
-				{
-					var row,data;
-					if(item instanceof HTMLElement)
+					this.tableConfig.getRow((data,row)=>
 					{
-						row=item;
-						data=this.connections.get(item);
-					}
-					else
-					{
-						row=this.connections.get(item);
-						data=item;
-					}
-					while(row.firstChild) row.firstChild.remove();
-					this.tableData.fillRow(data,row);
-					if(callback) callback.call(row,row,data,this.tableData);
+						this.dataDomMap.set(data,row);
+						if(this.tableConfig.options.callback) this.tableConfig.options.callback.call(row,row,data,this.tableConfig);
+						this.tableBody.appendChild(row);
+					});
 				}
 			}
-			else //update all
+		},
+		update:function(entry,callback)
+		{
+			if(entry==null)//update all
 			{
-				for(var data of )
+				for(var entry of this.data) this.update(entry);
 			}
+			else if(this.data.indexOf(entry)!=-1&&this.dataDomMap.has(entry))
+			{
+				var row=this.dataDomMap.get(entry);
+				while(row.firstChild) row.firstChild.remove();
+				this.tableConfig.fillRow(entry,row);
+				if(callback) callback.call(row,row,entry,this.tableConfig);
+			}
+		},
+		getRow:function(entry)
+		{
+			return this.dataDomMap.get(entry);
+		},
+		getEntry:function(row)
+		{
+			return this.data.find(entry=>this.getRow(entry)==row);
 		}
-	})
+	});
+
+	SMOD("gui.Table",Table);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

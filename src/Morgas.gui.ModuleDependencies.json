@@ -24,6 +24,10 @@
 			"Config"
 		]
 	},
+	"inputHistory.js": {
+		"deps": [],
+		"uses": []
+	},
 	"loading.js": {
 		"deps": [],
 		"uses": []
@@ -34,10 +38,6 @@
 			"gui.tree"
 		]
 	},
-	"selectionTable.js": {
-		"deps": [],
-		"uses": []
-	},
 	"selectionTree.js": {
 		"deps": [],
 		"uses": [
@@ -45,8 +45,23 @@
 			"adopt"
 		]
 	},
-	"tableData.js": {
+	"table.js": {
+		"deps": [
+			"Listeners"
+		],
+		"uses": [
+			"gui.TableConfig",
+			"array.remove"
+		]
+	},
+	"TableConfig.js": {
 		"deps": [],
+		"uses": []
+	},
+	"TableConfig.Select.js": {
+		"deps": [
+			"gui.TableConfig"
+		],
 		"uses": []
 	},
 	"tabs.js": {

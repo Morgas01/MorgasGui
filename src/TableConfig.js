@@ -119,7 +119,7 @@
 			for(var entry of data)
 			{
 				var row=this.getRow(entry);
-				if(callback)callback.call(row,row,data,this);
+				if(callback)callback.call(row,row,entry,this);
 				rtn.push(row);
 			}
 			return rtn;

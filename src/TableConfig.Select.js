@@ -71,7 +71,7 @@
 		}
 	});
 	TableConfig.Select.options={
-		tab:"div",
+		tag:"div",
 		header:{
 			tag:"header",
 			rowTag:"div",
@@ -137,7 +137,8 @@
 					bubbles:false,
 					cancelable:false,
 					detail:{
-						selectionType:selectionType
+						selectionType:selectionType,
+						row:row
 					}
 				}));
 			},false);

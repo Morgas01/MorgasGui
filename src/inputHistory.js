@@ -1,6 +1,6 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
-	//SC=SC({})
+	//SC=SC({});
 	if(!µ.gui) µ.gui={};
 
 	var InputHistory=µ.gui.InputHistory=µ.Class({
@@ -78,5 +78,7 @@
 	});
 	InputHistory.ID_PREFIX="intputHistory_";
 	InputHistory.ID_COUNTER=0;
+
+	SMOD("gui.InputHistory",InputHistory)
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
