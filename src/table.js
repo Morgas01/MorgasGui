@@ -26,6 +26,7 @@
 				this.tableElement=this.tableConfig.getTable(this.data,headerCallback,(row,data)=>
 				{
 					this.dataDomMap.set(data,row);
+					this.dataDomMap.set(row,data);
 					if(rowCallback) rowCallback.call(row,row,data,this.tableConfig);
 				});
 			}
@@ -33,15 +34,16 @@
 		},
 		remove:function(item)
 		{
+			if(item==null||!this.dataDomMap.has(item)) return false;
 			if(item instanceof HTMLElement)
 			{
-				item=this.getEntry(item);
+				item=this.dataDomMap.get(item);
 			}
-			if(item==null||!this.connections.has(item)) return false;
 
 			var row=this.connections.get(item);
 			row.remove();
 			this.dataDomMap.delete(item);
+			this.dataDomMap.delete(row);
 			this.fire("remove",{entry:item,row:row});
 			return true;
 		},
@@ -56,6 +58,7 @@
 					this.tableConfig.getRow((data,row)=>
 					{
 						this.dataDomMap.set(data,row);
+						this.dataDomMap.set(row,data);
 						if(this.tableConfig.options.callback) this.tableConfig.options.callback.call(row,row,data,this.tableConfig);
 						this.tableBody.appendChild(row);
 					});
@@ -66,23 +69,27 @@
 		{
 			if(entry==null)//update all
 			{
-				for(var entry of this.data) this.update(entry);
+				for(var entry of this.data) this.update(entry,callback);
 			}
-			else if(this.data.indexOf(entry)!=-1&&this.dataDomMap.has(entry))
+			else
 			{
+				if(!this.dataDomMap.has(item)) return false;
+				if(item instanceof HTMLElement)
+				{
+					item=this.dataDomMap.get(item);
+				}
 				var row=this.dataDomMap.get(entry);
 				while(row.firstChild) row.firstChild.remove();
 				this.tableConfig.fillRow(entry,row);
 				if(callback) callback.call(row,row,entry,this.tableConfig);
 			}
 		},
-		getRow:function(entry)
+		/**
+		 * exchanges entry with matching row and vice versa
+		 */
+		change:function(item)
 		{
-			return this.dataDomMap.get(entry);
-		},
-		getEntry:function(row)
-		{
-			return this.data.find(entry=>this.getRow(entry)==row);
+			return this.dataDomMap.get(item);
 		}
 	});
 

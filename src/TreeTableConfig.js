@@ -1,55 +1,57 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
-	var TableData=GMOD("gui.TableData")
+	var TableConfig=GMOD("gui.TableConfig")
 
 	SC=SC({
 		Node:"NodePatch"
 	});
 
+	var TREE=µ.gui.TreeTableConfig=µ.Class(TableConfig,{
 
+		//init see {@link TableConfig}
 
-	/**
-	 * @typedef {object} ColumnDef
-	 * @param {string} (name=undefined)
-	 * @param {function} fn function that sets the content of the cell
-	 *
-	 */
-
-	var TREE=µ.gui.TreeTableData=µ.Class(TableData,{
-		/**
-		 *
-		 * @param {any[]} data
-		 * @param {Array.<string|function|ColumnDef>} (columns=undefined)
-		 * @param {String|function} (childrenGetter=undefined)
-		 *
-		 */
-		init:function(data,columns,childrenGetter)
+		this.setOptions:function(options)
 		{
-			this.mega(data,columns);
-			this.childrenGetter=childrenGetter;
+			this.mega(options);
+			if(options&&"childrenGetter" in options) this.options.childrenGetter=options.childrenGetter;
+			return this;
 		},
-		getRows:function(rowTagName,columnTagName,callback)
+		getHeader:function(callback)
 		{
-			if(!rowTagName) rowTagName="tr";
-			if(!columnTagName) columnTagName="td";
-			return this.data.map(root=>SC.Node.traverse(root,(node,parent,parentResult,entry)=>
+			var row=this.mega();
+			var indent=document.createElement(this.options.header.columnTag);
+			row.insertBefore(indent,row.firstChild);
+			var toggleCol=document.createElement(this.options.header.columnTag);
+			row.insertBefore(toggleCol,row.firstChild);
+
+			if(callback)callback.call(row,row,this);
+			return row;
+		}
+		getRows:function(data,callback)
+		{
+			return data.map(root=>SC.Node.traverse(root,(node,parent,parentResult,entry)=>
 			{
-				var row=document.createElement(rowTagName);
-				row.dataset.depth=entry.depth;
+				var row=document.createElement(this.options.body.rowTag);
 
-				this.fillRow(data,row);
-
+				var toggleCell=document.createElement(this.options.body.columnTag);
 				var toggler=document.createElement("span");
 				toggler.classList.add("toggler");
-				row.firstElementChild.insertBefore(toggler,row.firstElementChild.firstChild);
+				toggleCell.appendChild(toggler);
+				row.appendChild(toggleCell);
+
+				var indentCell=document.createElement(this.options.body.columnTag);
 				var indent=document.createElement("span");
 				indent.classList.add("indent");
-				indent.innerHTML='<span></span>'.repeat(entry.depth);
-				row.firstElementChild.insertBefore(indent,row.firstElementChild.firstChild);
+				indent.innerHTML='<span></span>'.repeat(depth);
+				indentCell.appendChild(indent);
+				row.appendChild(indentCell);
+
+				this.fillRow(data,row,entry.depth);
 
 				if(callback)callback.call(row,row,node,this);
 
 				row.treeChildren=[];
+
 				var insertHelper=document.createDocumentFragment();
 				row.expand=function(state,all)
 				{
@@ -101,9 +103,15 @@
 				};
 
 				return result;
-			},this.childrenGetter).fragment);
+			},this.options.childrenGetter).fragment);
+		},
+		getTable:function(data,headerCallback,rowCallback)
+		{
+			var table=this.mega(data,headerCallback,rowCallback);
+			table.classList.add("tree");
+			return table;
 		}
 	});
-	SMOD("gui.TreeTableData",TREE);
+	SMOD("gui.TreeTableConfig",TREE);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);
