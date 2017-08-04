@@ -31,7 +31,7 @@
 		},
 		function radio(container)
 		{
-			var tableConfig=new µ.gui.TableConfig.Select(["a","b","c"],{radioName:"testRadio"});
+			var tableConfig=new µ.gui.TableConfig.Select(["a","b","c"],{radioName:"TableConfig.Select_Radio"});
 			var table=tableConfig.getTable(data);
 			container.appendChild(table);
 		},

@@ -16,7 +16,7 @@
 			this.mega(columns);
 			this.options=Object.create(TreeTableConfig.Select.options);
 			this.options.radioName=null;
-			this.options.noInput=false;
+			this.options.noInput=true;
 			this.options.control=false;
 			this.setOptions(options);
 		},
@@ -41,8 +41,10 @@
 			if(callback)callback.call(row,row,this);
 			return row;
 		},
-		fillRow:function(data,row)
+		getRow:function(data,depth)
 		{
+			var row=this.mega(data,depth)
+
 			var input=document.createElement("input");
 			if(this.options.radioName)
 			{
@@ -50,9 +52,8 @@
 				input.name=this.options.radioName;
 			}
 			else input.type="checkbox";
-			row.appendChild(input);
-
-			return this.mega(data,row);
+			row.insertBefore(input,row.firstChild);
+			return row;
 		},
 		getTable:function(data,headerCallback,rowCallback)
 		{
@@ -75,11 +76,11 @@
 
 			if(this.options.radioName)
 			{
-				table.addEventListener("change",function(event)
+				table.addEventListener("change",event=>
 				{
-					if(event.target.tagName=="input"&&event.target.type=="radio"&&event.target.name==this.options.radioName)
+					if(event.target.tagName=="INPUT"&&event.target.type=="radio"&&event.target.name==this.options.radioName)
 					{
-						for(var row of table.querySelectorAll("."+this.options.body.rowTag+".collapsed"))
+						for(var row of table.querySelectorAll(this.options.body.rowTag+".collapsed"))
 						{
 							SC.Node.traverse(row,(node,parent,parentResult,entry)=>{
 								if(entry.depth>0) node.firstElementChild.checked=false;
@@ -151,11 +152,12 @@
 				else
 				{//select only this
 					selectionType="single";
-					Array.map(tableBody.children,r=>r.children[0]).forEach(row=>
-						SC.Node.traverse(row,node=>
-							node.firstElementChild.checked=false,
+					Array.forEach(tableBody.children,row=>{
+						row.children[0].checked=false;
+						SC.Node.traverse(row,subRow=>
+							subRow.children[0].checked=false,
 						"treeChildren")
-					);
+					});
 					row.children[0].checked=true;
 					lastSelected=row;
 				}

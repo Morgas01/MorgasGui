@@ -67,7 +67,8 @@
 	load("selectionTree");
 	load("TableConfig",true);
 	load("TableConfig.Select");
-	//load("TreeTableData");
+	load("TreeTableConfig");
+	load("TreeTableConfig.Select",true); // TableConfig.Select.less
 	load("menu");
 	loadMorgas("Morgas.Config");
 	load("form");

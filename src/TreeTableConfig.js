@@ -10,68 +10,19 @@
 
 		//init see {@link TableConfig}
 
-		this.setOptions:function(options)
+		setOptions:function(options)
 		{
 			this.mega(options);
 			if(options&&"childrenGetter" in options) this.options.childrenGetter=options.childrenGetter;
 			return this;
 		},
-		getHeader:function(callback)
-		{
-			var row=this.mega();
-			var indent=document.createElement(this.options.header.columnTag);
-			row.insertBefore(indent,row.firstChild);
-			var toggleCol=document.createElement(this.options.header.columnTag);
-			row.insertBefore(toggleCol,row.firstChild);
-
-			if(callback)callback.call(row,row,this);
-			return row;
-		}
 		getRows:function(data,callback)
 		{
 			return data.map(root=>SC.Node.traverse(root,(node,parent,parentResult,entry)=>
 			{
-				var row=document.createElement(this.options.body.rowTag);
-
-				var toggleCell=document.createElement(this.options.body.columnTag);
-				var toggler=document.createElement("span");
-				toggler.classList.add("toggler");
-				toggleCell.appendChild(toggler);
-				row.appendChild(toggleCell);
-
-				var indentCell=document.createElement(this.options.body.columnTag);
-				var indent=document.createElement("span");
-				indent.classList.add("indent");
-				indent.innerHTML='<span></span>'.repeat(depth);
-				indentCell.appendChild(indent);
-				row.appendChild(indentCell);
-
-				this.fillRow(data,row,entry.depth);
+				var row=this.getRow(node,entry.depth);
 
 				if(callback)callback.call(row,row,node,this);
-
-				row.treeChildren=[];
-
-				var insertHelper=document.createDocumentFragment();
-				row.expand=function(state,all)
-				{
-					if(this.treeChildren.length>0&&(state==null||state===!this.classList.contains("expanded")))
-					{
-						if(row.classList.toggle("collapsed",!row.classList.toggle("expanded")))
-						{
-							for(var child of row.treeChildren) insertHelper.appendChild(child);
-						}
-						else
-						{
-							row.parentNode.insertBefore(insertHelper,row.nextSibling);
-						}
-
-						if(all)
-						{
-							for(var child of row.treeChildren) child.expand(state,true);
-						}
-					}
-				};
 
 				var result={};
 				if(!parentResult)
@@ -88,27 +39,70 @@
 				{
 					row.treeChildren.push(childRow);
 
-					insertHelper.appendChild(childRow);
-
 					if(row.treeChildren.length==1)
 					{//first time
 						row.classList.add("collapsed");
-						toggler.addEventListener("click",function(event)
-						{
-							row.expand(null,event.ctrlKey);
-							event.stopPropagation();
-							event.preventDefault();
-						},false);
 					}
 				};
 
 				return result;
 			},this.options.childrenGetter).fragment);
 		},
+		getRow:function(data,depth)
+		{
+			var row=document.createElement(this.options.body.rowTag);
+
+			this.fillRow(data,row);
+
+			var firstCell=row.firstElementChild;
+			var firstCellChild=firstCell.firstChild;
+
+			var indent=document.createElement("span");
+			indent.classList.add("indent");
+			indent.innerHTML='<span></span>'.repeat(depth);
+			firstCell.insertBefore(indent,firstCellChild);
+
+			var toggler=document.createElement("span");
+			toggler.classList.add("toggler");
+			firstCell.insertBefore(toggler,firstCellChild);
+
+			toggler.addEventListener("click",function(event)
+			{
+				row.expand(null,event.ctrlKey);
+				event.stopPropagation();
+				event.preventDefault();
+			},false);
+
+			row.treeChildren=[];
+
+			var insertHelper=document.createDocumentFragment();
+			row.expand=function(state,all)
+			{
+				if(this.treeChildren.length>0&&(state==null||state===!this.classList.contains("expanded")))
+				{
+					if(row.classList.toggle("collapsed",!row.classList.toggle("expanded")))
+					{
+						for(var child of row.treeChildren) child.remove();
+					}
+					else
+					{
+						for(var child of row.treeChildren) insertHelper.appendChild(child);
+						row.parentNode.insertBefore(insertHelper,row.nextSibling);
+					}
+
+					if(all)
+					{
+						for(var child of row.treeChildren) child.expand(state,true);
+					}
+				}
+			};
+
+			return row;
+		},
 		getTable:function(data,headerCallback,rowCallback)
 		{
 			var table=this.mega(data,headerCallback,rowCallback);
-			table.classList.add("tree");
+			table.classList.add("Tree");
 			return table;
 		}
 	});

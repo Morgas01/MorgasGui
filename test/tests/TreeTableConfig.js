@@ -1,5 +1,5 @@
 (function(){
-	var getData=()=>new µ.gui.TreeTableData([
+	var data=[
 		{
 			string:"string 1",
 			functionName:"function name 1",
@@ -49,23 +49,25 @@
 			functionName:"function name 3",
 			object:"object 3"
 		}
-	]);
-	module("TreeTableData",[
+	];
+	module("TreeTableConfig",[
 		function header(container)
 		{
-			var data=getData();
-			data.addColumn("string");
-			data.addColumn(function functionName(cell){cell.textContent=this.functionName});
-			data.addColumn({name:"object",fn:function(cell){cell.textContent=this.object}});
+			var config=new µ.gui.TreeTableConfig([
+				"string",
+				function functionName(cell){cell.textContent=this.functionName},
+				{name:"object",fn:function(cell){cell.textContent=this.object}}
+			]);
 			
-			container.appendChild(data.getTable());
+			container.appendChild(config.getTable(data));
 		},
 		function noHeader(container)
 		{
-			var data=getData();
-			data.addColumn(function(cell){cell.textContent=this.functionName});
-			data.addColumn({fn:function(cell){cell.textContent=this.object}});
-			container.appendChild(data.getTable());
+			var config=new µ.gui.TreeTableConfig([
+				function(cell){cell.textContent=this.functionName},
+				{fn:function(cell){cell.textContent=this.object}}
+			]);
+			container.appendChild(config.getTable(data));
 		}
 	]);
 })();
