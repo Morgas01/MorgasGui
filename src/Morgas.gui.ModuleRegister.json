@@ -8,11 +8,11 @@
 	"gui.loading": "loading.js",
 	"gui.loading2": "loading.js",
 	"gui.menu": "menu.js",
-	"gui.selectionTree": "selectionTree.js",
 	"gui.Table": "table.js",
 	"gui.TableConfig": "TableConfig.js",
 	"gui.TableConfig.Select": "TableConfig.Select.js",
 	"gui.tabs": "tabs.js",
 	"gui.tree": "tree.js",
-	"gui.TreeTableData": "TreeTableData.js"
+	"gui.TreeTableConfig": "TreeTableConfig.js",
+	"gui.TreeTableConfig.Select": "TreeTableConfig.Select.js"
 }

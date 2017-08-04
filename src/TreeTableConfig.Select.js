@@ -87,7 +87,7 @@
 							},"treeChildren");
 						}
 					}
-				})
+				});
 			}
 
 			return table;

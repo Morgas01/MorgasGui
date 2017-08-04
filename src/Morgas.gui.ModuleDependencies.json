@@ -38,13 +38,6 @@
 			"gui.tree"
 		]
 	},
-	"selectionTree.js": {
-		"deps": [],
-		"uses": [
-			"gui.tree",
-			"adopt"
-		]
-	},
 	"table.js": {
 		"deps": [
 			"Listeners"
@@ -75,9 +68,17 @@
 			"adopt"
 		]
 	},
-	"TreeTableData.js": {
+	"TreeTableConfig.js": {
 		"deps": [
-			"gui.TableData"
+			"gui.TableConfig"
+		],
+		"uses": [
+			"NodePatch"
+		]
+	},
+	"TreeTableConfig.Select.js": {
+		"deps": [
+			"gui.TreeTableConfig"
 		],
 		"uses": [
 			"NodePatch"
