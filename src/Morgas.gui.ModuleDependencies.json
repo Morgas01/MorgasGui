@@ -38,6 +38,13 @@
 			"gui.tree"
 		]
 	},
+	"selectionTree.js": {
+		"deps": [],
+		"uses": [
+			"gui.tree",
+			"adopt"
+		]
+	},
 	"table.js": {
 		"deps": [
 			"Listeners"
