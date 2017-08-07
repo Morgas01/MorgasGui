@@ -7,28 +7,37 @@
 		arrayRemove:"array.remove"
 	});
 
-	var Table=µ.Class(LISTERNERS,{
-		init:function(TableConfig=new SC.TableConfig())
+	if(!µ.gui) µ.gui={};
+
+	var Table=µ.gui.Table=µ.Class(LISTERNERS,{
+		init:function(tableConfig=new SC.TableConfig())
 		{
 			this.mega();
 
-			this.tableConfig=TableConfig;
+			this.tableConfig=tableConfig;
 			this.tableElement=null;
+			this.tableHeader=null;
+			this.tableBody=null;
 			this.dataDomMap=new WeakMap();
 			this.data=[];
 
 			this.createListener("add update remove");
 		},
-		getTable:function(headerCallback,rowCallback)
+		getTable:function()
 		{
 			if(this.tableElement==null);
 			{
-				this.tableElement=this.tableConfig.getTable(this.data,headerCallback,(row,data)=>
+				this.tableElement=this.tableConfig.getTable(this.data,null,(row,data)=>
 				{
 					this.dataDomMap.set(data,row);
 					this.dataDomMap.set(row,data);
-					if(rowCallback) rowCallback.call(row,row,data,this.tableConfig);
 				});
+				if(this.tableConfig.hasHeader())
+				{
+					this.tableHeader=this.tableElement.firstElementChild;
+					this.tableBody=this.tableHeader.nextElementSibling;
+				}
+				else this.tableBody=this.tableElement.firstElementChild;
 			}
 			return this.tableElement;
 		},
@@ -39,11 +48,11 @@
 			{
 				item=this.dataDomMap.get(item);
 			}
-
-			var row=this.connections.get(item);
+			var row=this.dataDomMap.get(item);
 			row.remove();
 			this.dataDomMap.delete(item);
 			this.dataDomMap.delete(row);
+			SC.arrayRemove(this.data,item);
 			this.fire("remove",{entry:item,row:row});
 			return true;
 		},
@@ -53,23 +62,23 @@
 			for(var entry of rowData)
 			{
 				this.data.push(entry);
+				var row;
 				if(this.tableElement!=null)
 				{
-					this.tableConfig.getRow((data,row)=>
-					{
-						this.dataDomMap.set(data,row);
-						this.dataDomMap.set(row,data);
-						if(this.tableConfig.options.callback) this.tableConfig.options.callback.call(row,row,data,this.tableConfig);
-						this.tableBody.appendChild(row);
-					});
+					row=this.tableConfig.getRow(entry);
+
+					this.dataDomMap.set(entry,row);
+					this.dataDomMap.set(row,entry);
+					this.tableBody.appendChild(row);
 				}
+				this.fire("add",{entry:entry,row:row});
 			}
 		},
-		update:function(entry,callback)
+		update:function(item)
 		{
-			if(entry==null)//update all
+			if(item==null)//update all
 			{
-				for(var entry of this.data) this.update(entry,callback);
+				for(var entry of this.data) this.update(entry);
 			}
 			else
 			{
@@ -78,10 +87,9 @@
 				{
 					item=this.dataDomMap.get(item);
 				}
-				var row=this.dataDomMap.get(entry);
+				var row=this.dataDomMap.get(item);
 				while(row.firstChild) row.firstChild.remove();
 				this.tableConfig.fillRow(entry,row);
-				if(callback) callback.call(row,row,entry,this.tableConfig);
 			}
 		},
 		/**

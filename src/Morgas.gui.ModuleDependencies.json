@@ -75,6 +75,16 @@
 			"adopt"
 		]
 	},
+	"TreeTable.js": {
+		"deps": [
+			"gui.Table"
+		],
+		"uses": [
+			"gui.TreeTableConfig",
+			"array.remove",
+			"NodePatch"
+		]
+	},
 	"TreeTableConfig.js": {
 		"deps": [
 			"gui.TableConfig"

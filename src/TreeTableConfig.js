@@ -48,7 +48,7 @@
 				return result;
 			},this.options.childrenGetter).fragment);
 		},
-		getRow:function(data,depth)
+		getRow:function(data,depth=0)
 		{
 			var row=document.createElement(this.options.body.rowTag);
 
