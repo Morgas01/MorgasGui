@@ -15,29 +15,55 @@
 		},
 		add:function(entry,parent)
 		{
-			if(!parent) this.mega(entry);
+			if(this.tableElement==null&&!parent) this.mega(entry);
 			else if (this.tableElement!=null)
 			{
-				var row=this.tableConfig.getRow(entry);
-
-				this.dataDomMap.set(entry,row);
-				this.dataDomMap.set(row,entry);
-				this.change(parent).treeChildren.push();
-				if(relative.classList.contains("expanded"))
+				var childrenGetter=SC.Node.normalizeChildrenGetter(this.tableConfig.options.childrenGetter);
+				var todo=[{entry:entry,parent:parent}];
+				var t;
+				while(t=todo.shift())
 				{
-					var relative=this.change(parent);
-					var childrenGetter=SC.Node.normalizeChildrenGetter(this.tableConfig.childrenGetter);
-					while (relative.classList.contains("expanded"))
+					var depth=0;
+					let pRow;
+					if(t.parent)
 					{
-						var children=childrenGetter(this.change(relative));
-						relative=this.change(children[children.length-1]);
+						pRow=this.change(t.parent);
+						depth=pRow.querySelector(".indent").children.length+1;
 					}
-					this.tableBody.insertBefore(row,relative.nextElementSibling);
-				}
+					var row=this.tableConfig.getRow(t.entry,depth);
 
-				this.fire("add",{entry:entry,row:row})
+					this.dataDomMap.set(t.entry,row);
+					this.dataDomMap.set(row,t.entry);
+					if(t.parent)
+					{
+						pRow.treeChildren.push(row);
+						pRow.classList.toggle("collapsed",!pRow.classList.contains("expanded"));
+					}
+					else this.tableBody.appendChild(row);
+					var children=childrenGetter(t.entry);
+					if(children&&children.length>0)
+					{
+						todo.push(...(children.map(c=>({entry:c,parent:t.entry}))));
+					}
+				}
+				if(parent)
+				{
+					var parentRow=this.change(parent);
+					var wasExpanded=parentRow.isExpanded();
+					parentRow.expand(false);
+					parentRow.expand(wasExpanded);
+				}
+				this.fire("add",{entry:entry,row:this.change(entry)});
 			}
 			else this.fire("add",{entry:entry,row:null});
+		},
+		clear:function()
+		{
+			this.data.length=0;
+			if(this.tableBody)
+			{
+				while(this.tableBody.firstChild)this.tableBody.firstChild.remove();
+			}
 		}
 	});
 

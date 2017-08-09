@@ -79,7 +79,7 @@
 			row.isExpanded=row.classList.contains.bind(row.classList,"expanded");
 			row.expand=function(state,all=false)
 			{
-				if(this.treeChildren.length>0)
+				if(row.treeChildren.length>0)
 				{
 					if(state==null||state!==row.isExpanded())
 					{
