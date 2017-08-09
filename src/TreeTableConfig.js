@@ -76,23 +76,45 @@
 			row.treeChildren=[];
 
 			var insertHelper=document.createDocumentFragment();
-			row.expand=function(state,all)
+			row.isExpanded=row.classList.contains.bind(row.classList,"expanded");
+			row.expand=function(state,all=false)
 			{
-				if(this.treeChildren.length>0&&(state==null||state===!this.classList.contains("expanded")))
+				if(this.treeChildren.length>0)
 				{
-					if(row.classList.toggle("collapsed",!row.classList.toggle("expanded")))
+					if(state==null||state!==row.isExpanded())
 					{
-						for(var child of row.treeChildren) child.remove();
+						if(state=row.classList.toggle("collapsed",!row.classList.toggle("expanded")))
+						{
+							let todo=row.treeChildren.slice();
+							let child;
+							while(child=todo.shift())
+							{
+								child.remove();
+								if(child.treeChildren.length>0&&all) child.classList.toggle("collapsed",!child.classList.toggle("expanded",false))
+								todo.unshift(...child.treeChildren);
+							}
+						}
+						else
+						{
+							let todo=row.treeChildren.slice();
+							let child;
+							while(child=todo.shift())
+							{
+								insertHelper.appendChild(child);
+								if(child.treeChildren.length>0&&(child.isExpanded()||child.classList.toggle("expanded",!child.classList.toggle("collapsed",!all))))
+								{
+									todo.unshift(...child.treeChildren);
+								}
+							}
+							row.parentNode.insertBefore(insertHelper,row.nextSibling);
+						}
 					}
-					else
+					else if(all)
 					{
-						for(var child of row.treeChildren) insertHelper.appendChild(child);
-						row.parentNode.insertBefore(insertHelper,row.nextSibling);
-					}
-
-					if(all)
-					{
-						for(var child of row.treeChildren) child.expand(state,true);
+						for(var child of row.treeChildren)
+						{
+							child.expand(state,true);
+						}
 					}
 				}
 			};
