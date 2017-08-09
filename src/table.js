@@ -88,8 +88,7 @@
 					item=this.dataDomMap.get(item);
 				}
 				var row=this.dataDomMap.get(item);
-				while(row.firstChild) row.firstChild.remove();
-				this.tableConfig.fillRow(entry,row);
+				this.tableConfig.fillRow(item,row);
 			}
 		},
 		/**

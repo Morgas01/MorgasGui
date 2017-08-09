@@ -107,7 +107,11 @@
 			for( var c of this.columns)
 			{
 				var element=document.createElement(this.options.header.columnTag);
-				if(c.name) element.dataset.translation=element.textContent=c.name;
+				if(c.name)
+				{
+					element.dataset.translation=element.textContent=c.name;
+					element.classList.add(c.name)
+				}
 				row.appendChild(element);
 			}
 			if(callback)callback.call(row,row,this);
@@ -132,13 +136,15 @@
 		},
 		fillRow:function(data,row)
 		{
+			var cols=Array.filter(row.children,e=>e.tagName==this.options.body.columnTag.toUpperCase());
 			for( var c of this.columns)
 			{
-				var cell=document.createElement(this.options.body.columnTag);
+				var cell=cols.shift()||document.createElement(this.options.body.columnTag);
+				if(!cell.parentNode) row.appendChild(cell);
 				c.name&&cell.classList.add(c.name);
 				c.fn.call(data,cell,data);
-				row.appendChild(cell);
 			}
+			cols.forEach(e=>e.remove());
 		},
 		getTable:function(data,headerCallback,rowCallback)
 		{
