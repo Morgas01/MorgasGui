@@ -6,7 +6,7 @@
 	});
 
 	if(!µ.gui) µ.gui={};
-
+	//TODO make it a class
 	var TREE=µ.gui.tree=function(root,mapper,options)
 	{
 		options=SC.adopt({
