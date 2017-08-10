@@ -53,6 +53,10 @@
 					parentRow.expand(false);
 					parentRow.expand(wasExpanded);
 				}
+				else
+				{
+					this.data.push(entry);
+				}
 				this.fire("add",{entry:entry,row:this.change(entry)});
 			}
 			else this.fire("add",{entry:entry,row:null});
@@ -64,6 +68,25 @@
 			{
 				while(this.tableBody.firstChild)this.tableBody.firstChild.remove();
 			}
+		},
+		getSelectedRows:function()
+		{
+			var rtn=[];
+			if(this.tableElement)
+			{
+				for(var entry of this.data)
+				{
+					SC.Node.traverse(this.change(entry),(row)=>
+					{
+						if(row.firstChild.checked) rtn.push(row);
+					},"treeChildren");
+				}
+			}
+			return rtn;
+		},
+		getSelected:function()
+		{
+			return this.getSelectedRows().map(r=>this.change(r));
 		}
 	});
 
