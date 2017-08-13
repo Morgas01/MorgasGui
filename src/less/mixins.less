@@ -71,7 +71,7 @@
 		}
 	}
 	position:relative;
-	&:hover::after {
+	&[@{attr}]:hover::after {
 		content:@content;
 		.background();
 		color:@textColor;
@@ -95,6 +95,18 @@
 		display:table-row;
 		> * {
 			display:table-cell;
+		}
+	}
+}
+.spring(@time:@fadeTime, @delay:0s, @from:1, @to:1.5, @transform-before:{}, @transform-after:{}) {
+	animation+: spring @time ease-in-out @delay infinite alternate;
+
+	@keyframes spring {
+		from {
+			transform:@transform-before() @from @transform-after();
+		}
+		to {
+			transform:@transform-before() @to @transform-after();
 		}
 	}
 }
