@@ -97,6 +97,23 @@
 		change:function(item)
 		{
 			return this.dataDomMap.get(item);
+		},
+		getSelectedRows:function()
+		{
+			return this.data.reduce((rtn,entry)=>
+			{
+				var row=this.change(entry);
+				if(row!=null&&row.firstElementChild.checked) rtn.push(row);
+				return rtn;
+			},[]);
+		},
+		getSelected:function()
+		{
+			return this.data.filter(entry=>
+			{
+				var row=this.change(entry);
+				return row!=null&&row.firstElementChild.checked;
+			});
 		}
 	});
 
