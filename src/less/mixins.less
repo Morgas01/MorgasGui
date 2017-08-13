@@ -98,15 +98,15 @@
 		}
 	}
 }
-.spring(@time:@fadeTime, @delay:0s, @from:1, @to:1.5, @transform-before:{}, @transform-after:{}) {
+.spring(@time:@fadeTime, @delay:0s, @from:1, @to:1.5, @transform-before:~"", @transform-after:~"") {
 	animation+: spring @time ease-in-out @delay infinite alternate;
 
 	@keyframes spring {
 		from {
-			transform:@transform-before() @from @transform-after();
+			transform:@transform-before @from @transform-after
 		}
 		to {
-			transform:@transform-before() @to @transform-after();
+			transform:@transform-before @to @transform-after
 		}
 	}
 }
