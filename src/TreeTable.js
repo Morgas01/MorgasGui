@@ -9,7 +9,7 @@
 	});
 
 	var TreeTable=µ.gui.TreeTable=µ.Class(TABLE,{
-		init:function(tableConfig=new SC.TreeTableConfig())
+		constructor:function(tableConfig=new SC.TreeTableConfig())
 		{
 			this.mega(tableConfig);
 		},
@@ -57,9 +57,9 @@
 				{
 					this.data.push(entry);
 				}
-				this.fire("add",{entry:entry,row:this.change(entry)});
+				this.report(new TABLE.AddEvent(entry,this.change(entry)));
 			}
-			else this.fire("add",{entry:entry,row:null});
+			else this.report(new TABLE.AddEvent(entry,null));
 		},
 		clear:function()
 		{

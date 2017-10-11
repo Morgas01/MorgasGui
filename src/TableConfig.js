@@ -17,7 +17,7 @@
 		 * @param {Array.<string|function|ColumnDef>} (columns=undefined)
 		 *
 		 */
-		init:function(columns,options)
+		constructor:function(columns,options)
 		{
 			this.columns=[];
 			this.options={

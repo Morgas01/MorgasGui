@@ -11,7 +11,7 @@
 	 * @param {string} (radioName=undefined) if radioName is provided selectionTable will use radio inputs instead of checkboxes
 	 */
 	TreeTableConfig.Select=µ.Class(TreeTableConfig,{
-		init:function(columns,options)
+		constructor:function(columns,options)
 		{
 			this.mega(columns);
 			this.options=Object.create(TreeTableConfig.Select.options);

@@ -4,13 +4,15 @@
 
 	SC=SC({
 		TableConfig:"gui.TableConfig",
-		arrayRemove:"array.remove"
+		arrayRemove:"array.remove",
+		reporter:"EventReporterPatch",
+		Event:"Event"
 	});
 
 	if(!µ.gui) µ.gui={};
 
-	var Table=µ.gui.Table=µ.Class(LISTERNERS,{
-		init:function(tableConfig=new SC.TableConfig())
+	var Table=µ.gui.Table=µ.Class({
+		constructor:function(tableConfig=new SC.TableConfig())
 		{
 			this.mega();
 
@@ -21,7 +23,7 @@
 			this.dataDomMap=new WeakMap();
 			this.data=[];
 
-			this.createListener("add update remove");
+			new EventReporterPatch([Table.AddEvent,Table.UpdateEvent,Table.RemoveEvent]);
 		},
 		getTable:function()
 		{
@@ -53,7 +55,8 @@
 			this.dataDomMap.delete(item);
 			this.dataDomMap.delete(row);
 			SC.arrayRemove(this.data,item);
-			this.fire("remove",{entry:item,row:row});
+
+			this.report(new Table.RemoveEvent(item,row));
 			return true;
 		},
 		add:function(rowData)
@@ -71,7 +74,7 @@
 					this.dataDomMap.set(row,entry);
 					this.tableBody.appendChild(row);
 				}
-				this.fire("add",{entry:entry,row:row});
+				this.report(new Table.AddEvent(entry,row));
 			}
 		},
 		update:function(item)
@@ -89,6 +92,8 @@
 				}
 				var row=this.dataDomMap.get(item);
 				this.tableConfig.fillRow(item,row);
+
+				this.report(new Table.UpdateEvent(item,row));
 			}
 		},
 		/**
@@ -114,6 +119,33 @@
 				var row=this.change(entry);
 				return row!=null&&row.firstElementChild.checked;
 			});
+		}
+	});
+
+	Table.AddEvent=µ.Class(SC.Event,{
+		name:"tableAdd",
+		constructor:function(entry,row)
+		{
+			this.entry=entry;
+			this.row=row;
+		}
+	});
+
+	Table.UpdateEvent=µ.Class(SC.Event,{
+		name:"tableUpdate",
+		constructor:function(entry,row)
+		{
+			this.entry=entry;
+			this.row=row;
+		}
+	});
+
+	Table.RemoveEvent=µ.Class(SC.Event,{
+		name:"tableRemove",
+		constructor:function(entry,row)
+		{
+			this.entry=entry;
+			this.row=row;
 		}
 	});
 
