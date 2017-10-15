@@ -1,7 +1,5 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
-	var LISTERNERS=GMOD("Listeners");
-
 	SC=SC({
 		TableConfig:"gui.TableConfig",
 		arrayRemove:"array.remove",
@@ -23,7 +21,7 @@
 			this.dataDomMap=new WeakMap();
 			this.data=[];
 
-			new EventReporterPatch([Table.AddEvent,Table.UpdateEvent,Table.RemoveEvent]);
+			new SC.reporter(this,[Table.AddEvent,Table.UpdateEvent,Table.RemoveEvent]);
 		},
 		getTable:function()
 		{
@@ -56,7 +54,7 @@
 			this.dataDomMap.delete(row);
 			SC.arrayRemove(this.data,item);
 
-			this.report(new Table.RemoveEvent(item,row));
+			this.reportEvent(new Table.RemoveEvent(item,row));
 			return true;
 		},
 		add:function(rowData)
@@ -74,7 +72,7 @@
 					this.dataDomMap.set(row,entry);
 					this.tableBody.appendChild(row);
 				}
-				this.report(new Table.AddEvent(entry,row));
+				this.reportEvent(new Table.AddEvent(entry,row));
 			}
 		},
 		update:function(item)
@@ -93,7 +91,7 @@
 				var row=this.dataDomMap.get(item);
 				this.tableConfig.fillRow(item,row);
 
-				this.report(new Table.UpdateEvent(item,row));
+				this.reportEvent(new Table.UpdateEvent(item,row));
 			}
 		},
 		/**

@@ -46,12 +46,12 @@
 		]
 	},
 	"table.js": {
-		"deps": [
-			"Listeners"
-		],
+		"deps": [],
 		"uses": [
 			"gui.TableConfig",
-			"array.remove"
+			"array.remove",
+			"EventReporterPatch",
+			"Event"
 		]
 	},
 	"TableConfig.js": {

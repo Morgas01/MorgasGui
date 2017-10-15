@@ -50,6 +50,7 @@
 					var key=column;
 					column={
 						name:column,
+						styleClass:name.replace(/ /g,"_"),
 						fn:function(cell)
 						{
 							cell.dataset.translation=cell.textContent=this[key];
@@ -57,11 +58,11 @@
 					};
 					break;
 				case "function":
-					column={name:column.name,fn:column};
+					column={name:column.name,styleClass:column.name,fn:column};
 					break;
 				case "object":
 					var getter=column.getter;
-					column={name:column.name,fn:column.fn};
+					column={name:column.name,styleClass:column.styleClass,fn:column.fn};
 					if(!column.fn&&getter) column.fn=function(cell,data)
 					{
 						cell.dataset.translation=cell.textContent=getter(data);
@@ -110,8 +111,8 @@
 				if(c.name)
 				{
 					element.dataset.translation=element.textContent=c.name;
-					element.classList.add(c.name)
 				}
+				if(c.styleClass)element.classList.add(c.styleClass);
 				row.appendChild(element);
 			}
 			if(callback)callback.call(row,row,this);
@@ -140,8 +141,8 @@
 			for( var c of this.columns)
 			{
 				var cell=cols.shift()||document.createElement(this.options.body.columnTag);
+				if(c.styleClass)cell.classList.add(c.styleClass);
 				if(!cell.parentNode) row.appendChild(cell);
-				c.name&&cell.classList.add(c.name);
 				c.fn.call(data,cell,data);
 			}
 			cols.forEach(e=>e.remove());

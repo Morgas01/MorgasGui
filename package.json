@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "Morgas": "git+https://github.com/Morgas01/Morgas.js.git"
+  },
+  "scripts": {
+    "build": "node lib/build"
   }
 }
