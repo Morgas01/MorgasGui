@@ -55,7 +55,7 @@
 
 		dialog.modal=param.modal;
 		if(param.target) dialog.appendTo(param.target);
-		param.actions.close=dialog.close;
+		if(!param.actions.close)param.actions.close=dialog.close;
 
 		SC.action(param.actions,dialog);
 		
