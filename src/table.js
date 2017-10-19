@@ -25,7 +25,7 @@
 		},
 		getTable:function()
 		{
-			if(this.tableElement==null);
+			if(this.tableElement==null)
 			{
 				this.tableElement=this.tableConfig.getTable(this.data,null,(row,data)=>
 				{
