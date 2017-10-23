@@ -9,14 +9,14 @@
 	 * @param {Event} event - click event
 	 * @param {Element} target - Element with data-action attribute
 	 * @param {Element} element - actionized element
-	 * @this {Element} element - actionized element
+	 * @param {Any} (scope=element) - scope of actions
 	 */
 
 	/**
 	 * @param {Object.<String,ActionCallback>} fns
 	 * @param {Element} element
 	 */
-	µ.gui.actionize=function(fns,element)
+	µ.gui.actionize=function(fns,element,scope=element)
 	{
 		element.addEventListener("click",function(e)
 		{
@@ -27,7 +27,7 @@
 				var action=target.dataset.action;
 				if( action in fns)
 				{
-					fns[action].call(element,e,target,element);
+					fns[action].call(scope,e,target,element);
 					e.stopPropagation();
 					return true;
 				}

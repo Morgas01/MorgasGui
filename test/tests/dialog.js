@@ -39,7 +39,7 @@ module("dialog",[
 					});
 					break;
 				case "script":
-					var dialog=µ.gui.dialog(dialogHTML);
+					var dialog=new µ.gui.dialog(dialogHTML);
 					dialog.modal=e.target.dataset.modal;
 					break;
 				default:

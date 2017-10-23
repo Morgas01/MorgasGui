@@ -1,7 +1,9 @@
 {
 	"gui.actionize": "actionize.js",
 	"gui.blocked": "blocked.js",
-	"gui.dialog": "dialog.js",
+	"gui.Dialog.Input": "Dialog.Input.js",
+	"gui.InputDialog": "Dialog.Input.js",
+	"gui.Dialog": "Dialog.js",
 	"gui.dragBox": "dragBox.js",
 	"gui.form": "form.js",
 	"gui.InputHistory": "inputHistory.js",

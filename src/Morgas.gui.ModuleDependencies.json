@@ -7,10 +7,18 @@
 		"deps": [],
 		"uses": []
 	},
-	"dialog.js": {
+	"Dialog.Input.js": {
+		"deps": [
+			"gui.Dialog"
+		],
+		"uses": [
+			"getInputValues",
+			"Promise"
+		]
+	},
+	"Dialog.js": {
 		"deps": [],
 		"uses": [
-			"adopt",
 			"gui.actionize"
 		]
 	},
