@@ -57,6 +57,13 @@
 			this.reportEvent(new Table.RemoveEvent(item,row));
 			return true;
 		},
+		clear:function()
+		{
+			for(let entry of this.data.slice())
+			{
+				this.remove(entry);
+			}
+		},
 		add:function(rowData)
 		{
 			if(!Array.isArray(rowData)) rowData=[rowData];
