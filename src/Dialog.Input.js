@@ -43,7 +43,8 @@
 					{
 						this._signal.resolve();
 					},
-					µ.constantFunctions.n);//hide uncaught error);
+					//@suppress UnhandledPromiseRejectionWarning
+					µ.constantFunctions.n);
 				}
 			};
 			param.dialogTagName="FIELDSET";
