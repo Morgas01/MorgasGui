@@ -79,7 +79,10 @@
 				{
 					this._signal=signal;
 				},{scope:this});
+
 				this.then=promise.then.bind(promise);
+				this.catch=promise.catch.bind(promise);
+				this.always=promise.always.bind(promise);
 
 				promise.always(()=>this.close());
 			}
