@@ -1,22 +1,27 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
-	//SC=SC({});
+	SC=SC({
+		remove:"array.remove",
+		rs:"rescope"
+	});
 	if(!µ.gui) µ.gui={};
 
 	let InputHistory=µ.gui.InputHistory=µ.Class({
-		constructor:function(entries)
+		constructor:function(entries,{
+			max=null
+		}={})
 		{
-			this.max=null;
-			this.list=document.createElement("datalist");
-			this.list.id=InputHistory.ID_PREFIX+InputHistory.ID_COUNTER++;
+			SC.rs.all(this,["onKeyPress"]);
+
+			this.max=max;
+
+			this.history=[];
 
 			if(entries) this.set(entries);
-
-			document.body.appendChild(this.list);
 		},
 		clear:function()
 		{
-			while(this.list.firstChild)this.list.firstChild.remove();
+			this.history.length=0;
 			return this;
 		},
 		set:function(entries)
@@ -28,11 +33,7 @@
 		add:function(entry,index=0)
 		{
 			this.remove(entry);
-
-			let option=document.createElement("option");
-			option.textContent= option.dataset.translation= option.value= entry;
-			this.list.insertBefore(option,this.list.children[index]);
-
+			this.history.unshift(entry);
 			this.checkCount();
 			return this;
 		},
@@ -46,10 +47,7 @@
 		},
 		remove:function(entry)
 		{
-			for(let option of this.list.children)
-			{
-				if (option.value==entry) option.remove();
-			}
+			SC.remove(this.history,entry);
 			return this;
 		},
 		setMax:function(max)
@@ -61,23 +59,37 @@
 		},
 		checkCount:function()
 		{
-			if(this.max!=null&&this.max>0)
+			if(this.max!=null&&this.max>0&&this.max<this.history.length)
 			{
-				while(this.list.children.length>this.max) this.list.children[this.max].remove();
+				this.history.length=this.max;
 			}
 			return this;
 		},
 		getValues:function()
 		{
-			return Array.from(this.list.children).map(o=>o.value);
+			return this.history.slice();
 		},
 		register:function(input)
 		{
-			input.setAttribute("list",this.list.id);
+			input.removeEventListener("keypress",this.onKeyPress,false);
+			input.addEventListener("keypress",this.onKeyPress,false);
+			return this;
+		},
+		onKeyPress:function(event)
+		{
+			let input=event.target;
+			if(input.value===""&&event.key=="ArrowUp") input.value=this.history[0]||"";
+			else
+			{
+				let index=this.history.indexOf(input.value);
+				if(index!=-1)
+				{
+					if(event.key=="ArrowUp"&&index+1<this.history.length)input.value=this.history[index+1];
+					if(event.key=="ArrowDown")input.value=this.history[index-1]||"";
+				}
+			}
 		}
 	});
-	InputHistory.ID_PREFIX="intputHistory_";
-	InputHistory.ID_COUNTER=0;
 
 	SMOD("gui.InputHistory",InputHistory)
 

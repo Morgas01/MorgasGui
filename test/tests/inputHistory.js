@@ -1,51 +1,78 @@
 module("InputHistory",[
 	function simple(container)
 	{
-		var input=document.createElement("input");
+		let input=document.createElement("input");
 		input.type="text";
 		container.appendChild(input);
 
-		var inputHistory=new µ.gui.InputHistory();
+		let inputHistory=new µ.gui.InputHistory();
 		inputHistory.register(input);
 
-		input.addEventListener("change",function(e)
+		input.addEventListener("keydown",function(e)
 		{
-			inputHistory.add(input.value);
-			input.value="";
-			input.focus();
+			if(e.key=="Enter")
+			{
+				inputHistory.add(e.target.value);
+				e.target.value="";
+			}
 		});
 	},
 	function prefilled(container)
 	{
-		var input=document.createElement("input");
+		let input=document.createElement("input");
 		input.type="text";
 		container.appendChild(input);
 
-		var inputHistory=new µ.gui.InputHistory(["test 2","test 1","test 2","test 3"]);
+		let inputHistory=new µ.gui.InputHistory(["test 3","test 2","test 1","test 2"]);
 		inputHistory.register(input);
 
-		input.addEventListener("change",function(e)
+		input.addEventListener("keydown",function(e)
 		{
-			inputHistory.add(input.value);
-			input.value="";
+			if(e.key=="Enter")
+			{
+				inputHistory.add(e.target.value);
+				e.target.value="";
+			}
 		});
 	},
 	function max5(container)
 	{
-		var input=document.createElement("input");
+		let input=document.createElement("input");
 		input.type="text";
 		container.appendChild(input);
 
-		var inputHistory=new µ.gui.InputHistory(["test 2","test 1","test 2","test 3"]);
+		let inputHistory=new µ.gui.InputHistory(["test 3","test 2","test 1","test 2"]);
 		inputHistory.register(input);
 
 		inputHistory.setMax(5);
-		input.list=inputHistory.id;
 
-		input.addEventListener("change",function(e)
+		input.addEventListener("keydown",function(e)
 		{
-			inputHistory.add(input.value);
-			input.value="";
+			if(e.key=="Enter")
+			{
+				inputHistory.add(e.target.value);
+				e.target.value="";
+			}
 		});
+	},
+	function multiple(container)
+	{
+		let inputHistory=new µ.gui.InputHistory(["test 3","test 2","test 1","test 2"]);
+
+		for(let i=0;i<2;i++)
+		{
+			let input=document.createElement("input");
+			input.type="text";
+			container.appendChild(input);
+			inputHistory.register(input);
+			input.addEventListener("keydown",function(e)
+			{
+				if(e.key=="Enter")
+				{
+					inputHistory.add(e.target.value);
+					e.target.value="";
+				}
+			});
+		}
 	},
 ]);

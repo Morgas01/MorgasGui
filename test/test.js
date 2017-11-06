@@ -59,7 +59,6 @@
 	load("loading");
 	load("dialog");
 	loadMorgas("Morgas.Patch");
-	loadMorgas("Morgas.util.object.iterate");
 	loadMorgas("Morgas.util.function.proxy");
 	loadMorgas("Morgas.nodePatch");
 	loadMorgas("Morgas.util.object.adopt");
@@ -75,6 +74,8 @@
 	load("tabs");
 	load("actionize",true);
 	load("dragBox");
+	loadMorgas("Morgas.util.function.rescope");
+	loadMorgas("Morgas.util.array.remove");
 	load("inputHistory",true);
 
 	document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/checkGlobals.js" defer></script>`);
