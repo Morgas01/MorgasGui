@@ -3,8 +3,8 @@
 	//SC=SC({});
 	if(!µ.gui) µ.gui={};
 
-	var InputHistory=µ.gui.InputHistory=µ.Class({
-		init:function(entries)
+	let InputHistory=µ.gui.InputHistory=µ.Class({
+		constructor:function(entries)
 		{
 			this.max=null;
 			this.list=document.createElement("datalist");
@@ -29,7 +29,7 @@
 		{
 			this.remove(entry);
 
-			var option=document.createElement("option");
+			let option=document.createElement("option");
 			option.textContent= option.dataset.translation= option.value= entry;
 			this.list.insertBefore(option,this.list.children[index]);
 
@@ -38,7 +38,7 @@
 		},
 		addAll:function(entries,index=0)
 		{
-			for(var entry of entries)
+			for(let entry of entries)
 			{
 				this.add(entry,index++);
 			}
@@ -46,7 +46,7 @@
 		},
 		remove:function(entry)
 		{
-			for(var option of this.list.children)
+			for(let option of this.list.children)
 			{
 				if (option.value==entry) option.remove();
 			}
