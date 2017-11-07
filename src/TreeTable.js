@@ -57,9 +57,9 @@
 				{
 					this.data.push(entry);
 				}
-				this.report(new TABLE.AddEvent(entry,this.change(entry)));
+				this.reportEvent(new TABLE.AddEvent(entry,this.change(entry)));
 			}
-			else this.report(new TABLE.AddEvent(entry,null));
+			else this.reportEvent(new TABLE.AddEvent(entry,null));
 		},
 		clear:function()
 		{
