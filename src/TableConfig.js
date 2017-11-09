@@ -50,7 +50,7 @@
 					var key=column;
 					column={
 						name:column,
-						styleClass:name.replace(/ /g,"_"),
+						styleClass:column.replace(/ /g,"_"),
 						fn:function(cell)
 						{
 							cell.dataset.translation=cell.textContent=this[key];
