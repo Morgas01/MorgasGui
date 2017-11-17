@@ -34,7 +34,10 @@
 	},
 	"inputHistory.js": {
 		"deps": [],
-		"uses": []
+		"uses": [
+			"array.remove",
+			"rescope"
+		]
 	},
 	"loading.js": {
 		"deps": [],
@@ -53,7 +56,7 @@
 			"adopt"
 		]
 	},
-	"table.js": {
+	"Table.js": {
 		"deps": [],
 		"uses": [
 			"gui.TableConfig",

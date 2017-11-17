@@ -33,7 +33,8 @@
 			let oldOK=param.actions["OK"];
 			param.actions["OK"]=function()
 			{
-				if(this.content.checkValidity())
+				let isValid=Array.from(this.content.elements).reduce((b,e)=>e.checkValidity()&&b,true);
+				if(isValid)
 				{
 					let values=SC.get(this.content.querySelectorAll("[name]"));
 					let result=oldOK.call(this,values);

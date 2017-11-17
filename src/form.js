@@ -20,7 +20,6 @@
 		{
 			var button=event.target;
 			var action=button.dataset.action;
-			event.stopPropagation();
 			if(action)
 			{
 				event.stopPropagation();
@@ -49,7 +48,7 @@
 						container.removeField(name);
 						break;
 					default:
-						µ.logger.warning(String.raw`unknown form action ${action}`);
+						µ.logger.info(String.raw`unknown form action ${action}`);
 				}
 			}
 		});
