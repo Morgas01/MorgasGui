@@ -6,7 +6,7 @@
 	"gui.Dialog": "Dialog.js",
 	"gui.dragBox": "dragBox.js",
 	"gui.form": "form.js",
-	"gui.InputHistory": "inputHistory.js",
+	"gui.InputHistory": "InputHistory.js",
 	"gui.loading": "loading.js",
 	"gui.loading2": "loading.js",
 	"gui.menu": "menu.js",

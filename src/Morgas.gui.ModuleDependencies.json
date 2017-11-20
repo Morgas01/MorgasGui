@@ -32,7 +32,7 @@
 			"Config"
 		]
 	},
-	"inputHistory.js": {
+	"InputHistory.js": {
 		"deps": [],
 		"uses": [
 			"array.remove",
