@@ -46,13 +46,13 @@
 	"menu.js": {
 		"deps": [],
 		"uses": [
-			"gui.tree"
+			"NodePatch"
 		]
 	},
 	"selectionTree.js": {
 		"deps": [],
 		"uses": [
-			"gui.tree",
+			"gui.Tree",
 			"adopt"
 		]
 	},
@@ -79,11 +79,10 @@
 		"deps": [],
 		"uses": []
 	},
-	"tree.js": {
+	"Tree.js": {
 		"deps": [],
 		"uses": [
-			"NodePatch",
-			"adopt"
+			"NodePatch"
 		]
 	},
 	"TreeTable.js": {

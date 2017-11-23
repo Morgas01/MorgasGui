@@ -1,7 +1,7 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
 	SC=SC({
-		tree:"gui.tree",
+		tree:"gui.Tree",
 		adopt:"adopt"
 	});
 

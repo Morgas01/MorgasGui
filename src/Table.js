@@ -9,7 +9,7 @@
 
 	if(!µ.gui) µ.gui={};
 
-	var Table=µ.gui.Table=µ.Class({
+	let Table=µ.gui.Table=µ.Class({
 		constructor:function(tableConfig=new SC.TableConfig())
 		{
 			this.mega();
@@ -48,7 +48,7 @@
 			{
 				item=this.dataDomMap.get(item);
 			}
-			var row=this.dataDomMap.get(item);
+			let row=this.dataDomMap.get(item);
 			row.remove();
 			this.dataDomMap.delete(item);
 			this.dataDomMap.delete(row);
@@ -67,10 +67,10 @@
 		add:function(rowData)
 		{
 			if(!Array.isArray(rowData)) rowData=[rowData];
-			for(var entry of rowData)
+			for(let entry of rowData)
 			{
 				this.data.push(entry);
-				var row;
+				let row;
 				if(this.tableElement!=null)
 				{
 					row=this.tableConfig.getRow(entry);
@@ -86,7 +86,7 @@
 		{
 			if(item==null)//update all
 			{
-				for(var entry of this.data) this.update(entry);
+				for(let entry of this.data) this.update(entry);
 			}
 			else
 			{
@@ -95,7 +95,7 @@
 				{
 					item=this.dataDomMap.get(item);
 				}
-				var row=this.dataDomMap.get(item);
+				let row=this.dataDomMap.get(item);
 				this.tableConfig.fillRow(item,row);
 
 				this.reportEvent(new Table.UpdateEvent(item,row));
@@ -112,7 +112,7 @@
 		{
 			return this.data.reduce((rtn,entry)=>
 			{
-				var row=this.change(entry);
+				let row=this.change(entry);
 				if(row!=null&&row.firstElementChild.checked) rtn.push(row);
 				return rtn;
 			},[]);
@@ -121,7 +121,7 @@
 		{
 			return this.data.filter(entry=>
 			{
-				var row=this.change(entry);
+				let row=this.change(entry);
 				return row!=null&&row.firstElementChild.checked;
 			});
 		}

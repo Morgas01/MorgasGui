@@ -15,7 +15,7 @@
 	"gui.TableConfig": "TableConfig.js",
 	"gui.TableConfig.Select": "TableConfig.Select.js",
 	"gui.tabs": "tabs.js",
-	"gui.tree": "tree.js",
+	"gui.tree": "Tree.js",
 	"gui.TreeTable": "TreeTable.js",
 	"gui.TreeTableConfig": "TreeTableConfig.js",
 	"gui.TreeTableConfig.Select": "TreeTableConfig.Select.js"

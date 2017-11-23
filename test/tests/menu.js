@@ -67,6 +67,36 @@
 </ul>
 `;
 		},
+		function markup_click(container)
+		{
+			container.innerHTML+=String.raw
+`
+<ul class="menu">
+	<li>item 1</li>
+	<li tabindex="-1">
+		item 2
+		<ul>
+			<li tabindex="-1">item 2-1</li>
+			<li tabindex="-1">item 2-2</li>
+			<li tabindex="-1">
+				item 2-3
+				<ul>
+					<li tabindex="-1">item 2-3-1</li>
+					<li tabindex="-1">item 2-3-2</li>
+				</ul>
+			</li>
+			<li tabindex="-1">
+				item 2-4
+				<ul>
+					<li tabindex="-1">item 2-4-1</li>
+					<li tabindex="-1">item 2-4-2</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>
+`;
+		},
 		function button_markup(container)
 		{
 			container.innerHTML+=String.raw
@@ -99,14 +129,6 @@
 </div>
 `;
 		},
-		function data(container)
-		{
-			container.appendChild(µ.gui.menu(menuData,mapper));
-		},
-		function data_Button(container)
-		{
-			container.appendChild(µ.gui.menu.button("button",menuData,mapper));
-		},
 		function splitButton_markup(container)
 		{
 			container.innerHTML+=String.raw
@@ -114,33 +136,46 @@
 <button class="splitButton">button menu</button><!-- prevent white space
 --><div>
 	<button class="menu">&#709;</button>
-         	<ul class="menu">
-         		<li>item 1</li>
-         		<li>
-         			item 2
-         			<ul>
-         				<li>item 2-1</li>
-         				<li>item 2-2</li>
-         				<li>
-         					item 2-3
-         					<ul>
-         						<li>item 2-3-1</li>
-         						<li> item 2-3-2</li>
-         					</ul>
-         				</li>
-         				<li>
-         					item 2-4
-         					<ul>
-         						<li>item 2-4-1</li>
-         						<li>item 2-4-2</li>
-         					</ul>
-         				</li>
-         			</ul>
-         		</li>
-         	</ul>
+			<ul class="menu">
+				<li>item 1</li>
+				<li>
+					item 2
+					<ul>
+						<li>item 2-1</li>
+						<li>item 2-2</li>
+						<li>
+							item 2-3
+							<ul>
+								<li>item 2-3-1</li>
+								<li> item 2-3-2</li>
+							</ul>
+						</li>
+						<li>
+							item 2-4
+							<ul>
+								<li>item 2-4-1</li>
+								<li>item 2-4-2</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
 </div>
 `;
 		},
+		function data(container)
+		{
+			container.appendChild(µ.gui.menu(menuData,mapper));
+		},
+		function data_click(container)
+		{
+			container.appendChild(µ.gui.menu(menuData,mapper,null,true));
+		},
+		function data_Button(container)
+		{
+			container.appendChild(µ.gui.menu.button("button",menuData,mapper));
+		},
+
 		function data_splitButton(container)
 		{
 			container.appendChild(µ.gui.menu.splitButton(b=>b.textContent="button",menuData,mapper));
