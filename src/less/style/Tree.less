@@ -1,15 +1,11 @@
-.tree {
+.Tree {
 	ul {
 		li {
 			list-style: "– ";
 		}
 		&::before {
-			display:inline-block;
-			line-height: .75em;
-			width: .75em;
-			text-align: center;
-			border:1px solid;
 			cursor: pointer;
+			font-size:125%;
 		}
 		&:not(.expanded) * {
 			height:0;

@@ -52,7 +52,7 @@
 			}
 			this.element.addEventListener("click",event=>
 			{
-				if(event.target.tagName==="UL")
+				if(event.target.tagName==="UL"&&event.target!=this.element)
 				{
 					this.expand(event.target.parentNode,undefined,event.ctrlKey);
 				}
@@ -90,16 +90,16 @@
 		{
 			if(item instanceof HTMLElement)
 			{
-				item=this.dataDomMap.get(item);
+				item=this.change(item);
 			}
-			let element=this.dataDomMap.get(item);
+			let element=this.change(item);
 			let subTree=element.children[1];
 			if(subTree&&subTree.tagName==="UL")
 			{
 				state=subTree.classList.toggle("expanded",state);
 				if(!state)
 				{
-					for(let child of subTree.children) subTree.removeChild(child);
+					for(let child of Array.from(subTree.children)) subTree.removeChild(child);
 				}
 				else
 				{
@@ -115,6 +115,13 @@
 				{
 					for(let child of this.childrenGetter(item)) await this.expand(child,state,all);
 				}
+			}
+		},
+		expandRoots:async function(state)
+		{
+			for(let root of this.data)
+			{
+				await this.expand(root,state,true);
 			}
 		},
 		filter:async function(filterFn)
@@ -176,6 +183,6 @@
 		},false);
 	};
 
-	SMOD("gui.tree",TREE);
+	SMOD("gui.Tree",TREE);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

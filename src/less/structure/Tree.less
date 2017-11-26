@@ -1,4 +1,4 @@
-.tree {
+.Tree {
 	li {
 		position: relative;
 		list-style: none;
@@ -8,14 +8,14 @@
 			visibility: visible;
 		}
 		&::before {
-			content:"+";
+			content:"⊞";
 			position: absolute;
-			font-size: 75%;
-			top:.5em;
-			right:calc(~"100% + .25em");
+			right:100%;
+			top:0;
+			line-height:1em;
 		}
 		&.expanded::before {
-			content:"−";
+			content:"⊟";
 		}
 		&:not(.expanded) * {
 			visibility: hidden;
@@ -23,6 +23,6 @@
 	}
 }
 
-.tree > li >ul::before, .tree .expanded > li > ul::before {
+.Tree > li >ul::before, .Tree .expanded > li > ul::before {
 	visibility: visible;
 }
