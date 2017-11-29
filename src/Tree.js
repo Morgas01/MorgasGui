@@ -73,7 +73,7 @@
 					let content=document.createElement("SPAN");
 					rtn.appendChild(content);
 					let children=this.childrenGetter(item);
-					if(children&&children.length>0)
+					if(children&&children[Symbol.iterator]&&children[Symbol.iterator]().next().value!=null)
 					{
 						let subTree=document.createElement("UL");
 						rtn.appendChild(subTree);
