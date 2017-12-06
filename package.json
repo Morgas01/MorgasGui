@@ -1,15 +1,15 @@
 {
   "name": "MorgasGui",
-  "version": "0.0.0",
+  "version": "0.8.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/Morgas01/MorgasGui"
   },
   "dependencies": {
-	"less": "^2.7.1"
+    "less": "^2.7.1"
   },
   "devDependencies": {
-    "Morgas": "git+https://github.com/Morgas01/Morgas.js.git"
+    "morgas": "^0.8.1"
   },
   "scripts": {
     "build": "node lib/build"

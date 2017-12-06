@@ -2,9 +2,8 @@ var path=require("path");
 var less=require("less");
 exports.dirname=path.resolve(__dirname,"src");
 exports.lessFolder=path.resolve(exports.dirname,"less");
-exports.getComponentStyle=function(component,theme)
+exports.getComponentStyle=function(component,theme="default")
 {
-	theme=theme||"default"
 	return less.render(
 		'\n@import "'+path.resolve(exports.dirname,"less","style",component)+'";'+
 		'\n@import "'+path.resolve(exports.dirname,"less","structure",component)+'";'+
@@ -14,10 +13,8 @@ exports.getComponentStyle=function(component,theme)
 		error=>Promise.reject(JSON.stringify(error))
 	);
 };
-exports.getTheme=function(theme,components)
+exports.getTheme=function(theme="default",components=[])
 {
-	theme=theme||"default";
-	components=components||[];
 	return less.render(
 		components.map(c=>
 			'\n@import "'+path.resolve(exports.dirname,"less","style",c)+'";'+
