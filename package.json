@@ -1,17 +1,24 @@
 {
-  "name": "MorgasGui",
-  "version": "0.8.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Morgas01/MorgasGui"
-  },
-  "dependencies": {
-    "less": "^2.7.1"
-  },
-  "devDependencies": {
-    "morgas": "^0.8.1"
-  },
-  "scripts": {
-    "build": "node lib/build"
-  }
+	"name": "morgasGui",
+	"version": "0.8.1",
+	"description": "Gui Elements for Morgas.js",
+	"homepage": "https://github.com/Morgas01/MorgasGui",
+	"bugs": {
+		"url": "https://github.com/Morgas01/MorgasGui/issues"
+	},
+	"license": "MIT",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Morgas01/MorgasGui.git"
+	},
+	"scripts": {
+		"build": "node lib/build"
+	},
+	"dependencies": {
+		"less": "^2.7.1"
+	},
+	"devDependencies": {
+		"morgas": "^0.8.1"
+	}
 }
