@@ -10,7 +10,7 @@ Gui Elements for Morgas.js
 load gui
 ```js
 require("morgas");		// creates global µ
-require("morgasGui");	// integrates into µ.gui
+require("morgas.gui");	// integrates into µ.gui
 ```
 use less folder for lookup
 ```js
