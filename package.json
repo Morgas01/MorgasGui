@@ -1,6 +1,6 @@
 {
 	"name": "morgas.gui",
-	"version": "0.8.1",
+	"version": "0.8.2",
 	"description": "Gui Elements for Morgas.js",
 	"homepage": "https://github.com/Morgas01/MorgasGui",
 	"bugs": {
@@ -19,6 +19,6 @@
 		"less": "^2.7.1"
 	},
 	"devDependencies": {
-		"morgas": "^0.8.1"
+		"morgas": "^0.8.2"
 	}
 }

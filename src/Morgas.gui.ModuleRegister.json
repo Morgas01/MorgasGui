@@ -10,7 +10,6 @@
 	"gui.loading": "loading.js",
 	"gui.loading2": "loading.js",
 	"gui.menu": "menu.js",
-	"gui.selectionTree": "selectionTree.js",
 	"gui.Table": "Table.js",
 	"gui.TableConfig": "TableConfig.js",
 	"gui.TableConfig.Select": "TableConfig.Select.js",

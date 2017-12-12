@@ -63,7 +63,6 @@
 	loadMorgas("Morgas.nodePatch");
 	loadMorgas("Morgas.util.object.adopt");
 	load("Tree");
-	//load("selectionTree");
 	load("TableConfig",true);
 	load("TableConfig.Select");
 	load("TreeTableConfig");
