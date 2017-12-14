@@ -2,9 +2,7 @@ MorgasGui
 =========
 Gui Elements for Morgas.js
 
-~~ImportManager~~
-
-~~tests~~
+[tests](https://morgas01.github.io/MorgasGui/test/test_pages.html)
 
 ###Generating styles
 load gui

@@ -1,1 +1,1 @@
-checkGlobals();
+tests.checkGlobals();

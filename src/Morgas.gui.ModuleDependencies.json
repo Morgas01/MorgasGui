@@ -49,13 +49,6 @@
 			"NodePatch"
 		]
 	},
-	"selectionTree.js": {
-		"deps": [],
-		"uses": [
-			"gui.Tree",
-			"adopt"
-		]
-	},
 	"Table.js": {
 		"deps": [],
 		"uses": [
