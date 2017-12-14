@@ -46,7 +46,7 @@
 
 	tests.loadTest("blocked");
 	tests.loadTest("loading");
-	tests.loadTest("dialog");
+	tests.loadTest("Dialog");
 	tests.loadMorgas("Morgas.Patch");
 	tests.loadMorgas("Morgas.util.function.proxy");
 	tests.loadMorgas("Morgas.NodePatch");
@@ -64,7 +64,7 @@
 	tests.loadTest("dragBox");
 	tests.loadMorgas("Morgas.util.function.rescope");
 	tests.loadMorgas("Morgas.util.array.remove");
-	tests.loadTest("inputHistory",true);
+	tests.loadTest("InputHistory",true);
 
 	document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/checkGlobals.js" defer></script>`);
 

@@ -3,7 +3,7 @@
 	window.tests={
 		loadMorgas:function(name)
 		{
-			document.write(String.raw`<script type="application/javascript" charset="utf-8" src="http://morgas01.github.io/Morgas.js/src/${name}.js" defer></script>`);
+			document.write(String.raw`<script type="application/javascript" charset="utf-8" src="https://morgas01.github.io/Morgas.js/src/${name}.js" defer></script>`);
 		},
 		loadTest:function(name,noStyle)
 		{
