@@ -12,7 +12,7 @@
 
 	};
 
-	window.checkGlobals=function()
+	window.tests.checkGlobals=function()
 	{
 		var addedGlobals=Object.keys(window).filter(e=>globals.indexOf(e)==-1&&e!="Morgas"&&e!="µ")
 		if(addedGlobals.length>0) alert(`⚠ added globals: ${addedGlobals}`);
@@ -42,40 +42,29 @@
 	};
 
 
-	var loadMorgas=function(name)
-	{
-		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="/Morgas.js/src/${name}.js" defer></script>`);
-	}
-	var load=function(name,noStyle){
-		noStyle||document.write(String.raw`<link rel="stylesheet" href="/morgas/gui/css/${name}.less"/>`);
-		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="../src/${name}.js" defer></script>`);
-		document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/${name}.js" defer></script>`);
-	};
+	tests.loadMorgas("Morgas");
 
-
-	loadMorgas("Morgas");
-
-	load("blocked");
-	load("loading");
-	load("dialog");
-	loadMorgas("Morgas.Patch");
-	loadMorgas("Morgas.util.function.proxy");
-	loadMorgas("Morgas.nodePatch");
-	loadMorgas("Morgas.util.object.adopt");
-	load("Tree");
-	load("TableConfig",true);
-	load("TableConfig.Select");
-	load("TreeTableConfig");
-	load("TreeTableConfig.Select",true); // TableConfig.Select.less
-	load("menu");
-	loadMorgas("Morgas.Config");
-	load("form");
-	load("tabs");
-	load("actionize",true);
-	load("dragBox");
-	loadMorgas("Morgas.util.function.rescope");
-	loadMorgas("Morgas.util.array.remove");
-	load("inputHistory",true);
+	tests.loadTest("blocked");
+	tests.loadTest("loading");
+	tests.loadTest("dialog");
+	tests.loadMorgas("Morgas.Patch");
+	tests.loadMorgas("Morgas.util.function.proxy");
+	tests.loadMorgas("Morgas.NodePatch");
+	tests.loadMorgas("Morgas.util.object.adopt");
+	tests.loadTest("Tree");
+	tests.loadTest("TableConfig",true);
+	tests.loadTest("TableConfig.Select");
+	tests.loadTest("TreeTableConfig");
+	tests.loadTest("TreeTableConfig.Select",true); // TableConfig.Select.less
+	tests.loadTest("menu");
+	tests.loadMorgas("Morgas.Config");
+	tests.loadTest("form");
+	tests.loadTest("tabs");
+	tests.loadTest("actionize",true);
+	tests.loadTest("dragBox");
+	tests.loadMorgas("Morgas.util.function.rescope");
+	tests.loadMorgas("Morgas.util.array.remove");
+	tests.loadTest("inputHistory",true);
 
 	document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/checkGlobals.js" defer></script>`);
 
