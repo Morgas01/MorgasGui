@@ -52,6 +52,9 @@
 	tests.loadMorgas("Morgas.NodePatch");
 	tests.loadMorgas("Morgas.util.object.adopt");
 	tests.loadTest("Tree");
+	tests.loadMorgas("Morgas.util.function.rescope");
+	tests.loadMorgas("Morgas.util.array.remove");
+	tests.loadTest("Tree.Select");
 	tests.loadTest("TableConfig",true);
 	tests.loadTest("TableConfig.Select");
 	tests.loadTest("TreeTableConfig");
@@ -62,8 +65,6 @@
 	tests.loadTest("tabs");
 	tests.loadTest("actionize",true);
 	tests.loadTest("dragBox");
-	tests.loadMorgas("Morgas.util.function.rescope");
-	tests.loadMorgas("Morgas.util.array.remove");
 	tests.loadTest("InputHistory",true);
 
 	document.write(String.raw`<script type="application/javascript" charset="utf-8" src="tests/checkGlobals.js" defer></script>`);

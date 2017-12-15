@@ -9,9 +9,9 @@
 	let mapData=function(root,mapper,childrenGetter)
 	{
 
-		var rootResult=SC.Node.traverse(root,function(node,parent,parentResult,entry)
+		let rootResult=SC.Node.traverse(root,function(node,parent,parentResult,entry)
 		{
-			var item=document.createElement("LI");
+			let item=document.createElement("LI");
 			if(parent)
 			{
 				if(parent!=root)item.dataset.index=parentResult.item.dataset.index+"."+entry.index;
@@ -30,7 +30,7 @@
 		return rootResult.item;
 	}
 
-	var TREE=µ.gui.Tree=µ.Class({
+	let TREE=µ.gui.Tree=µ.Class({
 		constructor:function(data=[],mapper,{
 			childrenGetter=null
 		}={})
@@ -47,7 +47,7 @@
 
 			for(let root of this.data)
 			{
-				SC.Node.traverse(root,node=>this.dataDomMap.set(node,null));
+				SC.Node.traverse(root,node=>this.dataDomMap.set(node,null),this.childrenGetter);
 				this.element.appendChild(this.change(root));
 			}
 			this.element.addEventListener("click",event=>
@@ -69,22 +69,27 @@
 				let rtn=this.dataDomMap.get(item);
 				if(!rtn)
 				{
-					rtn=document.createElement("LI");
-					let content=document.createElement("SPAN");
-					rtn.appendChild(content);
-					let children=this.childrenGetter(item);
-					if(children&&children[Symbol.iterator]&&children[Symbol.iterator]().next().value!=null)
-					{
-						let subTree=document.createElement("UL");
-						rtn.appendChild(subTree);
-					}
-					this.mapper.call(item,content,item);
-					this.dataDomMap.set(item,rtn);
-					this.dataDomMap.set(rtn,item);
+					rtn=this._createDomNode(item);
 				}
 				return rtn;
 			}
 			return undefined;
+		},
+		_createDomNode:function(item)
+		{
+			let rtn=document.createElement("LI");
+			let content=document.createElement("SPAN");
+			rtn.appendChild(content);
+			let children=this.childrenGetter(item);
+			if(children&&children[Symbol.iterator]&&children[Symbol.iterator]().next().value!=null)
+			{
+				let subTree=document.createElement("UL");
+				rtn.appendChild(subTree);
+			}
+			this.mapper.call(item,content,item);
+			this.dataDomMap.set(item,rtn);
+			this.dataDomMap.set(rtn,item);
+			return rtn;
 		},
 		expand:async function(item,state,all)
 		{
@@ -93,7 +98,7 @@
 				item=this.change(item);
 			}
 			let element=this.change(item);
-			let subTree=element.children[1];
+			let subTree=element.children[element.children.length-1];
 			if(subTree&&subTree.tagName==="UL")
 			{
 				state=subTree.classList.toggle("expanded",state);

@@ -78,6 +78,15 @@
 			"NodePatch"
 		]
 	},
+	"Tree.Select.js": {
+		"deps": [
+			"gui.Tree"
+		],
+		"uses": [
+			"rescope",
+			"array.remove"
+		]
+	},
 	"TreeTable.js": {
 		"deps": [
 			"gui.Table"
