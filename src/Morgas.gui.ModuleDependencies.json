@@ -1,13 +1,13 @@
 {
-	"actionize.js": {
+	"gui.actionize": {
 		"deps": [],
 		"uses": []
 	},
-	"blocked.js": {
+	"gui.blocked": {
 		"deps": [],
 		"uses": []
 	},
-	"Dialog.Input.js": {
+	"gui.Dialog.Input": {
 		"deps": [
 			"gui.Dialog"
 		],
@@ -16,40 +16,53 @@
 			"Promise"
 		]
 	},
-	"Dialog.js": {
+	"gui.InputDialog": {
+		"deps": [
+			"gui.Dialog"
+		],
+		"uses": [
+			"getInputValues",
+			"Promise"
+		]
+	},
+	"gui.Dialog": {
 		"deps": [],
 		"uses": [
 			"gui.actionize"
 		]
 	},
-	"dragBox.js": {
+	"gui.dragBox": {
 		"deps": [],
 		"uses": []
 	},
-	"form.js": {
+	"gui.form": {
 		"deps": [],
 		"uses": [
 			"Config"
 		]
 	},
-	"InputHistory.js": {
+	"gui.InputHistory": {
 		"deps": [],
 		"uses": [
 			"array.remove",
 			"rescope"
 		]
 	},
-	"loading.js": {
+	"gui.loading": {
 		"deps": [],
 		"uses": []
 	},
-	"menu.js": {
+	"gui.loading2": {
+		"deps": [],
+		"uses": []
+	},
+	"gui.menu": {
 		"deps": [],
 		"uses": [
 			"NodePatch"
 		]
 	},
-	"Table.js": {
+	"gui.Table": {
 		"deps": [],
 		"uses": [
 			"gui.TableConfig",
@@ -58,27 +71,27 @@
 			"Event"
 		]
 	},
-	"TableConfig.js": {
+	"gui.TableConfig": {
 		"deps": [],
 		"uses": []
 	},
-	"TableConfig.Select.js": {
+	"gui.TableConfig.Select": {
 		"deps": [
 			"gui.TableConfig"
 		],
 		"uses": []
 	},
-	"tabs.js": {
+	"gui.tabs": {
 		"deps": [],
 		"uses": []
 	},
-	"Tree.js": {
+	"gui.Tree": {
 		"deps": [],
 		"uses": [
 			"NodePatch"
 		]
 	},
-	"Tree.Select.js": {
+	"gui.Tree.Select": {
 		"deps": [
 			"gui.Tree"
 		],
@@ -87,7 +100,7 @@
 			"array.remove"
 		]
 	},
-	"TreeTable.js": {
+	"gui.TreeTable": {
 		"deps": [
 			"gui.Table"
 		],
@@ -97,7 +110,7 @@
 			"NodePatch"
 		]
 	},
-	"TreeTableConfig.js": {
+	"gui.TreeTableConfig": {
 		"deps": [
 			"gui.TableConfig"
 		],
@@ -105,7 +118,7 @@
 			"NodePatch"
 		]
 	},
-	"TreeTableConfig.Select.js": {
+	"gui.TreeTableConfig.Select": {
 		"deps": [
 			"gui.TreeTableConfig"
 		],
