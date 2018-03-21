@@ -19,6 +19,6 @@
 		"less": "^2.7.1"
 	},
 	"devDependencies": {
-		"morgas": "^0.8.2"
+		"morgas": "^0.8.3"
 	}
 }
