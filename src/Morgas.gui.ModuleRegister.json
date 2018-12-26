@@ -1,8 +1,6 @@
 {
 	"gui.actionize": "actionize.js",
 	"gui.blocked": "blocked.js",
-	"gui.Dialog.Input": "Dialog.Input.js",
-	"gui.InputDialog": "Dialog.Input.js",
 	"gui.Dialog": "Dialog.js",
 	"gui.dragBox": "dragBox.js",
 	"gui.form": "form.js",
@@ -12,11 +10,13 @@
 	"gui.menu": "menu.js",
 	"gui.Table": "Table.js",
 	"gui.TableConfig": "TableConfig.js",
-	"gui.TableConfig.Select": "TableConfig.Select.js",
 	"gui.tabs": "tabs.js",
 	"gui.Tree": "Tree.js",
-	"gui.Tree.Select": "Tree.Select.js",
 	"gui.TreeTable": "TreeTable.js",
 	"gui.TreeTableConfig": "TreeTableConfig.js",
-	"gui.TreeTableConfig.Select": "TreeTableConfig.Select.js"
+	"gui.Dialog.Input": "Dialog/Input.js",
+	"gui.InputDialog": "Dialog/Input.js",
+	"gui.TableConfig.Select": "TableConfig/Select.js",
+	"gui.Tree.Select": "Tree/Select.js",
+	"gui.TreeTableConfig.Select": "TreeTableConfig/Select.js"
 }

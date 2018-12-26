@@ -7,24 +7,6 @@
 		"deps": [],
 		"uses": []
 	},
-	"gui.Dialog.Input": {
-		"deps": [
-			"gui.Dialog"
-		],
-		"uses": [
-			"getInputValues",
-			"Promise"
-		]
-	},
-	"gui.InputDialog": {
-		"deps": [
-			"gui.Dialog"
-		],
-		"uses": [
-			"getInputValues",
-			"Promise"
-		]
-	},
 	"gui.Dialog": {
 		"deps": [],
 		"uses": [
@@ -75,12 +57,6 @@
 		"deps": [],
 		"uses": []
 	},
-	"gui.TableConfig.Select": {
-		"deps": [
-			"gui.TableConfig"
-		],
-		"uses": []
-	},
 	"gui.tabs": {
 		"deps": [],
 		"uses": []
@@ -89,15 +65,6 @@
 		"deps": [],
 		"uses": [
 			"NodePatch"
-		]
-	},
-	"gui.Tree.Select": {
-		"deps": [
-			"gui.Tree"
-		],
-		"uses": [
-			"rescope",
-			"array.remove"
 		]
 	},
 	"gui.TreeTable": {
@@ -116,6 +83,39 @@
 		],
 		"uses": [
 			"NodePatch"
+		]
+	},
+	"gui.Dialog.Input": {
+		"deps": [
+			"gui.Dialog"
+		],
+		"uses": [
+			"getInputValues",
+			"Promise"
+		]
+	},
+	"gui.InputDialog": {
+		"deps": [
+			"gui.Dialog"
+		],
+		"uses": [
+			"getInputValues",
+			"Promise"
+		]
+	},
+	"gui.TableConfig.Select": {
+		"deps": [
+			"gui.TableConfig"
+		],
+		"uses": []
+	},
+	"gui.Tree.Select": {
+		"deps": [
+			"gui.Tree"
+		],
+		"uses": [
+			"rescope",
+			"array.remove"
 		]
 	},
 	"gui.TreeTableConfig.Select": {
