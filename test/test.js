@@ -47,20 +47,28 @@
 	tests.loadTest("blocked");
 	tests.loadTest("loading");
 	tests.loadTest("Dialog");
-	tests.loadMorgas("Morgas.Patch");
-	tests.loadMorgas("Morgas.util.function.proxy");
-	tests.loadMorgas("Morgas.NodePatch");
-	tests.loadMorgas("Morgas.util.object.adopt");
+	tests.loadMorgas("Patch");
+	tests.loadMorgas("util/function/proxy");
+	tests.loadMorgas("NodePatch");
+	tests.loadMorgas("util/object/adopt");
 	tests.loadTest("Tree");
-	tests.loadMorgas("Morgas.util.function.rescope");
-	tests.loadMorgas("Morgas.util.array.remove");
-	tests.loadTest("Tree.Select");
+	tests.loadMorgas("util/function/rescope");
+	tests.loadMorgas("util/array/remove");
+	tests.loadTest("Tree/Select");
 	tests.loadTest("TableConfig",true);
-	tests.loadTest("TableConfig.Select");
+	tests.loadTest("TableConfig/Select");
+	tests.loadMorgas("Event");
+	tests.loadTest("Table",true);
+	tests.loadMorgas("SortedArray");
+	tests.loadMorgas("util/object/equals");
+	tests.loadMorgas("util/object/goPath");
+	tests.loadMorgas("util/function/proxy");
+	tests.loadMorgas("Organizer");
+	tests.loadTest("Table/OrganizedTable",true);
 	tests.loadTest("TreeTableConfig");
-	tests.loadTest("TreeTableConfig.Select",true); // TableConfig.Select.less
+	tests.loadTest("TreeTableConfig/Select",true); // TableConfig.Select.less
 	tests.loadTest("menu");
-	tests.loadMorgas("Morgas.Config");
+	tests.loadMorgas("Config");
 	tests.loadTest("form");
 	tests.loadTest("tabs");
 	tests.loadTest("actionize",true);

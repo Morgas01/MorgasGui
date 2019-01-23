@@ -108,6 +108,9 @@
 		{
 			return this.dataDomMap.get(item);
 		},
+
+		//*** methods for TableConfig.Select ***//
+
 		getSelectedRows:function()
 		{
 			return this.data.reduce((rtn,entry)=>

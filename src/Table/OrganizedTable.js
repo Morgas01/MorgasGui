@@ -3,12 +3,10 @@
 	let Table=GMOD("gui.Table");
 
 	SC=SC({
-		TableConfig:"gui.TableConfig.Select",
-		org:"Organizer",
-		proxy:"proxy"
+		org:"Organizer"
 	});
 
-	let OrganizedTable=µ.Class(Table,{
+	let OrganizedTable=Table.OrganizedTable=µ.Class(Table,{
 		constructor:function(tableConfig)
 		{
 			this.mega(tableConfig);
@@ -16,11 +14,6 @@
 			this.organizer=new SC.org();
 			this.sortKey=null;
 			this.filterKey=null;
-
-			SC.proxy(this.organizer,{
-				"sort":"addSort",
-				"filter":"addFilter"
-			},this);
 		},
 		add(data)
 		{
@@ -31,7 +24,7 @@
 		{
 			this.mega();
 			this.organizer.remove(data);
-		}
+		},
 		updateTable:function()
 		{
 			if(!this.tableElement) return false;
@@ -42,10 +35,10 @@
 			let values=null;
 			if(this.sortKey!=null)
 			{
-				if(this.filter==null) values=this.organizer.getSort(this.sortKey);
+				if(this.filterKey==null) values=this.organizer.getSort(this.sortKey);
 				else values=this.organizer.combine(false,this.sortKey).filter(this.filterKey).get();
 			}
-			else if(this.filter!=null)
+			else if(this.filterKey!=null)
 			{
 				values=this.organizer.getFilter(this.filterKey).getValues();
 			}
@@ -56,26 +49,48 @@
 
 			values.forEach(entry=>this.tableBody.appendChild(this.dataDomMap.get(entry)));
 
+			this.tableElement.appendChild(this.tableBody); //readd to dom
+
 			return true;
+		},
+		addSort(key,fn)
+		{
+			this.organizer.sort(key,fn);
+			return this;
 		},
 		setSort(sortKey)
 		{
+			if(sortKey==null)
+			{
+				this.sortKey=null;
+				return true;
+			}
 			if(this.organizer.hasSort(sortKey))
 			{
 				this.sortKey=sortKey;
 				return true;
 			}
 			return false;
-		}
+		},
+		addFilter(key,fn)
+		{
+			this.organizer.filter(key,fn);
+			return this;
+		},
 		setFilter(filterKey)
 		{
+			if(filterKey==null)
+			{
+				this.filterKey=null;
+				return true;
+			}
 			if(this.organizer.hasFilter(filterKey))
 			{
 				this.filterKey=filterKey;
 				return true;
 			}
 			return false;
-		};
+		}
 	});
 
 	SMOD("gui.OrganizedTable",OrganizedTable);
