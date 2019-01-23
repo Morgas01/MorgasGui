@@ -58,14 +58,15 @@
 					};
 					break;
 				case "function":
-					column={name:column.name,styleClass:column.name,fn:column};
+					let parsedColumn=Object.create(column);
+					parsedColumn.fn=column;
+					if(!parsedColumn.styleClass) parsedColumn.styleClass=column.name;
+					column=parsedColumn;
 					break;
 				case "object":
-					var getter=column.getter;
-					column={name:column.name,styleClass:column.styleClass,fn:column.fn};
-					if(!column.fn&&getter) column.fn=function(cell,data)
+					if(!column.fn&&column.getter) column.fn=function(cell,data)
 					{
-						cell.dataset.translation=cell.textContent=getter(data);
+						cell.dataset.translation=cell.textContent=column.getter(data);
 					}
 					break;
 				default:
