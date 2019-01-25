@@ -62,7 +62,6 @@
 	tests.loadMorgas("SortedArray");
 	tests.loadMorgas("util/object/equals");
 	tests.loadMorgas("util/object/goPath");
-	tests.loadMorgas("util/function/proxy");
 	tests.loadMorgas("Organizer");
 	tests.loadTest("Table/OrganizedTable",true);
 	tests.loadTest("TreeTableConfig");

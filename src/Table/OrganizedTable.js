@@ -14,6 +14,7 @@
 			this.organizer=new SC.org();
 			this.sortKey=null;
 			this.filterKey=null;
+			this.groupMap=new Map();
 		},
 		add(data)
 		{
@@ -32,26 +33,29 @@
 			this.tableElement.removeChild(this.tableBody); //remove from dom for performance
 			while(this.tableBody.firstChild) this.tableBody.removeChild(this.tableBody.firstChild);
 
-			let values=null;
-			if(this.sortKey!=null)
+			let combine=this.organizer.combine(false,this.sortKey);
+			if(this.filterKey!=null)
 			{
-				if(this.filterKey==null) values=this.organizer.getSort(this.sortKey);
-				else values=this.organizer.combine(false,this.sortKey).filter(this.filterKey).get();
+				combine.filter(this.filterKey);
 			}
-			else if(this.filterKey!=null)
+			for(let [groupKey,groupPart] of this.groupMap.entries())
 			{
-				values=this.organizer.getFilter(this.filterKey).getValues();
-			}
-			else
-			{
-				values=this.organizer.getValues();
+				combine.group(groupKey,groupPart);
 			}
 
-			values.forEach(entry=>this.tableBody.appendChild(this.dataDomMap.get(entry)));
+			combine.get().forEach(entry=>this.tableBody.appendChild(this.dataDomMap.get(entry)));
 
 			this.tableElement.appendChild(this.tableBody); //readd to dom
 
 			return true;
+		},
+		update(item)
+		{
+			if(item!=null)
+			{
+				this.organizer.update(entry);
+			}
+			this.mega();
 		},
 		addSort(key,fn)
 		{
@@ -87,6 +91,29 @@
 			if(this.organizer.hasFilter(filterKey))
 			{
 				this.filterKey=filterKey;
+				return true;
+			}
+			return false;
+		},
+		addGroup(key,fn)
+		{
+			this.organizer.group(key,fn);
+			return this;
+		},
+		getGroupParts(groupKey)
+		{
+			return this.organizer.getGroupParts(groupKey);
+		},
+		setGroup(groupKey,groupPart)
+		{
+			if(groupPart==null)
+			{
+				this.groupMap.delete(groupKey);
+				return true;
+			}
+			if(this.organizer.hasGroup(groupKey)&&this.organizer.getGroupPart(groupKey,groupPart)!=null)
+			{
+				this.groupMap.set(groupKey,groupPart);
 				return true;
 			}
 			return false;

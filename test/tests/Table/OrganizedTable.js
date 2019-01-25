@@ -49,9 +49,13 @@
 	 				<span>filter:</span>
 					<select name="filter">
 						<option value="">none</option>
-						<option value="groupHedgehog">group hedgehog</option>
-						<option value="groupRabbit">group rabbit</option>
 						<option value="active">active</option>
+					</select>
+				</label>
+	 			<label>
+	 				<span>group:</span>
+					<select name="group">
+						<option value="">none</option>
 					</select>
 				</label>
 	 		`;
@@ -62,24 +66,37 @@
 	 		.addSort("dataValue+",µ.Organizer.orderBy(d=>d.data.value,false))
 	 		.addSort("dataValue-",µ.Organizer.orderBy(d=>d.data.value,true))
 
-	 		.addFilter("groupHedgehog",d=>[].concat(d.group).includes("hedgehog"))
-	 		.addFilter("groupRabbit",d=>[].concat(d.group).includes("rabbit"))
-	 		.addFilter("active",d=>d.active);
+	 		.addFilter("active",d=>d.active)
 
-	 		table.add(data);
+	 		.addGroup("animalGroup",d=>d.group);
+
+
+			table.add(data);
+
+	 		let groupSelect=container.querySelector("[name='group']");
+	 		for(let groupPartName of table.getGroupParts("animalGroup"))
+			{
+				let option=document.createElement("OPTION");
+				option.textContent=option.value=groupPartName;
+				groupSelect.appendChild(option);
+			}
+
 	 		container.appendChild(table.getTable());
 	 		container.addEventListener("change",function(event)
 	 		{
 	 			let select=event.target;
+	 			let value=select.value;
+	 			if(value=="") value=null;
 	 			switch(select.name)
 	 			{
 	 				case "sort":
-	 					if(select.value==="") table.setSort(null);
-	 					else table.setSort(select.value);
+	 					table.setSort(value);
 	 					break;
 	 				case "filter":
-	 					if(select.value==="") table.setFilter(null);
-	 					else table.setFilter(select.value);
+	 					table.setFilter(value);
+	 					break;
+	 				case "group":
+	 					table.setGroup("animalGroup",value);
 	 					break;
 	 			}
 	 			table.updateTable();
