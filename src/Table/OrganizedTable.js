@@ -3,7 +3,8 @@
 	let Table=GMOD("gui.Table");
 
 	SC=SC({
-		org:"Organizer"
+		org:"Organizer",
+		encase:"encase"
 	});
 
 	let OrganizedTable=Table.OrganizedTable=µ.Class(Table,{
@@ -13,6 +14,7 @@
 
 			this.organizer=new SC.org();
 			this.sortKey=null;
+			this.sortReverse=false;
 			this.filterKey=null;
 			this.groupMap=new Map();
 		},
@@ -38,12 +40,17 @@
 			{
 				combine.filter(this.filterKey);
 			}
-			for(let [groupKey,groupPart] of this.groupMap.entries())
+			for(let [groupKey,groupParts] of this.groupMap.entries())
 			{
-				combine.group(groupKey,groupPart);
+				for(let groupPart of groupParts)
+				{
+					combine.group(groupKey,groupPart);
+				}
 			}
 
-			combine.get().forEach(entry=>this.tableBody.appendChild(this.dataDomMap.get(entry)));
+			let values=combine.get();
+			if(this.sortReverse) values.reverse();
+			values.forEach(entry=>this.tableBody.appendChild(this.dataDomMap.get(entry)));
 
 			this.tableElement.appendChild(this.tableBody); //readd to dom
 
@@ -62,7 +69,7 @@
 			this.organizer.sort(key,fn);
 			return this;
 		},
-		setSort(sortKey)
+		setSort(sortKey,sortReverse=false)
 		{
 			if(sortKey==null)
 			{
@@ -72,9 +79,18 @@
 			if(this.organizer.hasSort(sortKey))
 			{
 				this.sortKey=sortKey;
+				this.sortReverse=sortReverse;
 				return true;
 			}
 			return false;
+		},
+		getSort()
+		{
+			return this.sortKey;
+		},
+		getSortReverse()
+		{
+			return this.sortReverse;
 		},
 		addFilter(key,fn)
 		{
@@ -95,6 +111,10 @@
 			}
 			return false;
 		},
+		getFilter()
+		{
+			return this.filterKey;
+		},
 		addGroup(key,fn)
 		{
 			this.organizer.group(key,fn);
@@ -104,19 +124,35 @@
 		{
 			return this.organizer.getGroupParts(groupKey);
 		},
-		setGroup(groupKey,groupPart)
+		setGroup(groupKey,groupParts)
 		{
-			if(groupPart==null)
+			groupParts=SC.encase(groupParts);
+			if(groupParts.length==0)
 			{
 				this.groupMap.delete(groupKey);
 				return true;
 			}
-			if(this.organizer.hasGroup(groupKey)&&this.organizer.getGroupPart(groupKey,groupPart)!=null)
+			if(this.organizer.hasGroup(groupKey)&&groupParts.every(groupPart=>this.organizer.getGroupPart(groupKey,groupPart)!=null))
 			{
-				this.groupMap.set(groupKey,groupPart);
+				this.groupMap.set(groupKey,groupParts);
 				return true;
 			}
 			return false;
+		},
+		getGroups()
+		{
+			let rtn={};
+			for(let [groupKey,groupParts] of this.groupMap.entries())
+			{
+				rtn[groupKey]=groupParts.slice();
+			}
+			return rtn;
+		},
+		getTable()
+		{
+			let tableElement=this.mega();
+			tableElement.classList.add("OrganizedTable");
+			return tableElement;
 		}
 	});
 

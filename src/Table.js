@@ -32,6 +32,7 @@
 					this.dataDomMap.set(data,row);
 					this.dataDomMap.set(row,data);
 				});
+				this.tableElement.classList.add("Table");
 				if(this.tableConfig.hasHeader())
 				{
 					this.tableHeader=this.tableElement.firstElementChild;

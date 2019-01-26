@@ -97,9 +97,9 @@
 					option.dataset.translation=name+"."+val;
 					field.appendChild(option);
 				}
-				field.size=field.children.length;
 				if(config.multiple)
 				{
+					field.size=field.children.length;
 					field.multiple=true;
 				}
 				field.value=null;

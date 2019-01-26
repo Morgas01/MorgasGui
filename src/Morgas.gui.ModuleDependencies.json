@@ -103,6 +103,14 @@
 			"Promise"
 		]
 	},
+	"gui.OrganizedTable": {
+		"deps": [
+			"gui.Table"
+		],
+		"uses": [
+			"Organizer"
+		]
+	},
 	"gui.TableConfig.Select": {
 		"deps": [
 			"gui.TableConfig"
