@@ -336,6 +336,8 @@
 			label.appendChild(field);
 			label.isValid=()=>field.isValid();
 
+			if(config.fieldFirst) label.appendChild(span);
+
 			if(parent instanceof SC.Config.Container.Array || parent instanceof SC.Config.Container.Map)
 			{
 				let removeButton=document.createElement("button")

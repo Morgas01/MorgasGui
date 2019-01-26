@@ -23,6 +23,15 @@
 			this.mega(data);
 			this.organizer.addAll(data);
 		},
+		clear()
+		{
+			this.organizer.clear();
+			this.sortKey=null;
+			this.sortReverse=false;
+			this.filterKey=false;
+			this.groupMap.clear();
+			this.mega();
+		},
 		remove(data)
 		{
 			this.mega();
