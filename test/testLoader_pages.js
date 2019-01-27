@@ -1,10 +1,6 @@
 (function(){
 
 	window.tests={
-		loadMorgas:function(name)
-		{
-			document.write(String.raw`<script type="application/javascript" charset="utf-8" src="https://morgas01.github.io/Morgas.js/src/${name}.js" defer></script>`);
-		},
 		loadTest:function(name,noStyle)
 		{
 			if(!noStyle)
@@ -25,7 +21,7 @@
 	window.less={
 		env: "development",
 		async: true,
-		fileAsync: true,
+		fileAsync: true
 	};
 
 })();
