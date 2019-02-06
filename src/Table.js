@@ -3,7 +3,7 @@
 	SC=SC({
 		TableConfig:"gui.TableConfig",
 		arrayRemove:"array.remove",
-		reporter:"EventReporterPatch",
+		Reporter:"EventReporterPatch",
 		Event:"Event"
 	});
 
@@ -21,7 +21,7 @@
 			this.dataDomMap=new WeakMap();
 			this.data=[];
 
-			new SC.reporter(this,[Table.AddEvent,Table.UpdateEvent,Table.RemoveEvent]);
+			new SC.Reporter(this,[Table.AddEvent,Table.UpdateEvent,Table.RemoveEvent]);
 		},
 		getTable:function()
 		{

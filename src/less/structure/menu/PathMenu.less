@@ -1,0 +1,14 @@
+@import (once) "../menu";
+.PathMenu {
+	> li > ul {
+		top:100%;
+		left:0;
+		> li {
+			display:block;
+		}
+	}
+	.active {
+		.selectable();
+		.selected();
+	}
+}

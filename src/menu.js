@@ -30,7 +30,7 @@
 
 		return rootResult.item;
 	};
-	
+
 	µ.gui.menu=function(data,mapper,childrenGetter,clickable)
 	{
 		var menu=document.createElement("ul");
@@ -41,7 +41,7 @@
 		menu.classList.add("menu");
 		return menu;
 	};
-	
+
 	µ.gui.menu.button=function(text,data,mapper,childrenGetter,clickable)
 	{
 		var wrapper=document.createDocumentFragment();
@@ -50,7 +50,7 @@
 		button.classList.add("menu");
 		var menu=µ.gui.menu(data,mapper,childrenGetter,clickable);
 		menu.classList.add("menu");
-		
+
 		wrapper.appendChild(button);
 		wrapper.appendChild(menu);
 		return wrapper;

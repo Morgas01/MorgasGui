@@ -7,6 +7,13 @@
 	border-color:@ternaryColor;
 }
 
+.centerPosition(@position:absolute) {
+	position:@position;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+
 .fadeIn(@time:@fadeTime, @delay:0s) {
 	animation+: fadeIn @time @delay both;
 
