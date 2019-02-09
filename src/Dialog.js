@@ -26,7 +26,8 @@
 		target=document.body,
 		autofocus=true,
 		actions={},
-		dialogTagName="div"
+		dialogTagName="div",
+		actionEvents
 		}={})
 		{
 			this.wrapper=document.createElement("div");
@@ -54,7 +55,7 @@
 
 			this.actions=actions;
 
-			SC.action(this.actions,this.content,this);
+			SC.action(this.actions,this.content,this,actionEvents);
 		},
 		appendTo(element)
 		{
