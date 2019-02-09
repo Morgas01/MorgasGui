@@ -1,7 +1,9 @@
 {
 	"gui.actionize": {
 		"deps": [],
-		"uses": []
+		"uses": [
+			"encase"
+		]
 	},
 	"gui.blocked": {
 		"deps": [],
@@ -103,12 +105,22 @@
 			"Promise"
 		]
 	},
+	"gui.PathMenu": {
+		"deps": [
+			"gui.menu"
+		],
+		"uses": [
+			"EventReporterPatch",
+			"Event"
+		]
+	},
 	"gui.OrganizedTable": {
 		"deps": [
 			"gui.Table"
 		],
 		"uses": [
-			"Organizer"
+			"Organizer",
+			"encase"
 		]
 	},
 	"gui.TableConfig.Select": {

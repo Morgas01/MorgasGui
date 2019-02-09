@@ -6,7 +6,7 @@
 	
 	if(!µ.gui) µ.gui={};
 
-	let mapData=function(root,mapper,childrenGetter,clickable)
+	let mapData=function(root,mapper,{childrenGetter,clickable,filter}={})
 	{
 
 		var rootResult=SC.Node.traverse(root,function(node,parent,parentResult,entry)
@@ -26,29 +26,29 @@
 			if(clickable) item.tabIndex=-1;
 			mapper.call(node,item,node,parent,entry.index);
 			return {container:null,item:item};
-		},childrenGetter);
+		},{childrenGetter,filter});
 
 		return rootResult.item;
 	};
 
-	µ.gui.menu=function(data,mapper,childrenGetter,clickable)
+	µ.gui.menu=function(data,mapper,param)
 	{
 		var menu=document.createElement("ul");
 		for(var entry of data)
 		{
-			menu.appendChild(mapData(entry,mapper,childrenGetter,clickable));
+			menu.appendChild(mapData(entry,mapper,param));
 		}
 		menu.classList.add("menu");
 		return menu;
 	};
 
-	µ.gui.menu.button=function(text,data,mapper,childrenGetter,clickable)
+	µ.gui.menu.button=function(text,data,mapper,param)
 	{
 		var wrapper=document.createDocumentFragment();
 		var button=document.createElement("button");
 		button.textContent=button.dataset.translation=text;
 		button.classList.add("menu");
-		var menu=µ.gui.menu(data,mapper,childrenGetter,clickable);
+		var menu=µ.gui.menu(data,mapper,param);
 		menu.classList.add("menu");
 
 		wrapper.appendChild(button);
@@ -56,7 +56,7 @@
 		return wrapper;
 	};
 
-	µ.gui.menu.splitButton=function(text,data,mapper,childrenGetter,clickable)
+	µ.gui.menu.splitButton=function(text,data,mapper,param)
 	{
 		var wrapper=document.createDocumentFragment();
 		var button=document.createElement("button");
@@ -64,7 +64,7 @@
 		wrapper.appendChild(button);
 
 		var splitWrapper=document.createElement("div");
-		splitWrapper.appendChild(µ.gui.menu.button("▽",data,mapper,childrenGetter,clickable));
+		splitWrapper.appendChild(µ.gui.menu.button("▽",data,mapper,param));
 		wrapper.appendChild(splitWrapper);
 
 		if(typeof text!="function")button.textContent=button.dataset.translation=text;

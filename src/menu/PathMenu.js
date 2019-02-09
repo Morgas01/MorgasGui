@@ -12,22 +12,43 @@
 	let includes=Function.prototype.call.bind(Array.prototype.includes);
 
 	let PathMenu=guiMenu.PathMenu=µ.Class({
-		constructor:function(data,mapper,{childrenGetter,active})
+		constructor:function(
+			data,
+			mapper,
+			{
+				active,
+				placeholder=document.createElement("li"),
+				menuPlaceholder=document.createElement("li"),
+				deselectable=true,
+				menuParam={}
+			}={})
 		{
 			new SC.Reporter(this,[PathMenu.ChangeEvent]);
 
 			this.domDataMap=new WeakMap();
-			this.mapper=mapper
+			this.mapper=mapper;
+
 			this.menu=guiMenu(data,(element,data)=>
 			{
 				this.domDataMap.set(data,element);
 				this.domDataMap.set(element,data);
 				mapper(element,data);
-			},childrenGetter);
+			},menuParam);
 			this.element=document.createElement("UL");
 			this.element.classList.add("PathMenu","menu");
 			this.element.addEventListener("focusin",this._showMenu.bind(this));
 			this.element.addEventListener("click",this._selectItem.bind(this));
+
+			this.placeholder=placeholder;
+			this.placeholder.tabIndex=-1;
+			this.placeholder.classList.add("placeholder");
+
+			this.menuPlaceholder=menuPlaceholder;
+			this.menuPlaceholder.classList.add("placeholder");
+
+			this.menu.insertBefore(this.menuPlaceholder,this.menu.firstChild);
+
+			if(deselectable) this.element.classList.add("deselectable");
 
 			this.activePath=[];
 
@@ -59,7 +80,7 @@
 			}
 			else
 			{
-				//TODO dummy item
+				this.element.appendChild(this.placeholder);
 			}
 			this.reportEvent(new PathMenu.ChangeEvent(this.activePath));
 		},
@@ -74,7 +95,7 @@
 			if(pathIndex==-1) return;
 			let item=this.activePath[pathIndex];
 
-			let itemElement=this.domDataMap.get(item);
+			let itemElement=this.domDataMap.get(item)||this.menuPlaceholder;
 			itemElement.classList.add(ACTIVE_STYLE);
 			let subMenu=itemElement.parentNode;
 			let subMenuParent=subMenu.parentNode;
@@ -93,7 +114,7 @@
 			if(target==this.element||includes(this.element.children,target)) return;
 
 			document.activeElement.blur();
-			while(target&&!this.domDataMap.has(target)) target=target.parentNode;
+			while(target&&!(target==this.menu||this.domDataMap.has(target))) target=target.parentNode;
 			if(!target) return;
 			this.setActive(target);
 		}
@@ -108,5 +129,7 @@
 			this.path=activePath.slice();
 		}
 	});
+
+	SMOD("gui.PathMenu",PathMenu);
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut);

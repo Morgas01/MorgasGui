@@ -1,5 +1,11 @@
 @import (once) "../menu";
 .PathMenu {
+	> .placeholder::after {
+		content:"❯"; /* makes it clickable */
+ 	}
+	&.deselectable .placeholder {
+		min-height:1em;
+ 	}
 	> li > ul {
 		top:100%;
 		left:0;

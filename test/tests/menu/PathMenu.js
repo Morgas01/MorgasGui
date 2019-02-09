@@ -34,7 +34,7 @@
 	module("menu/PathMenu",[
 		function (container)
 		{
-			let menu=new µ.gui.menu.PathMenu(menuData,mapper,{active:menuData[1].children[2]});
+			let menu=new µ.gui.menu.PathMenu(menuData,mapper/*,{active:menuData[1].children[2]}*/);
 			container.appendChild(menu.element);
 			menu.addEventListener("pathChange",null,e=>alert(JSON.stringify(e,null,"\t")));
 		}

@@ -34,7 +34,7 @@
 		},
 		remove(data)
 		{
-			this.mega();
+			this.mega(data);
 			this.organizer.remove(data);
 		},
 		updateTable:function()

@@ -6,30 +6,6 @@
 
 	if(!µ.gui) µ.gui={};
 
-	let mapData=function(root,mapper,childrenGetter)
-	{
-
-		let rootResult=SC.Node.traverse(root,function(node,parent,parentResult,entry)
-		{
-			let item=document.createElement("LI");
-			if(parent)
-			{
-				if(parent!=root)item.dataset.index=parentResult.item.dataset.index+"."+entry.index;
-				else item.dataset.index=entry.index;
-				if(!parentResult.container)
-				{
-					parentResult.container=document.createElement("UL");
-					parentResult.item.appendChild(parentResult.container);
-				}
-				parentResult.container.appendChild(item);
-			}
-			mapper.call(node,item,node,parent,entry.index);
-			return {container:null,item:item};
-		},childrenGetter);
-
-		return rootResult.item;
-	}
-
 	let TREE=µ.gui.Tree=µ.Class({
 		constructor:function(data=[],mapper,{
 			childrenGetter=null
@@ -47,7 +23,7 @@
 
 			for(let root of this.data)
 			{
-				SC.Node.traverse(root,node=>this.dataDomMap.set(node,null),this.childrenGetter);
+				SC.Node.traverse(root,node=>this.dataDomMap.set(node,null),{childrenGetter:this.childrenGetter});
 				this.element.appendChild(this.change(root));
 			}
 			this.element.addEventListener("click",event=>
