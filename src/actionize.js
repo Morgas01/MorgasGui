@@ -1,6 +1,8 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
-	//SC=SC({});
+	SC=SC({
+		encase:"encase"
+	});
 
 	if(!µ.gui) µ.gui={};
 
@@ -16,15 +18,15 @@
 	 * @param {Object.<String,ActionCallback>} fns
 	 * @param {Element} element
 	 */
-	µ.gui.actionize=function(fns,element,scope=element)
+	µ.gui.actionize=function(fns,element,scope=element,events=["click"])
 	{
-		element.addEventListener("click",function(e)
+		let listener=function(e)
 		{
-			var target=e.target;
-			var fn
+			let target=e.target;
+			let fn
 			while(target&&target!=element)
 			{
-				var action=target.dataset.action;
+				let action=target.dataset.action;
 				if( action in fns)
 				{
 					fns[action].call(scope,e,target,element);
@@ -33,7 +35,8 @@
 				}
 				target=target.parentNode;
 			}
-		})
+		}
+		for(let event of SC.encase(events))	element.addEventListener(event,listener);
 	};
 	SMOD("gui.actionize",µ.gui.actionize);
 
