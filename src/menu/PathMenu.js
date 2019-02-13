@@ -86,7 +86,7 @@
 		},
 		getActive()
 		{
-			return this.activePath&&this.activePath[this.activePath.length]||null;
+			return this.activePath&&this.activePath[this.activePath.length-1]||null;
 		},
 		_showMenu(event)
 		{
