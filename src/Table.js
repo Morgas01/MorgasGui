@@ -4,7 +4,8 @@
 		TableConfig:"gui.TableConfig",
 		arrayRemove:"array.remove",
 		Reporter:"EventReporterPatch",
-		Event:"Event"
+		Event:"Event",
+		encase:"encase"
 	});
 
 	if(!µ.gui) µ.gui={};
@@ -64,10 +65,11 @@
 			{
 				this.remove(entry);
 			}
+			return this;
 		},
 		add:function(rowData)
 		{
-			if(!Array.isArray(rowData)) rowData=[rowData];
+			rowData=SC.encase(rowData);
 			for(let entry of rowData)
 			{
 				this.data.push(entry);
@@ -82,6 +84,7 @@
 				}
 				this.reportEvent(new Table.AddEvent(entry,row));
 			}
+			return this;
 		},
 		update:function(item)
 		{

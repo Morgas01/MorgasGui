@@ -4,7 +4,8 @@
 
 	SC=SC({
 		Reporter:"EventReporterPatch",
-		Event:"Event"
+		Event:"Event",
+		encase:"encase"
 	});
 
 	let ACTIVE_STYLE="active";
@@ -25,15 +26,13 @@
 		{
 			new SC.Reporter(this,[PathMenu.ChangeEvent]);
 
+			this.data=[];
 			this.domDataMap=new WeakMap();
 			this.mapper=mapper;
 
-			this.menu=guiMenu(data,(element,data)=>
-			{
-				this.domDataMap.set(data,element);
-				this.domDataMap.set(element,data);
-				mapper(element,data);
-			},menuParam);
+			this.menu=null;
+			this.menuParam=menuParam;
+
 			this.element=document.createElement("UL");
 			this.element.classList.add("PathMenu","menu");
 			this.element.addEventListener("focusin",this._showMenu.bind(this));
@@ -46,13 +45,30 @@
 			this.menuPlaceholder=menuPlaceholder;
 			this.menuPlaceholder.classList.add("placeholder");
 
-			this.menu.insertBefore(this.menuPlaceholder,this.menu.firstChild);
-
 			if(deselectable) this.element.classList.add("deselectable");
 
 			this.activePath=[];
 
+			this.setData(data);
 			this.setActive(active);
+		},
+		setData(data)
+		{
+			this.domDataMap=new WeakMap(); //clear map
+			this.data.length=0;
+			this.data.push(...SC.encase(data));
+			this._createMenu();
+		},
+		_createMenu()
+		{
+			this.menu=guiMenu(this.data,(element,data)=>
+			{
+				this.domDataMap.set(data,element);
+				this.domDataMap.set(element,data);
+				this.mapper(element,data);
+			},this.menuParam);
+
+			this.menu.insertBefore(this.menuPlaceholder,this.menu.firstChild);
 		},
 		setActive(item)
 		{
@@ -119,7 +135,6 @@
 			this.setActive(target);
 		}
 	});
-
 
 	PathMenu.ChangeEvent=µ.Class(SC.Event,{
 		name:"pathChange",

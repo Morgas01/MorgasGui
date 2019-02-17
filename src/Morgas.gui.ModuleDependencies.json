@@ -52,7 +52,8 @@
 			"gui.TableConfig",
 			"array.remove",
 			"EventReporterPatch",
-			"Event"
+			"Event",
+			"encase"
 		]
 	},
 	"gui.TableConfig": {
@@ -66,7 +67,8 @@
 	"gui.Tree": {
 		"deps": [],
 		"uses": [
-			"NodePatch"
+			"NodePatch",
+			"encase"
 		]
 	},
 	"gui.TreeTable": {
@@ -111,7 +113,8 @@
 		],
 		"uses": [
 			"EventReporterPatch",
-			"Event"
+			"Event",
+			"encase"
 		]
 	},
 	"gui.OrganizedTable": {

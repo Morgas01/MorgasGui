@@ -2,6 +2,7 @@
 
 	SC=SC({
 		Node:"NodePatch",
+		encase:"encase"
 	});
 
 	if(!µ.gui) µ.gui={};
@@ -11,7 +12,7 @@
 			childrenGetter=null
 		}={})
 		{
-			this.data=[].concat(data);
+			this.data=[];
 			this.mapper=mapper;
 			this.childrenGetter=SC.Node.normalizeChildrenGetter(childrenGetter);
 			this.element=document.createElement("UL");
@@ -20,12 +21,6 @@
 			this.filtered=null
 
 			this.dataDomMap=new WeakMap();
-
-			for(let root of this.data)
-			{
-				SC.Node.traverse(root,node=>this.dataDomMap.set(node,null),{childrenGetter:this.childrenGetter});
-				this.element.appendChild(this.change(root));
-			}
 			this.element.addEventListener("click",event=>
 			{
 				if(event.target.tagName==="UL"&&event.target!=this.element)
@@ -34,6 +29,27 @@
 				}
 			},false);
 
+			this.add(data);
+		},
+		add(roots)
+		{
+			roots=SC.encase(roots);
+			for(let root of roots)
+			{
+				this.data.push(root);
+				SC.Node.traverse(root,node=>this.dataDomMap.set(node,null),{childrenGetter:this.childrenGetter});
+				this.element.appendChild(this.change(root));
+			}
+
+			return this;
+		},
+		clear()
+		{
+			this.data.length=0;
+			this.dataDomMap=new WeakMap(); // clear map
+			this.element.innerHTML="";
+
+			return this;
 		},
 		/**
 		 * exchanges entry with matching row and vice versa
