@@ -46,7 +46,7 @@
 				};
 
 				return result;
-			},this.options.childrenGetter).fragment);
+			},{childrenGetter:this.options.childrenGetter}).fragment);
 		},
 		getRow:function(data,depth=0)
 		{

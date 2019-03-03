@@ -79,7 +79,7 @@
 					SC.Node.traverse(this.change(entry),(row)=>
 					{
 						if(row.firstChild.checked) rtn.push(row);
-					},"treeChildren");
+					},{childrenGetter:"treeChildren"});
 				}
 			}
 			return rtn;

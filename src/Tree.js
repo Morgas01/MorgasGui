@@ -143,7 +143,7 @@
 						return true;
 					}
 					return false;
-				});
+				},{childrenGetter:this.childrenGetter});
 			}
 
 			for(let entry of this.filtered) this.filtered.add(parentMap.get(entry));
@@ -156,7 +156,7 @@
 						this.change(node).remove();
 						return true;
 					}
-				});
+				},{childrenGetter:this.childrenGetter});
 			}
 		}
 

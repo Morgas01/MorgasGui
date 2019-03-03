@@ -84,7 +84,7 @@
 						{
 							SC.Node.traverse(row,(node,parent,parentResult,entry)=>{
 								if(entry.depth>0) node.firstElementChild.checked=false;
-							},"treeChildren");
+							},{childrenGetter:"treeChildren"});
 						}
 					}
 				});
@@ -156,7 +156,7 @@
 						row.children[0].checked=false;
 						SC.Node.traverse(row,subRow=>
 							subRow.children[0].checked=false,
-						"treeChildren")
+						{childrenGetter:"treeChildren"})
 					});
 					row.children[0].checked=true;
 					lastSelected=row;
