@@ -64,6 +64,7 @@
 	tests.loadTest("TreeTableConfig");
 	tests.loadTest("TreeTableConfig/Select",true); // TableConfig.Select.less
 	tests.loadTest("menu");
+	tests.loadTest("menu/DynamicMenu");
 	tests.loadTest("menu/PathMenu");
 	tests.loadTest("form");
 	tests.loadTest("tabs");

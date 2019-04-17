@@ -169,7 +169,7 @@
 		},
 		function data_click(container)
 		{
-			container.appendChild(µ.gui.menu(menuData,mapper,null,true));
+			container.appendChild(µ.gui.menu(menuData,mapper,{clickable:true}));
 		},
 		function data_Button(container)
 		{
