@@ -42,7 +42,7 @@
 	module("menu/DynamicMenu",[
 		function (container)
 		{
-			let menu=new µ.gui.menu.DynamicMenu(loader,menuData,mapper/**/,{clickable:true}/**/);
+			let menu=new µ.gui.menu.DynamicMenu(loader,menuData,mapper/**,{clickable:true}/**/);
 			container.appendChild(menu.element);
 		}
 	]);

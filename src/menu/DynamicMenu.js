@@ -22,7 +22,7 @@
 			this.element=guiMenu(data,this._mapper,param);
 			this.element.classList.add("DynamicMenu");
 			this.element.addEventListener("click",this._trigger);
-			this.element.addEventListener("hover",this._trigger);
+			this.element.addEventListener("mouseover",this._trigger);
 		},
 		_mapper(element,data)
 		{
