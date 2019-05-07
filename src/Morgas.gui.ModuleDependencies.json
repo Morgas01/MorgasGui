@@ -43,7 +43,8 @@
 	"gui.menu": {
 		"deps": [],
 		"uses": [
-			"NodePatch"
+			"NodePatch",
+			"encase"
 		]
 	},
 	"gui.Table": {
@@ -105,6 +106,16 @@
 		"uses": [
 			"getInputValues",
 			"Promise"
+		]
+	},
+	"gui.DynamicMenu": {
+		"deps": [
+			"gui.menu"
+		],
+		"uses": [
+			"rescope",
+			"NodePatch",
+			"encase"
 		]
 	},
 	"gui.PathMenu": {
