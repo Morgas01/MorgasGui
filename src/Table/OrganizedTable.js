@@ -49,12 +49,14 @@
 			{
 				combine.filter(this.filterKey);
 			}
-			for(let [groupKey,groupParts] of this.groupMap.entries())
+			for(let [groupKey,{parts,some}] of this.groupMap.entries())
 			{
-				for(let groupPart of groupParts)
+				let groupCombine=this.organizer.combine(some);
+				for(let groupPart of parts)
 				{
-					combine.group(groupKey,groupPart);
+					groupCombine.group(groupKey,groupPart);
 				}
+				combine.combine(groupCombine);
 			}
 
 			let values=combine.get();
@@ -133,17 +135,17 @@
 		{
 			return this.organizer.getGroupParts(groupKey);
 		},
-		setGroup(groupKey,groupParts)
+		setGroup(groupKey,groupParts,some=false)
 		{
-			groupParts=SC.encase(groupParts);
+			let parts=SC.encase(groupParts);
 			if(groupParts.length==0)
 			{
 				this.groupMap.delete(groupKey);
 				return true;
 			}
-			if(this.organizer.hasGroup(groupKey)&&groupParts.every(groupPart=>this.organizer.getGroupPart(groupKey,groupPart)!=null))
+			if(this.organizer.hasGroup(groupKey)&&parts.every(groupPart=>this.organizer.getGroupPart(groupKey,groupPart)!=null))
 			{
-				this.groupMap.set(groupKey,groupParts);
+				this.groupMap.set(groupKey,{parts,some});
 				return true;
 			}
 			return false;
@@ -151,9 +153,9 @@
 		getGroups()
 		{
 			let rtn={};
-			for(let [groupKey,groupParts] of this.groupMap.entries())
+			for(let [groupKey,{parts,some}] of this.groupMap.entries())
 			{
-				rtn[groupKey]=groupParts.slice();
+				rtn[groupKey]={parts:parts.slice(),some};
 			}
 			return rtn;
 		},
