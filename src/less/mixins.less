@@ -1,5 +1,25 @@
 @import (reference, once) "variables";
 
+.animate(@styles) {
+	@styles();
+	@stop: {
+		animation-delay:0s;
+		animation-duration:0s;
+		transition-delay:0s;
+		transition-duration:0s;
+	}
+	/* separate to single out invalid selector query */
+	.still:not(.animate) & {
+		@stop();
+	}
+	.still:not(.animate) {
+		@stop();
+	}
+	&.still:not(.animate) {
+		@stop();
+	}
+}
+
 .background() {
 	background-color:@primaryColor;
 }
@@ -15,7 +35,9 @@
 }
 
 .fadeIn(@time:@fadeTime, @delay:0s) {
-	animation+: fadeIn @time @delay both;
+	.animate({
+		animation+: fadeIn @time @delay both;
+	});
 
 	@keyframes fadeIn {
 		from {
@@ -51,7 +73,9 @@
 	background-image: linear-gradient(@angle, @color1 25%, @color2 25%, @color2 50%, @color1 50%, @color1 75%, @color2 75%, @color2);
 	.stripes-animate(@time:2s)
 	{
-		animation+: stripes-animate @time linear infinite;
+		.animate({
+			animation+: stripes-animate @time linear infinite;
+		});
 
 		@keyframes stripes-animate {
 			0% {
@@ -106,7 +130,9 @@
 	}
 }
 .spring(@time:@fadeTime, @delay:0s, @from:1, @to:1.5, @transform-before:~"", @transform-after:~"") {
-	animation+: spring @time ease-in-out @delay infinite alternate;
+	.animate({
+		animation+: spring @time ease-in-out @delay infinite alternate;
+	});
 
 	@keyframes spring {
 		from {

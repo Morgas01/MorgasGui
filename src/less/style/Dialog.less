@@ -1,9 +1,8 @@
-.dialog-wrapper.modal {
+.dialog-wrapper {
 	.dialog-scope();
-	background:@modalBackground;
 	.fadeIn(@fadeTime);
-	.dialog {
-		animation-delay:@fadeDelay;
+	&.modal {
+		background:@modalBackground;
 	}
 }
 .dialog {
@@ -12,5 +11,4 @@
 	border-radius:@borderRadius;
 	padding:@borderRadius/2;
 	.boxShadow();
-	.fadeIn(@fadeTime);
 }

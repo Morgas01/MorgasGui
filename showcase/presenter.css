@@ -1,0 +1,40 @@
+html, body {
+	width:100vw;
+	height:100vh;
+	margin:0;
+	padding:0;
+	border:0 none;
+}
+
+#cases {
+	background-image: linear-gradient(#1abdc0 33%,#85ecee);
+	display:flex;
+	flex-wrap:wrap;
+	font-size:1.25em;
+}
+#cases .active {
+	background: rgba(75, 7, 200, 0.5);
+	color:white;
+}
+
+#cases span {
+	padding: .5ex;
+	margin: 1ex;
+	display: block;
+	box-shadow: 0 0 1ex 0px rgba(0,0,0,.25);
+	transition: .5s box-shadow;
+	cursor:pointer;
+}
+#cases span:hover {
+	box-shadow: .5ex .5ex 1.5ex 0px rgba(0,0,0,.3);
+}
+
+#description, #stage {
+	margin:1em;
+}
+#description code {
+	display:block;
+	background-color:lightgray;
+	white-space:pre-wrap;
+	margin:1em 0;
+}

@@ -22,15 +22,21 @@
 }
 .sub-menu() {
 	.menu-scope();
-	transition: opacity @fadeOut-time @fadeOut-delay, transform @transformOut-time @transformOut-delay;
+	.animate({
+		transition: opacity @fadeOut-time @fadeOut-delay, transform @transformOut-time @transformOut-delay;
+	});
 }
 .show-sub-menu() {
 	.menu-scope();
-	transition: opacity @fadeIn-time @fadeIn-delay, transform @transformIn-time @transformIn-delay;
+	.animate({
+		transition: opacity @fadeIn-time @fadeIn-delay, transform @transformIn-time @transformIn-delay;
+	});
 }
 .rehide-sub-menu() {
 	.menu-scope();
-	transition: opacity @fadeChange-time, transform @transformChange-time;
+	.animate({
+		transition: opacity @fadeChange-time, transform @transformChange-time;
+	});
 }
 .splitButton {
 	border-width: 1px 0 1px 1px;

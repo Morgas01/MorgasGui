@@ -1,0 +1,11 @@
+{
+	"name":"root",
+	"cases":["blocked"],
+	"children":[
+		{
+			"name":"Dialog",
+			"hasCase":true,
+			"cases":["Input"]
+		}
+	]
+}

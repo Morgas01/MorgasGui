@@ -29,7 +29,7 @@
 			this.then=null;
 
 			this._signal=null;
-
+			param.actions=param.actions||{};
 			let oldOK=param.actions["OK"];
 			param.actions["OK"]=function()
 			{
@@ -37,15 +37,14 @@
 				if(isValid)
 				{
 					let values=SC.get(this.content.querySelectorAll("[name]"));
-					let result=oldOK.call(this,values);
+					let result=values;
+					if(oldOK)
+					{
+						result=oldOK.call(this,values);
+					}
 					if(result===false) result=Promise.reject();
 					Promise.resolve(result)
-					.then(()=>
-					{
-						this._signal.resolve();
-					},
-					//@suppress UnhandledPromiseRejectionWarning
-					µ.constantFunctions.n);
+					.then(this._signal.resolve,this._signal.reject);
 				}
 			};
 			param.dialogTagName="FIELDSET";

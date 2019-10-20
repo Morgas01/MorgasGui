@@ -8,9 +8,9 @@
 	{
 		element=element||document.createElement("div");
 		element.classList.add("blocked");
-		element.block		=element.classList.add.bind(element.classList,"blocked");
-		element.unblock		=element.classList.remove.bind(element.classList,"blocked");
-		element.toggleBlock	=element.classList.toggle.bind(element.classList,"blocked");
+		element.block		=function(){element.classList.add("blocked")};
+		element.unblock		=function(){element.classList.remove("blocked")};
+		element.toggleBlock	=function(){element.classList.toggle("blocked")};
 		return element;
 	};
 	µ.gui.blocked.unblock=function(element)

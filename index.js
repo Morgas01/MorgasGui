@@ -16,11 +16,11 @@ exports.getComponentStyle=function(component,theme="default")
 exports.getTheme=function(theme="default",components=[])
 {
 	return less.render(
-		components.map(c=>
-			'\n@import "'+path.resolve(exports.dirname,"less","style",c)+'";'+
+		'@import "'+path.resolve(exports.dirname,"less","theme",theme)+'";'+
+		components.map(component=>
+			'\n@import "'+path.resolve(exports.dirname,"less","style",component)+'";'+
 			'\n@import "'+path.resolve(exports.dirname,"less","structure",component)+'";'
-		).join("")+
-		'\n@import "'+path.resolve(exports.dirname,"less","theme",theme)+'";'
+		).join("")
 	).then(
 		data=>data.css,
 		error=>Promise.reject(JSON.stringify(error))

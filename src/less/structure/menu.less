@@ -57,7 +57,9 @@ button.menu {
 	display:inline-block;
 	position:absolute;
 	z-index:1;
-	transition: opacity .25s .5s, transform .25s .5s;
+	.animate({
+		transition: opacity .25s .5s, transform .25s .5s;
+	});
 	opacity:0;
 	transform:scale(0);
 	transform-origin:0 0;

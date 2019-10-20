@@ -48,13 +48,21 @@
 	.loading-scope();
 	border-style: solid;
 	border-width: @border-width;
-	animation:loading_1 @time-1 linear infinite,rainbow @time-1*15 linear infinite;
+	.animate({
+		animation:loading_1 @time-1 linear infinite,rainbow @time-1*15 linear infinite;
+	});
 	.loading_1 {
-		animation:loading_1 @time-1*3 linear infinite,rainbow @time-1*5 linear infinite;
+		.animate({
+			animation:loading_1 @time-1*3 linear infinite,rainbow @time-1*5 linear infinite;
+		});
 		.loading_1 {
-			animation:loading_1 @time-1*5 linear infinite,rainbow @time-1*3 linear infinite;
+			.animate({
+				animation:loading_1 @time-1*5 linear infinite,rainbow @time-1*3 linear infinite;
+			});
 			.loading_1 {
-				animation:loading_1 @time-1*7 linear infinite,rainbow @time-1 linear infinite;
+				.animate({
+					animation:loading_1 @time-1*7 linear infinite,rainbow @time-1 linear infinite;
+				});
 			}
 		}
 	}
@@ -63,7 +71,9 @@
 	.loading-scope();
 	border-style: solid;
 	border-width: @border-width;
-	animation:loading_2 @time-2 ease infinite;
+	.animate({
+		animation:loading_2 @time-2 ease infinite;
+	});
 	&.layer_1 {
 		border-width: @border-width;
 		border-top-color:@color-2-1;

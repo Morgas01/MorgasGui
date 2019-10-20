@@ -37,7 +37,7 @@
 
 			this.wrapper.appendChild(this.content);
 
-			Object.defineProperty(this.content,"modal",{
+			Object.defineProperty(this,"modal",{
 				configurable:true,
 				enumerable:true,
 				set:val=>
@@ -48,7 +48,7 @@
 				get:this.wrapper.classList.contains.bind(this.wrapper.classList,"modal")
 			});
 
-			this.content.modal=modal;
+			this.modal=modal;
 			this.autofocus=autofocus;
 			if(target) this.appendTo(target);
 			if(!actions.close)actions.close=this.close;
