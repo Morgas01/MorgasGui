@@ -2,7 +2,7 @@
 
 .animate(@styles) {
 	@styles();
-	@stop: {
+	.stop() {
 		animation-delay:0s;
 		animation-duration:0s;
 		transition-delay:0s;
@@ -10,13 +10,13 @@
 	}
 	/* separate to single out invalid selector query */
 	.still:not(.animate) & {
-		@stop();
+		.stop();
 	}
 	.still:not(.animate) {
-		@stop();
+		.stop();
 	}
 	&.still:not(.animate) {
-		@stop();
+		.stop();
 	}
 }
 
