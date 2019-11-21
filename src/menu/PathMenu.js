@@ -77,7 +77,6 @@
 			if(this.domDataMap.has(item))
 			{
 				if(item instanceof Element) item=this.domDataMap.get(item);
-				this.active=item;
 
 				this.activePath.push(item);
 				let itemElement=this.domDataMap.get(item);
@@ -99,6 +98,10 @@
 				this.element.appendChild(this.placeholder);
 			}
 			this.reportEvent(new PathMenu.ChangeEvent(this.activePath));
+		},
+		getActivePath()
+		{
+			return this.activePath.slice();
 		},
 		getActive()
 		{
