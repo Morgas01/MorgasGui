@@ -30,6 +30,7 @@
 				body:{
 					tag:"tbody",
 					rowTag:"tr",
+					rowStyle:null,
 					columnTag:"td"
 				}
 			};
@@ -77,7 +78,7 @@
 		},
 		setOptions:function(options)
 		{
-			if(!options)
+			if(options)
 			{
 				if(options.tag)this.options.tag=options.tag;
 				if(options.header)
@@ -90,6 +91,7 @@
 				{
 					if(options.body.tag)this.options.body.tag=options.body.tag;
 					if(options.body.rowTag)this.options.body.rowTag=options.body.rowTag;
+					if(options.body.rowStyle)this.options.body.rowStyle=options.body.rowStyle;
 					if(options.body.columnTag)this.options.body.columnTag=options.body.columnTag;
 				}
 			}
@@ -138,7 +140,15 @@
 		},
 		fillRow:function(data,row)
 		{
-			var cols=Array.filter(row.children,e=>e.tagName==this.options.body.columnTag.toUpperCase());
+			row.className="";
+			let rowStyleOption=this.options.body.rowStyle;
+			if(typeof rowStyleOption==="function") rowStyleOption=rowStyleOption(data);
+			if(rowStyleOption)
+			{
+				if(typeof rowStyleOption==="string") rowStyleOption=[rowStyleOption];
+				row.classList.add(...rowStyleOption);
+			}
+			var cols=Array.prototype.filter.call(row.children,e=>e.tagName==this.options.body.columnTag.toUpperCase());
 			for( var c of this.columns)
 			{
 				var cell=cols.shift()||document.createElement(this.options.body.columnTag);

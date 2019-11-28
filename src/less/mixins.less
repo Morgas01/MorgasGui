@@ -58,9 +58,12 @@
 		background-color:fade(@secondaryColor,40%);
 	}
 }
-.zebra(@color:fade(@ternaryColor,40%)) {
+.zebra(@color:fade(@ternaryColor,40%),@color2:lighten(spin(@color,30),40%)) {
 	&:nth-child(even) {
 		background-color:@color;
+	}
+	&:nth-child(odd) {
+		background-color:@color2;
 	}
 }
 

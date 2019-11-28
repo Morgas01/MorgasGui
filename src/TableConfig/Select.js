@@ -18,6 +18,7 @@
 		},
 		setOptions:function(options)
 		{
+			this.mega(options)
 			if(options)
 			{
 				if("radioName" in options) this.options.radioName=options.radioName;
@@ -29,7 +30,7 @@
 		getHeader:function(callback)
 		{
 			var row=this.mega();
-			var inputCol=document.createElement("div");
+			var inputCol=document.createElement("DIV");
 			row.insertBefore(inputCol,row.firstChild);
 
 			if(callback)callback.call(row,row,this);
@@ -37,14 +38,18 @@
 		},
 		fillRow:function(data,row)
 		{
-			var input=document.createElement("input");
+			let input=Array.from(row.children).find(e=>e.tagName==="INPUT");
+			if(!input)
+			{
+				input=document.createElement("INPUT");
+				row.appendChild(input);
+			}
 			if(this.options.radioName)
 			{
 				input.type="radio";
 				input.name=this.options.radioName;
 			}
 			else input.type="checkbox";
-			row.appendChild(input);
 
 			this.mega(data,row);
 		},

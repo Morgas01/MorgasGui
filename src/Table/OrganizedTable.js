@@ -71,9 +71,9 @@
 		{
 			if(item!=null)
 			{
-				this.organizer.update(entry);
+				this.organizer.update(item);
 			}
-			this.mega();
+			this.mega(item);
 		},
 		addSort(key,fn)
 		{
