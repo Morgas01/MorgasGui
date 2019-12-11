@@ -134,7 +134,7 @@
 				else
 				{//select only this
 					selectionType="single";
-					Array.map(tableBody.children,r=>r.children[0]).forEach(i=>i.checked=false);
+					Array.prototype.map.call(tableBody.children,r=>r.children[0]).forEach(i=>i.checked=false);
 					row.children[0].checked=true;
 					lastSelected=row;
 				}
