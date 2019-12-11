@@ -1,10 +1,10 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
 	let guiMenu=GMOD("gui.menu");
+	let Event=GMOD("Event");
 
 	SC=SC({
 		Reporter:"EventReporterPatch",
-		Event:"Event",
 		encase:"encase"
 	});
 
@@ -139,7 +139,7 @@
 		}
 	});
 
-	PathMenu.ChangeEvent=µ.Class(SC.Event,{
+	PathMenu.ChangeEvent=µ.Class(Event,{
 		name:"pathChange",
 		constructor:function(activePath)
 		{
