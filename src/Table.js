@@ -1,10 +1,11 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
+	let Event=GMOD("Event");
+
 	SC=SC({
 		TableConfig:"gui.TableConfig",
 		arrayRemove:"array.remove",
 		Reporter:"EventReporterPatch",
-		Event:"Event",
 		encase:"encase"
 	});
 
@@ -134,7 +135,7 @@
 		}
 	});
 
-	Table.AddEvent=µ.Class(SC.Event,{
+	Table.AddEvent=µ.Class(Event,{
 		name:"tableAdd",
 		constructor:function(entry,row)
 		{
@@ -143,7 +144,7 @@
 		}
 	});
 
-	Table.UpdateEvent=µ.Class(SC.Event,{
+	Table.UpdateEvent=µ.Class(Event,{
 		name:"tableUpdate",
 		constructor:function(entry,row)
 		{
@@ -152,7 +153,7 @@
 		}
 	});
 
-	Table.RemoveEvent=µ.Class(SC.Event,{
+	Table.RemoveEvent=µ.Class(Event,{
 		name:"tableRemove",
 		constructor:function(entry,row)
 		{
