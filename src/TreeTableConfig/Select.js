@@ -152,7 +152,7 @@
 				else
 				{//select only this
 					selectionType="single";
-					Array.forEach(tableBody.children,row=>{
+					Array.prototype.forEach.call(tableBody.children,row=>{
 						row.children[0].checked=false;
 						SC.Node.traverse(row,subRow=>
 							subRow.children[0].checked=false,
