@@ -71,7 +71,7 @@
 				{
 					field=document.createElement("input");
 					field.type="text";
-					if(config.pattern)field.pattern=config.pattern.toSource().match(/\/?\^?(.*?)\$?\//)[1]
+					if(config.pattern)field.pattern=config.pattern.toString().match(/\/?\^?(.*?)\$?\//)[1]
 				}
 				field.value=config.get();
 				break;
