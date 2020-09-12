@@ -37,7 +37,7 @@
 	let loader=function(data)
 	{
 		data.children=children.get(data);
-		return new Promise(resolve=>setTimeout(resolve,Math.random()*4e3+1e3));
+		return new Promise(resolve=>setTimeout(resolve,Math.random()*2e3+1e3));
 	};
 	module("menu/DynamicMenu",[
 		function (container)
