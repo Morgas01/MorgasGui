@@ -108,6 +108,10 @@
 			this.organizer.filter(key,fn);
 			return this;
 		},
+		hasFilter(filterKey)//TODO use proxy?
+		{
+			return this.organizer.hasFilter(filterKey);
+		},
 		setFilter(filterKey)
 		{
 			if(filterKey==null)
