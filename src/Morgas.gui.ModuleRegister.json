@@ -3,6 +3,7 @@
 	"gui.blocked": "blocked.js",
 	"gui.Dialog": "Dialog.js",
 	"gui.dragBox": "dragBox.js",
+	"gui.Element": "Element.js",
 	"gui.form": "form.js",
 	"gui.InputHistory": "InputHistory.js",
 	"gui.loading": "loading.js",

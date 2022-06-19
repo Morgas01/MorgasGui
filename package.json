@@ -13,13 +13,15 @@
 		"url": "https://github.com/Morgas01/MorgasGui.git"
 	},
 	"scripts": {
-		"build": "node lib/build"
+		"build": "node lib/build",
+		"debug": "karma start test_2/karma.conf.js"
 	},
 	"dependencies": {
 		"less": "^3.9.0"
 	},
 	"devDependencies": {
 		"concat-with-sourcemaps": "^1.1.0",
-		"morgas": "^0.8.9"
+		"morgas": "^0.8.9",
+		"karma": "^6.4.0"
 	}
 }

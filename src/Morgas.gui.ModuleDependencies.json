@@ -19,6 +19,10 @@
 		"deps": [],
 		"uses": []
 	},
+	"gui.Element": {
+		"deps": [],
+		"uses": []
+	},
 	"gui.form": {
 		"deps": [],
 		"uses": [
@@ -48,12 +52,13 @@
 		]
 	},
 	"gui.Table": {
-		"deps": [],
+		"deps": [
+			"Event"
+		],
 		"uses": [
 			"gui.TableConfig",
 			"array.remove",
 			"EventReporterPatch",
-			"Event",
 			"encase"
 		]
 	},
@@ -120,11 +125,11 @@
 	},
 	"gui.PathMenu": {
 		"deps": [
-			"gui.menu"
+			"gui.menu",
+			"Event"
 		],
 		"uses": [
 			"EventReporterPatch",
-			"Event",
 			"encase"
 		]
 	},
