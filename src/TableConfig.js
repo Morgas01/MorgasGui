@@ -138,7 +138,7 @@
 		},
 		fillRow:function(data,row)
 		{
-			var cols=Array.filter(row.children,e=>e.tagName==this.options.body.columnTag.toUpperCase());
+			var cols=Array.from(row.children).filter(e=>e.tagName===this.options.body.columnTag.toUpperCase());
 			for( var c of this.columns)
 			{
 				var cell=cols.shift()||document.createElement(this.options.body.columnTag);
