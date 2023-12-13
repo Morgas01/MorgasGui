@@ -1,11 +1,11 @@
 @import "../mixins";
 
 html {
-	.background();
+    background-color:@backgroundColor;
 	color:@textColor;
 }
 *:not(button):not(input):not(select):not(textarea):not(progress) {
-	.border-color();
+    border-color:@borderColor;
 }
 :not(fieldset):invalid{
 	box-shadow:0 0 1px red,0 0 1ex red;

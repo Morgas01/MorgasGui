@@ -11,32 +11,39 @@
 	 * @param {Event} event - click event
 	 * @param {Element} target - Element with data-action attribute
 	 * @param {Element} element - actionized element
-	 * @param {Any} (scope=element) - scope of actions
+	 * @this {Any} (scope=element) - scope of actions
 	 */
 
 	/**
-	 * @param {Object.<String,ActionCallback>} fns
 	 * @param {Element} element
+	 * @param {Object.<String,ActionCallback>} actions
+	 *
+	 * @returns {Function} listener that is called for the provided dom events
 	 */
-	µ.gui.actionize=function(fns,element,scope=element,events=["click"])
+	µ.gui.actionize=function({element,actions,scope=element,events=["click"]})
 	{
 		let listener=function(e)
 		{
 			let target=e.target;
-			let fn
-			while(target&&target!=element)
+
+			while(!target.dataset.action&&target!=element)
 			{
-				let action=target.dataset.action;
-				if( action in fns)
-				{
-					fns[action].call(scope,e,target,element);
-					e.stopPropagation();
-					return true;
-				}
 				target=target.parentNode;
 			}
-		}
+			let action=target.dataset.action;
+			if(!target||target===element||!(action in actions)) return;
+
+			try
+			{
+				actions[action].call(scope,e,target,element);
+			}
+			catch (e)
+			{
+				µ.logger.error(e);
+			}
+		};
 		for(let event of SC.encase(events))	element.addEventListener(event,listener);
+		return listener;
 	};
 	SMOD("gui.actionize",µ.gui.actionize);
 

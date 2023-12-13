@@ -14,6 +14,7 @@
 	},
 	"scripts": {
 		"build": "node lib/build",
+		"showcase": "node showcase/server.js",
 		"debug": "karma start test_2/karma.conf.js"
 	},
 	"dependencies": {
@@ -22,6 +23,6 @@
 	"devDependencies": {
 		"concat-with-sourcemaps": "^1.1.0",
 		"morgas": "^0.8.9",
-		"karma": "^6.4.0"
+		"niwa": "^0.8.8"
 	}
 }

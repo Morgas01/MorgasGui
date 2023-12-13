@@ -1,0 +1,69 @@
+{
+	"string":"string",
+	"number":"number",
+	"boolean": "boolean",
+	"object":"object",
+	"objectMap":{
+		"_valueType": "string"
+	},
+	"array":{
+		"_valueType": "string"
+	},
+	"function": {
+		"params": [],
+		"body": ""
+	},
+	"HTMLElement": "HTMLElement",
+
+	"class": {
+		"_module": "base",
+		"params": []
+	},
+
+	"multiType": {
+		"_types": ["string","number"]
+	},
+
+
+	"actionize": {
+		"_type": "function",
+		"params": [
+			{
+				"_type": "object",
+				"element": "HTMLElement",
+				"actions": {
+					"_type": "objectMap",
+					"_valueType": "function"
+				},
+				"events": {
+					"_type": "array",
+					"_valueType": "string",
+					"_optional": true
+				}
+			}
+		]
+	},
+	"Dialog": {
+		"_module": "gui.Dialog",
+		"_type": "class",
+		"params": [
+			{
+				"_type": "multiType",
+				"_types": ["string","HTMLElement","function"]
+			},
+			{
+				"_type": "object",
+				"modal": {"_type": "boolean", "_optional": true},
+				"target": {"_type": "HTMLElement", "_optional": true},
+				"autofocus": {"_type": "boolean", "_optional": true},
+				"actions": {
+					"_type": "objectMap",
+					"_valueType": "function",
+					"_optional": true
+				},
+				"contentTagName": {"_type": "string", "_optional": true},
+				"actionEvents": {"_type": "string", "_optional": true}
+			}
+		]
+	}
+}

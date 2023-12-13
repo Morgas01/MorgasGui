@@ -1,7 +1,9 @@
 (function(µ,SMOD,GMOD,HMOD,SC){
 
+	let Element=GMOD("gui.Element");
+
 	SC=SC({
-		action:"gui.actionize"
+		action:"gui.actionize",
 	});
 	
 	if(!µ.gui) µ.gui={};
@@ -12,7 +14,7 @@
 	 * @property {Element} (param.target=document.body)
 	 * @property {boolean} (param.autofocus=true) - try to focus an element with the "autofocus" attribute when the dialog is appended to a container
 	 * @property {Object.<String,Function>} (param.actions={})
-	 * @property {String} (param.dialogTagName="div") - tag name of the dialog element
+	 * @property {String} (param.contentTagName="div") - tag name of the dialog element
 	 */
 	/**
 	 * @param {String|Element|Function} content
@@ -20,32 +22,32 @@
 	 *
 	 * uses "close" action to close the dialog
 	 */
-	µ.gui.Dialog=µ.Class({
+	µ.gui.Dialog=µ.Class(Element,{
+		styleClass:"gui-dialog",
 		constructor:function(content,{
 		modal=false,
 		target=document.body,
 		autofocus=true,
 		actions={},
-		dialogTagName="div",
-		actionEvents
+		contentTagName="div",
+		actionEvents=undefined
 		}={})
 		{
-			this.wrapper=document.createElement("div");
-			this.wrapper.classList.add("dialog-wrapper","modal");
-			this.content=parse(content,dialogTagName);
-			this.content.classList.add("dialog");
+			Element.call(this,{tagName:"dialog"});
 
-			this.wrapper.appendChild(this.content);
+			this.content=parse(content,contentTagName);
+
+			this.el.appendChild(this.content);
 
 			Object.defineProperty(this,"modal",{
 				configurable:true,
 				enumerable:true,
 				set:val=>
 				{
-					if(val)this.wrapper.classList.add("modal");
-					else this.wrapper.classList.remove("modal");
+					if(val)this.el.classList.add("modal");
+					else this.el.classList.remove("modal");
 				},
-				get:this.wrapper.classList.contains.bind(this.wrapper.classList,"modal")
+				get:this.el.classList.contains.bind(this.el.classList,"modal")
 			});
 
 			this.modal=modal;
@@ -55,26 +57,31 @@
 
 			this.actions=actions;
 
-			SC.action(this.actions,this.content,this,actionEvents);
+			SC.action({actions:this.actions,element:this.content,scope:this,events:this.actionEvents});
 		},
 		appendTo(element)
 		{
-			element.appendChild(this.wrapper);
+			element.appendChild(this.el);
 			if(this.autofocus)
 			{
 				let toFocus=this.content.querySelector("[autofocus]");
 				if(toFocus) toFocus.focus();
 			}
 		},
-		close(){
-			this.wrapper.remove()
+		open()
+		{
+			this.modal?this.el.showModal():this.el.show();
+		},
+		close()
+		{
+			this.el.close();
 		}
 	});
 
 
-	let parse=function(param,tagName)
+	let parse=function(param,tagName="div")
 	{
-		if(param instanceof HTMLElement) return param;
+		if(param instanceof HTMLElement||param instanceof DocumentFragment) return param;
 
 		let element=document.createElement(tagName);
 		switch(typeof param)

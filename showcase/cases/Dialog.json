@@ -1,0 +1,80 @@
+{
+	"basic": {
+		"template": "<button id='btn'>open</button>",
+		"init": {
+			"_type": "function",
+			"params": ["element"],
+			"body": "document.getElementById('btn').addEventListener('click',()=>element.open())"
+		},
+		"element": {
+			"_type": "class",
+			"_module": "gui.Dialog",
+			"params": ["hello dialog <button data-action='close'>close</button>"]
+		}
+	},
+	"function": {
+		"template": "<button id='btn'>open</button>",
+		"init": {
+			"_type": "function",
+			"params": ["element"],
+			"body": "document.getElementById('btn').addEventListener('click',()=>element.open())"
+		},
+		"element": {
+			"_type": "class", "_module": "gui.Dialog", "params": [
+				{
+					"_type": "function",
+					"params": ["element"],
+					"body": "element.contentEditable=true;element.innerHTML='<span>editable! ☺ </span><button data-action=\"close\">close</button>';"
+				}
+			]
+		}
+	},
+	"modal": {
+		"template": "<button id='btn'>open</button>",
+		"init": {
+			"_type": "function",
+			"params": ["element"],
+			"body": "document.getElementById('btn').addEventListener('click',()=>element.open())"
+		},
+		"element": {
+			"_type": "class",
+			"_module": "gui.Dialog",
+			"params": ["modal dialog <button data-action='close'>close</button>", {"modal": true}]
+		}
+	},
+	"autofocus": {
+		"template": "<button id='btn'>open</button>",
+		"init": {
+			"_type": "function",
+			"params": ["element"],
+			"body": "document.getElementById('btn').addEventListener('click',()=>element.open())"
+		},
+		"element": {
+			"_type": "class",
+			"_module": "gui.Dialog",
+			"params": [
+				"<button data-action='close'>close</button><button data-action='close' autofocus>close focused</button>"
+			]
+		}
+	},
+	"actions": {
+		"template": "<button id='btn'>open</button>",
+		"init": {
+			"_type": "function",
+			"params": ["element"],
+			"body": "document.getElementById('btn').addEventListener('click',()=>element.open())"
+		},
+		"element": {
+			"_type": "class", "_module": "gui.Dialog", "params": [
+				"<button data-action='alert'>alert</button><button data-action='close'>close</button>", {
+					"actions": {
+						"alert": {
+							"_type": "function",
+							"body": "alert('stay alert!');"
+						}
+					}
+				}
+			]
+		}
+	}
+}

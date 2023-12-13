@@ -1,0 +1,25 @@
+html,body {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+#fixture {
+    flex-basis: 50%;
+    border: none;
+}
+#cases {
+    margin-top: 1ex;
+}
+#cases button:not(:last-child){
+    margin-right: 1ex;
+}
+#apply {
+    margin-top: 1em;
+    align-self: start;
+}

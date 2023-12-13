@@ -2,11 +2,11 @@
 
 	//SC=SC({});
 
-	µ.gui={};
+	if(!µ.gui) µ.gui={};
 
 	let Element=µ.gui.Element=µ.Class({
 		styleClass:"gui-element",
-		constructor:function({el,tagName}={})
+		constructor:function({el,tagName="div"}={})
 		{
 			if(el) this.el=el;
 			else if (tagName)

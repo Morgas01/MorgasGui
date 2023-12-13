@@ -1,0 +1,10 @@
+{
+	"name": "MorgasGui showcase",
+	"welcomeSign": "showcase",
+	"fields": [
+		{
+			"path": ".",
+			"name": "showcase"
+		}
+	]
+}
