@@ -5,8 +5,6 @@
 	SC=SC({
 		action:"gui.actionize",
 	});
-	
-	if(!µ.gui) µ.gui={};
 
 	/**
 	 * @typedef {Object} gui.Dialog~param
@@ -30,7 +28,7 @@
 		autofocus=true,
 		actions={},
 		contentTagName="div",
-		actionEvents=undefined
+		actionEvents=undefined //actionize default
 		}={})
 		{
 			Element.call(this,{tagName:"dialog"});
@@ -56,6 +54,7 @@
 			if(!actions.close)actions.close=this.close;
 
 			this.actions=actions;
+			this.actionEvents=actionEvents;
 
 			SC.action({actions:this.actions,element:this.content,scope:this,events:this.actionEvents});
 		},

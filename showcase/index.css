@@ -6,6 +6,7 @@ html,body {
 }
 body {
     display: flex;
+    background: aliceblue;
 }
 #showcaseList {
     padding: 1em;

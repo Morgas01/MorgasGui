@@ -8,18 +8,21 @@ body {
     display: flex;
     flex-direction: column;
     align-content: center;
+    background: beige;
 }
 #fixture {
     flex-basis: 50%;
     border: none;
-}
-#cases {
-    margin-top: 1ex;
+    background: white;
 }
 #cases button:not(:last-child){
     margin-right: 1ex;
 }
+#cases, #parameters {
+    padding: 1ex;
+}
 #apply {
     margin-top: 1em;
+    margin-left: 1ex;
     align-self: start;
 }

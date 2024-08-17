@@ -5,6 +5,13 @@
 		DependenciesRestApi:"DependenciesRestApi"
 	});
 
-	module.exports = SC.DependenciesRestApi(SC.deps);
+	let deps=SC.deps;
+	module.exports = SC.DependenciesRestApi(deps);
+
+	module.exports.log=function()
+	{
+		console.log(deps);
+		return deps;
+	}
 
 })(Morgas,Morgas.setModule,Morgas.getModule,Morgas.hasModule,Morgas.shortcut)

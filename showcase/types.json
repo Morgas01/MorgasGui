@@ -1,28 +1,35 @@
 {
-	"string":"string",
-	"number":"number",
+	"string": "string",
+	"number": {
+		"_type": "number",
+		"_value": 3
+	},
 	"boolean": "boolean",
-	"object":"object",
-	"objectMap":{
+	"object": "object",
+	"objectMap": {
 		"_valueType": "string"
 	},
-	"array":{
+	"array": {
 		"_valueType": "string"
 	},
 	"function": {
+		"name": "string",
 		"params": [],
-		"body": ""
+		"body": "string"
 	},
 	"HTMLElement": "HTMLElement",
-
 	"class": {
+		"_type": "subclass / class",
 		"_module": "base",
 		"params": []
 	},
-
 	"multiType": {
-		"_types": ["string","number"]
+		"_types": ["string", "number"]
 	},
+	"json": {
+		"input": "free form"
+	},
+
 
 
 	"actionize": {
@@ -33,7 +40,8 @@
 				"element": "HTMLElement",
 				"actions": {
 					"_type": "objectMap",
-					"_valueType": "function"
+					"_valueType": "function",
+					"params": ["event","target","element"]
 				},
 				"events": {
 					"_type": "array",
@@ -44,12 +52,12 @@
 		]
 	},
 	"Dialog": {
-		"_module": "gui.Dialog",
 		"_type": "class",
+		"_module": "gui.Dialog",
 		"params": [
 			{
 				"_type": "multiType",
-				"_types": ["string","HTMLElement","function"]
+				"_types": ["string", "HTMLElement", "function"]
 			},
 			{
 				"_type": "object",
@@ -58,12 +66,56 @@
 				"autofocus": {"_type": "boolean", "_optional": true},
 				"actions": {
 					"_type": "objectMap",
-					"_valueType": "function",
+					"_valueType": {
+						"_type": "function",
+						"params": ["event", "target", "element"]
+					},
 					"_optional": true
 				},
 				"contentTagName": {"_type": "string", "_optional": true},
 				"actionEvents": {"_type": "string", "_optional": true}
 			}
 		]
+	},
+	"Table": {
+		"_type": "class",
+		"_module": "gui.Table",
+		"params": [
+			{
+				"_type": "object",
+				"columns": {
+					"_type": "array",
+					"_valueType": "Table.Column:parsable"
+				},
+				"data": {"_type": "array", "_valueType": ["json"]}
+			}
+		]
+	},
+	"Table.Column": {
+		"_type": "class",
+		"_module": "gui.Table.Column",
+		"params": ["Table.Column:param"]
+	},
+	"Table.Column:parsable": {
+		"_type": "multiType",
+		"_types": [
+			"string",
+			"Table.Column",
+			"Table.Column:update",
+			"Table.Column:param"
+		]
+	},
+	"Table.Column:update": {
+		"_type": "function",
+		"params": ["cell", "rowData"]
+	},
+	"Table.Column:param": {
+		"_type": "object",
+		"title": "string",
+		"update": "Table.Column:update",
+		"styleClass": {
+			"_type": "multiType",
+			"_types": ["string", {"_type": "array", "_valueType": ["string"]}]
+		}
 	}
 }

@@ -70,6 +70,7 @@
 					"actions": {
 						"alert": {
 							"_type": "function",
+							"params":["event","target","element"],
 							"body": "alert('stay alert!');"
 						}
 					}
